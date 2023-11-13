@@ -19,7 +19,7 @@ function SignIn() {
 
 function Card3() {
   return (
-    <div className={`absolute right-[0%] top-[2%] w-[450px] `}>
+    <div className={`relative right-[0%] top-[2%] w-[450px]  `}>
       <h1 className="text-white font-bold text-[32px] text-center">
         Welcome to
       </h1>

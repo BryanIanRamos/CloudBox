@@ -12,9 +12,9 @@ function LoginScreen({ position1, position2, Card1, Card2 }) {
   // };
 
   return (
-    <div className="h-screen  relative bg-gradient-to-b from-blue-900 to-blue-500 overflow-hidden">
+    <div className="h-screen  relative bg-gradient-to-b from-primaryColor to-secondaryColor overflow-hidden">
       <div className={`absolute p-5 ${position2}-0`}>
-        <div className="flex flex-row text-center items-center gap-2 text-white ">
+        <div className="flex flex-row text-center items-center gap-2 text-tertiaryColor ">
           <img src={CloudBox} alt="CloudBox" />
           <h1 className="text-[24px] font-bold">CloudBox</h1>
         </div>
@@ -28,7 +28,10 @@ function LoginScreen({ position1, position2, Card1, Card2 }) {
 
       {/* Right Side content */}
       <div
-        className={`w-[450px] h-screen bg-white absolute ${position1}-0 opacity-100  flex items-center justify-start z-10`}
+        className={`w-[450px] h-screen bg-white absolute ${
+          position1 === "right" ? "right-0" : "left-0"
+        }
+        opacity-100  flex items-center justify-start z-10`}
       >
         {Card1 && <Card1 />}
       </div>
