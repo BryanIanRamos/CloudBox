@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import SideNavBar from "./components.js/SideNavBar";
+import SideNavBar from "../../Components/SideNavBar";
 import { Icon } from "@iconify/react";
 import TransData from "../../data/TransData";
-import ProfileHdr from "./components.js/ProfileHdr";
+import ProfileHdr from "../../Components/ProfileHdr";
 import ProdData from "../../data/ProdData";
 
 import Product from "./components.js/Product";
@@ -15,23 +15,31 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      {/* <div className="w-[1280px] h-[59px] bg-white border border-white"></div> */}
-      <div className="flex">
-        <SideNavBar />
+    <div className="flex w-screen h-screen ">
+      <SideNavBar />
+      <div className="w-full h-full">
         <ProfileHdr />
-        <div className="flex border w-screen bg-slate-400 ">
-          <div className="bg-[#EBEEF5] w-[100%] mt-8">
+        <div className="flex border w-full h-[95%] bg-[#EBEEF5] ">
+          <div
+            // bg-[#EBEEF5]
+            className="
+            w-[100%] mt-8"
+          >
             {!nextPage ? (
-              <div className="flex flex-col py-10 px-20 gap-6">
+              <div className="flex flex-col  px-20 gap-6 ">
                 <div className="flex relative h-10 items-center">
                   <h1 className=" text-blue-950 text-[32px] font-bold font-['Poppins'] absolute">
                     Dashboard
                   </h1>
                   <button
-                    className="absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
+                    className="flex items-center  gap-2 absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
                     onClick={handleClick}
                   >
+                    <Icon
+                      icon="solar:box-bold"
+                      style={{ color: "white" }}
+                      className="h-[18px] w-[18px] "
+                    />
                     <span className="text-white">Products</span>
                   </button>
                 </div>
@@ -129,51 +137,54 @@ const Dashboard = () => {
               />
             )}
           </div>
-          <div className=" bg-[#113F8D] w-[378px] pt-[7%] px-4">
-            <h1 className="text-center text-white text-[30px] font-bold font-['Poppins']">
-              Transactions
-            </h1>
+          <div className=" bg-[#113F8D] max-w-[378px] pt-[4%] px-5 ">
+            <div className="">
+              <h1 className="text-center text-white text-[30px] font-bold font-['Poppins']">
+                Transactions
+              </h1>
 
-            <div className="flex items-center">
-              <hr className="w-full border-2" />
-              <Icon
-                icon="icon-park-solid:check-one"
-                style={{ color: "white" }}
-                className="h-[125px] w-[125px] mx-2"
-              />
-              <hr className="w-full border-2" />
-            </div>
+              <div className="flex items-center">
+                <hr className="w-full border-2" />
+                <Icon
+                  icon="icon-park-solid:check-one"
+                  style={{ color: "white" }}
+                  className="h-[125px] w-[125px] mx-2"
+                />
+                <hr className="w-full border-2" />
+              </div>
 
-            {/* TransData */}
+              {/* TransData */}
 
-            <div className="flex flex-col gap-7">
-              {TransData.map((elem, index) => (
-                <>
-                  <div key={index} className="flex gap-4 px-3">
-                    <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
-                      <span className="font-bold text-white text-[23px]">
-                        {elem.initial}
-                      </span>
+              <div className="flex flex-col gap-7">
+                {TransData.map((elem, index) => (
+                  <>
+                    <div key={index} className="flex gap-4 px-3">
+                      <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
+                        <span className="font-bold text-white text-[23px]">
+                          {elem.initial}
+                        </span>
+                      </div>
+                      {/* <div className="flex gap-5 border"> */}
+                      <div className="flex flex-col  w-[120px] ">
+                        <p className=" text-white text-xs font-bold font-['Poppins'] ">
+                          {elem.name}
+                        </p>
+                        <p className="text-white text-xs font-normal font-['Poppins'] mr-5">
+                          {elem.date}
+                        </p>
+                      </div>
+                      <div className=" text-white text-[10.32px] font-bold font-['Poppins']">
+                        ${elem.amount}
+                      </div>
+                      {/* </div> */}
                     </div>
-                    {/* <div className="flex gap-5 border"> */}
-                    <div className="flex flex-col  w-[120px] ">
-                      <p className=" text-white text-xs font-bold font-['Poppins'] ">
-                        {elem.name}
-                      </p>
-                      <p className="text-white text-xs font-normal font-['Poppins'] mr-5">
-                        {elem.date}
-                      </p>
-                    </div>
-                    <div className=" text-white text-[10.32px] font-bold font-['Poppins']">
-                      ${elem.amount}
-                    </div>
-                    {/* </div> */}
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

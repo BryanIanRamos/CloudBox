@@ -17,15 +17,20 @@ const Product = ({ trigger }) => {
   }, []);
 
   return (
-    <div className="mt-[30px] px-20">
+    <div className="px-20">
       <div className="flex relative items-center h-10 mb-5">
         <div className="text-blue-950 text-[32px] font-bold font-['Poppins']">
           Products
         </div>
         <button
-          className="absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
+          className="flex gap-2 items-center absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
           onClick={handleClick}
         >
+          <Icon
+            icon="icon-park-twotone:back"
+            style={{ color: "white" }}
+            className="h-[19px] w-[19px] "
+          />
           <span className="text-white">Back</span>
         </button>
       </div>

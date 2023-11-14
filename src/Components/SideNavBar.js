@@ -1,10 +1,11 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { Link } from "react-router-dom";
 
 const SideNavBar = () => {
   return (
     <>
-      <div className="w-[245px] h-screen bg-primaryColor px-6 py-7 z-[3]">
+      <div className="w-[245px] h-full bg-primaryColor px-6 py-7 z-[3]">
         <div>
           <div className="flex items-center gap-1">
             <Icon
@@ -25,9 +26,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                Dashboard
-              </h1>
+              <Link to="/dashboard">
+                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                  Dashboard
+                </h1>
+              </Link>
             </div>
           </div>
           <div>
@@ -37,9 +40,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                Calendar
-              </h1>
+              <Link to="/calendar">
+                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                  Calendar
+                </h1>
+              </Link>
             </div>
           </div>
           <div>
@@ -49,9 +54,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                Mail
-              </h1>
+              <Link to="/mail">
+                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                  Mail
+                </h1>
+              </Link>
             </div>
           </div>
           <div>
@@ -61,9 +68,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                Reports
-              </h1>
+              <Link to="/report">
+                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                  Reports
+                </h1>
+              </Link>
             </div>
           </div>
           <div>
@@ -73,9 +82,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                Statistics
-              </h1>
+              <Link to="#">
+                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                  Statistics
+                </h1>
+              </Link>
             </div>
           </div>
           <div>
@@ -85,9 +96,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="w-auto text-center text-white text-[15px] font-['Poppins']">
-                File Manager
-              </h1>
+              <Link to="/file_manager">
+                <h1 className="w-auto text-center text-white text-[15px] font-['Poppins']">
+                  File Manager
+                </h1>
+              </Link>
             </div>
           </div>
           <div>
@@ -97,9 +110,11 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                Notes
-              </h1>
+              <Link to="/notes">
+                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                  Notes
+                </h1>
+              </Link>
             </div>
           </div>
         </div>
