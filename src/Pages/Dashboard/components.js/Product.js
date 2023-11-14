@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import ProdData from "../../../data/ProdData";
 
-const Product = () => {
+const Product = ({ trigger }) => {
   const [filter, setFilter] = useState(false);
+  const [Back, setBack] = useState(true);
+
+  const handleClick = () => {
+    setBack(false);
+    trigger(Back);
+    // console.log("trigger", trigger);
+  };
+
+  useEffect(() => {
+    setBack();
+  }, []);
 
   return (
     <div className="mt-[30px] px-20">
-      <div className="text-blue-950 text-[32px] font-bold font-['Poppins'] mb-2">
-        Products
+      <div className="flex relative items-center h-10 mb-5">
+        <div className="text-blue-950 text-[32px] font-bold font-['Poppins']">
+          Products
+        </div>
+        <button
+          className="absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
+          onClick={handleClick}
+        >
+          <span className="text-white">Back</span>
+        </button>
       </div>
 
       <div>
@@ -18,7 +37,7 @@ const Product = () => {
               !filter ? "bg-white" : "bg-[#E8E8E8]"
             } rounded-tl-[25px] rounded-tr-[25px] border border-stone-300 relative z-[1]
                             flex gap-3 items-center justify-center`}
-            onClick={(e) => {
+            onClick={() => {
               setFilter(false);
             }}
           >

@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideNavBar from "./components.js/SideNavBar";
 import { Icon } from "@iconify/react";
 import TransData from "../../data/TransData";
 import ProfileHdr from "./components.js/ProfileHdr";
+import ProdData from "../../data/ProdData";
+
 import Product from "./components.js/Product";
 
 const Dashboard = () => {
+  const [nextPage, setNextPage] = useState(false);
+
+  const handleClick = () => {
+    setNextPage((prevState) => !prevState);
+  };
+
   return (
     <div>
       {/* <div className="w-[1280px] h-[59px] bg-white border border-white"></div> */}
@@ -14,11 +22,19 @@ const Dashboard = () => {
         <ProfileHdr />
         <div className="flex border w-screen bg-slate-400 ">
           <div className="bg-[#EBEEF5] w-[100%] mt-8">
-            {false ? (
+            {!nextPage ? (
               <div className="flex flex-col py-10 px-20 gap-6">
-                <h1 className=" text-blue-950 text-[32px] font-bold font-['Poppins']">
-                  Dashboard
-                </h1>
+                <div className="flex relative h-10 items-center">
+                  <h1 className=" text-blue-950 text-[32px] font-bold font-['Poppins'] absolute">
+                    Dashboard
+                  </h1>
+                  <button
+                    className="absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
+                    onClick={handleClick}
+                  >
+                    <span className="text-white">Products</span>
+                  </button>
+                </div>
                 <div>
                   <div className="flex gap-[5%]">
                     <div
@@ -106,7 +122,11 @@ const Dashboard = () => {
                 <ButtomSide />
               </div>
             ) : (
-              <Product />
+              <Product
+                trigger={(e) => {
+                  setNextPage(e);
+                }}
+              />
             )}
           </div>
           <div className=" bg-[#113F8D] w-[378px] pt-[7%] px-4">
@@ -153,7 +173,7 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-        </div>{" "}
+        </div>
       </div>
     </div>
   );
@@ -180,26 +200,4 @@ function ButtomSide() {
       </div>
     </>
   );
-}
-
-{
-  /* <div>
-  <div
-    key={index}
-    className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center"
-  >
-    <span className="font-bold text-white text-[23px]">{elem.initial}</span>
-  </div>
-  <div className="flex flex-col">
-    <p className="text-center text-white text-xs font-bold font-['Poppins']">
-      {elem.name}
-    </p>
-    <p className="text-white text-xs font-normal font-['Poppins']">
-      {elem.date}
-    </p>
-  </div>
-  <div className="text-center text-white text-[10.32px] font-bold font-['Poppins']">
-    ${elem.amount}
-  </div>
-</div>; */
 }
