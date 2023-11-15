@@ -56,7 +56,7 @@ function Login() {
   };
 
   return (
-    <div
+    <form
       onSubmit={handleLogin}
       className="text-center w-[296px] h-[400px] absolute pt-[20px]  items-start"
     >
@@ -71,7 +71,7 @@ function Login() {
         </b>
       </p>
       <input
-        id="email"
+        // id="email"
         type="email"
         name="identifier"
         value={user.identifier}
@@ -85,7 +85,7 @@ function Login() {
         autoComplete="username"
       />
       <input
-        id="pwd"
+        // id="pwd"
         type="password"
         name="password"
         value={user.password}
@@ -130,7 +130,8 @@ function Login() {
         </div>
         {/* Button  */}
         <button
-          onClick={handleLogin}
+          // onClick={handleLogin}
+          type=""
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  w-[294px] mt-3 h-[43px]"
         >
           Sign In
@@ -143,7 +144,7 @@ function Login() {
           Sign In with Google
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
