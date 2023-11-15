@@ -12,9 +12,9 @@ const Product = ({ trigger }) => {
     // console.log("trigger", trigger);
   };
 
-  useEffect(() => {
-    setBack();
-  }, []);
+  // useEffect(() => {
+  //   setBack();
+  // }, []);
 
   return (
     <div className="px-20">

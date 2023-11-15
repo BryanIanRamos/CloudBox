@@ -1,30 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const initialUser = { email: "", password: "", username: "" };
 
 function Create() {
-  const [user, setUser] = useState(initialUser);
+  // const [user, setUser] = useState(initialUser);
   const navigate = useNavigate();
+
+  const [user, setUser] = useState({ username: "", email: "", password: "" });
 
   const signUp = async () => {
     try {
       const url = `http://localhost:1337/api/auth/local/register`;
-      console.log(user.username);
-      console.log(user.email);
-      console.log(user.password);
+      console.log("User", user.username);
+      console.log("pass", user.password);
+      console.log("email", user.email);
       if (user.username && user.email && user.password) {
         const res = await axios.post(url, user);
-        if (!!res) {
+        // console.log("res", );
+
+        if (res.statusText === "OK") {
           toast.success("Registered successfully!", {
             hideProgressBar: true,
           });
           setUser(initialUser);
-          console.log(res);
+          console.log("res", res);
 
-          navigate("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         }
       }
     } catch (error) {
@@ -43,9 +51,19 @@ function Create() {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signUp(); // Call signUp when form is submitted
+  };
+
   return (
     <div className="absolute ">
-      <div className=" w-[445px] h-[400px] ml-[19%] text-center">
+      <ToastContainer />
+      <form
+        // method="POST"
+        onSubmit={handleSubmit}
+        className=" w-[445px] h-[400px] ml-[19%] text-center"
+      >
         <h1 className=" text-blue-900 text-[28px] font-bold font-['Poppins']">
           Registration
         </h1>
@@ -65,16 +83,16 @@ function Create() {
                   value={user.username}
                   onChange={handleUserChange}
                   // placeholder="Enter your email"
-                  className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
                 />
               </div>
             </div>
             {/* <InputDisplay text={"First Name"} /> */}
             {/* <InputDisplay text={"Last Name"} /> */}
-            <InputDisplay text={"Position"} />
+            {/* <InputDisplay text={"Position"} /> */}
           </div>
           <div className="flex flex-cols gap-6 mt-[25px] justify-center">
-            <InputDisplay text={"Location"} />
+            {/* <InputDisplay text={"Location"} /> */}
             <div>
               <div className=" ">
                 <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
@@ -86,7 +104,7 @@ function Create() {
                   value={user.email}
                   onChange={handleUserChange}
                   // placeholder="Enter your email"
-                  className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
                 />
               </div>
             </div>
@@ -106,7 +124,7 @@ function Create() {
                   value={user.password}
                   onChange={handleUserChange}
                   // placeholder="Enter password"
-                  className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
                 />
               </div>
             </div>
@@ -115,18 +133,17 @@ function Create() {
           </div>
 
           <div className="ml-[5%] mt-[35px] absolute flex flex-col justify-center items-center">
-            <div className="">
-              <DateForm />
-            </div>
+            <div className="">{/* <DateForm /> */}</div>
             <button
-              onClick={signUp}
-              className=" w-[295px] h-[43px] bg-blue-900 hover:bg-blue-700 border border-black mt-[50px] flex justify-center items-center "
+              type="submit"
+              // onClick={signUp}
+              className=" w-[295px] h-[43px] bg-blue-900 hover:bg-blue-700 border border-black mt-[50px] flex justify-center items-center"
             >
               <h1 className=" text-center text-white font-bold ">Proceed</h1>
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
