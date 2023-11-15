@@ -3,7 +3,6 @@ import SideNavBar from "../../Components/SideNavBar";
 import { Icon } from "@iconify/react";
 import TransData from "../../data/TransData";
 import ProfileHdr from "../../Components/ProfileHdr";
-import ProdData from "../../data/ProdData";
 
 import Product from "./components.js/Product";
 

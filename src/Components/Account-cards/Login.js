@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Google from "../Assets/google.png";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { storeUser } from "../Account-cards/extensionAuth/helper";
 
 const initialUser = { password: "", identifier: "" };
 
 function Login() {
   // left
   const [isChecked, setIsChecked] = useState(false);
+  const navigate = useNavigate();
 
   // Function to handle checkbox change
   const handleCheckboxChange = () => {
@@ -34,13 +39,19 @@ function Login() {
 
     try {
       if (user.identifier && user.password) {
-        const res = await axios.post(url, user);
-        console.log({ res });
-      } else {
-        console.log("res not running");
+        const { data } = await axios.post(url, user);
+        console.log({ data });
+        if (data.jwt) {
+          toast.success("Log in sucessful", {});
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 2000);
+          storeUser(data);
+        }
       }
     } catch (error) {
       console.error("Login failed:", error.message);
+      toast.error("Invalid email or password!", {});
     }
   };
 
@@ -49,6 +60,7 @@ function Login() {
       onSubmit={handleLogin}
       className="text-center w-[296px] h-[400px] absolute pt-[20px]  items-start"
     >
+      <ToastContainer />
       <h1 className="text-left text-black text-[26px] font-bold font-['Poppins'] not-italic ">
         Sign In
       </h1>
