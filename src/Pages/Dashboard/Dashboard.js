@@ -5,7 +5,6 @@ import TransData from "../../data/TransData";
 import ProfileHdr from "../../Components/ProfileHdr";
 
 import Product from "./components.js/Product";
-
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
 

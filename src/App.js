@@ -15,6 +15,7 @@ import Report from "./Pages/Reports/Report.js";
 import FileManager from "./Pages/File Maneger/FileManager.js";
 import Notes from "./Pages/Notes/Notes.js";
 import Permission from "./Pages/Permission/Permission.js";
+import { Protector } from "./Components/Account-cards/extensionAuth/helper.js";
 
 function App() {
   return (
@@ -25,7 +26,10 @@ function App() {
         <Route path="/status" element={<Verify />} />
         <Route path="/business" element={<BusReg />} />
         <Route path="/businessInfo" element={<BusID />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={<Protector Component={Dashboard} />}
+        />
         {/* Pages  */}
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/mail" element={<Mail />} />
