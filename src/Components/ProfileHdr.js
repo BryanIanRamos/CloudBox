@@ -10,10 +10,15 @@ const ProfileHdr = () => {
   const handleLogout = () => {
     setTimeout(() => {
       // Delaying the execution of the following code by 1.5 seconds
-      toast.success("Logged out successfully!", {
-        hideProgressBar: true,
-      });
-      localStorage.setItem("isLogged", false); // Updating the `isLogged` key in local storage to `false` upon logging out
+      toast.success(
+        "Logged out successfully!",
+        {
+          hideProgressBar: true,
+        },
+        2000
+      );
+      localStorage.clear();
+      // localStorage.setItem("isLogged", false); // Updating the `isLogged` key in local storage to `false` upon logging out
       window.location.href = "/"; // Redirecting the user to the homepage upon logging out
     }, 1500); // Delay for 1.5 seconds (1500 milliseconds)
   };

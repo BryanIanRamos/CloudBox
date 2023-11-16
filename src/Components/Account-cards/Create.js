@@ -56,6 +56,10 @@ function Create() {
     signUp(); // Call signUp when form is submitted
   };
 
+  // useState(() => {
+  //   signUp();
+  // });
+
   return (
     <div className="absolute ">
       <ToastContainer />

@@ -30,14 +30,21 @@ function App() {
           path="/dashboard"
           element={<Protector Component={Dashboard} />}
         />
+
         {/* Pages  */}
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/mail" element={<Mail />} />
-        <Route path="/report" element={<Report />} />
+        <Route path="/calendar" element={<Protector Component={Calendar} />} />
+        <Route path="/mail" element={<Protector Component={Mail} />} />
+        <Route path="/report" element={<Protector Component={Report} />} />
         {/* <Route path="/statistics" element={<Statistics />} /> */}
-        <Route path="/file_manager" element={<FileManager />} />
-        <Route path="/notes" element={<Notes />} />
-        <Route path="/Permission" element={<Permission />} />
+        <Route
+          path="/file_manager"
+          element={<Protector Component={FileManager} />}
+        />
+        <Route path="/notes" element={<Protector Component={Notes} />} />
+        <Route
+          path="/Permission"
+          element={<Protector Component={Permission} />}
+        />
       </Routes>
     </Routers>
   );
