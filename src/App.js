@@ -26,12 +26,12 @@ function App() {
         <Route path="/status" element={<Verify />} />
         <Route path="/business" element={<BusReg />} />
         <Route path="/businessInfo" element={<BusID />} />
+
+        {/* Pages  */}
         <Route
           path="/dashboard"
           element={<Protector Component={Dashboard} />}
         />
-
-        {/* Pages  */}
         <Route path="/calendar" element={<Protector Component={Calendar} />} />
         <Route path="/mail" element={<Protector Component={Mail} />} />
         <Route path="/report" element={<Protector Component={Report} />} />

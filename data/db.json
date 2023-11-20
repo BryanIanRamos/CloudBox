@@ -1,0 +1,44 @@
+{
+    "products":[
+        {
+            "id": 1,
+            "price": 38,
+             "img": ("./box-medium.png"),
+            "name": "Milk",
+            "desc": "Pure, rich, and irresistibly delicious milk straight from our cows.",
+            "qty": 28
+        },
+        {
+            "id": 2,
+            "price": 22,
+             "img": "#",
+            "name": "Cheese",
+            "desc": "Pure, rich, and irresistibly delicious cheese straight from our cows.",
+            "qty": 13
+        },
+        {
+            "id": 3,
+            "price": 40,
+             "img": "#",
+            "name": "Yogurt",
+            "desc": "Pure, rich, and irresistibly delicious yogurt straight from our cows.",
+            "qty": 15
+        },
+        {
+            "id": 4,
+            "price": 44,
+             "img": "#",
+            "name": "Nuts",
+            "desc": "Pure, rich, and irresistibly delicious straight from our farm.",
+            "qty": 5
+        },
+        {
+            "id": 5,
+            "price": 76,
+             "img": "#",
+            "name": "Butter",
+            "desc": "Pure, rich, and irresistibly delicious straight from our farm.",
+            "qty": 5
+        }
+    ]
+}

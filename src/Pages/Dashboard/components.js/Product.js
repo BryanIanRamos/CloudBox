@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import ProdData from "../../../data/ProdData";
+import ProdData from "../../../tempData/ProdData";
+import useFetch from "../../../API/useFetch";
+import IMG from "../../../Assets/box-medium.png";
+// src\Assets\box-medium.png
 
 const Product = ({ trigger }) => {
   const [filter, setFilter] = useState(false);
   const [Back, setBack] = useState(true);
+  const [product, setProduct] = useState([]);
 
   const handleClick = () => {
     setBack(false);
@@ -12,9 +16,35 @@ const Product = ({ trigger }) => {
     // console.log("trigger", trigger);
   };
 
-  // useEffect(() => {
-  //   setBack();
-  // }, []);
+  useEffect(() => {
+    setBack();
+  }, []);
+
+  // const {
+  //   data: product,
+  //   loading,
+  //   error,
+  //   // } = useFetch("http://localhost:7000/products");
+  // } = useFetch("https://dummyjson.com/products");
+
+  useEffect(() => {
+    fetch("https://dummyjson.com/products")
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Data is not fetch");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        // console.log("Product Data::", data);
+        setProduct(data.products);
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  }, []);
+
+  // console.log("Product::", product);
 
   return (
     <div className="px-20">
@@ -102,57 +132,64 @@ const Product = ({ trigger }) => {
                   </span>
                 </button>
               </div>
-
-              <div
-                className="grid grid-cols-3 gap-2 px-[30px] overflow-auto"
-                style={{ scrollBehavior: "smooth" }}
-              >
-                {ProdData.map((elem, index) => (
-                  <div>
-                    <div className="w-[205px] h-[237px] bg-white rounded-md border border-zinc-500 border-opacity-50 p-[10px]">
-                      <div className="relative">
-                        <div className=" bg-amber-500 rounded-2xl flex items-center justify-center px-3 py-1 absolute m-2">
-                          <p className=" text-white text-[7px] font-bold font-['Poppins']">
-                            {elem.price} php
+              {/* Here */}
+              {product ? (
+                <div
+                  className="grid grid-cols-3 gap-2 px-[30px] overflow-auto"
+                  style={{ scrollBehavior: "smooth" }}
+                >
+                  {product.map((elem, index) => (
+                    <div key={elem.id}>
+                      <div className="w-[205px] h-[237px] bg-white rounded-md border border-zinc-500 border-opacity-50 p-[10px]">
+                        <div className="relative">
+                          <div className=" bg-amber-500 rounded-2xl flex items-center justify-center px-3 py-1 absolute m-2">
+                            <p className=" text-white text-[7px] font-bold font-['Poppins']">
+                              {elem.price} php
+                            </p>
+                          </div>
+                          <img
+                            className="w-[181px] h-[107px] rounded-md border bg-gray-400"
+                            // src={elem.img}
+                            src={elem.thumbnail}
+                            alt="profile"
+                          />
+                        </div>
+                        <div>
+                          <p className="text-black text-[16px] font-bold font-['Poppins'] py-1 overflow-hidden  h-[29px]">
+                            {/* {elem.name} */}
+                            <span>{elem.title}</span>
+                            {console.log("Checker", elem.title)}
                           </p>
                         </div>
-                        <img
-                          class="w-[181px] h-[107px] rounded-md border"
-                          src={elem.img}
-                          alt="profile"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-black text-[16px] font-bold font-['Poppins'] py-1">
-                          {elem.name}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="w-[181px] text-black text-[9px] font-normal font-['Poppins']">
-                          {elem.desc}
-                        </p>
-                      </div>
-                      <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
-                        <p className=" text-white text-[6.84px] font-bold font-['Poppins']">
-                          QTY {elem.qty}
-                        </p>
-                      </div>
-                      <div className="flex justify-end gap-1">
-                        <button className="w-[50px] h-auto bg-amber-500 rounded-[17.22px] px-3 py-1 flex items-center justify-center">
-                          <span className="text-white text-[8.11px] font-bold font-['Poppins']">
-                            Update
-                          </span>
-                        </button>
-                        <button className="w-[50px] h-auto bg-red-400 rounded-[17.22px] px-4 py-1 flex items-center justify-center">
-                          <span className="text-white text-[8.11px] font-bold font-['Poppins']">
-                            Delete
-                          </span>
-                        </button>
+                        <div>
+                          <p className="w-[181px] h-[29px] text-black text-[9px] font-normal font-['Poppins'] overflow-hidden ">
+                            <span> {elem.description}</span>
+                          </p>
+                        </div>
+                        <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
+                          <p className=" text-white text-[6.84px] font-bold font-['Poppins']">
+                            QTY {elem.stock}
+                          </p>
+                        </div>
+                        <div className="flex justify-end gap-1">
+                          <button className="w-[50px] h-auto bg-amber-500 rounded-[17.22px] px-3 py-1 flex items-center justify-center">
+                            <span className="text-white text-[8.11px] font-bold font-['Poppins']">
+                              Update
+                            </span>
+                          </button>
+                          <button className="w-[50px] h-auto bg-red-400 rounded-[17.22px] px-4 py-1 flex items-center justify-center">
+                            <span className="text-white text-[8.11px] font-bold font-['Poppins']">
+                              Delete
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div>Loading...</div>
+              )}
             </>
           ) : (
             <>
@@ -176,56 +213,62 @@ const Product = ({ trigger }) => {
                 </button>
               </div>
 
-              <div
-                className="grid grid-cols-3 gap-2 px-[30px] overflow-auto"
-                style={{ scrollBehavior: "smooth" }}
-              >
-                {ProdData.map((elem, index) => (
-                  <div>
-                    <div className="w-[205px] h-[237px] bg-white rounded-md border border-zinc-500 border-opacity-50 p-[10px]">
-                      <div className="relative">
-                        <div className=" bg-amber-500 rounded-2xl flex items-center justify-center px-3 py-1 absolute m-2">
-                          <p className=" text-white text-[7px] font-bold font-['Poppins']">
-                            {elem.price} php
+              {product ? (
+                <div
+                  className="grid grid-cols-3 gap-2 px-[30px] overflow-auto"
+                  style={{ scrollBehavior: "smooth" }}
+                >
+                  {product.map((elem, index) => (
+                    <div key={elem.id}>
+                      <div className="w-[205px] h-[237px] bg-white rounded-md border border-zinc-500 border-opacity-50 p-[10px]">
+                        <div className="relative">
+                          <div className=" bg-amber-500 rounded-2xl flex items-center justify-center px-3 py-1 absolute m-2">
+                            <p className=" text-white text-[7px] font-bold font-['Poppins']">
+                              {elem.price} php
+                            </p>
+                          </div>
+                          <img
+                            className="w-[181px] h-[107px] rounded-md border bg-gray-400"
+                            // src={elem.img}
+                            src={elem.thumbnail}
+                            alt="profile"
+                          />
+                        </div>
+                        <div>
+                          <p className="text-black text-[16px] font-bold font-['Poppins'] py-1">
+                            {/* {elem.name} */}
+                            {elem.name}Cheese filtered
                           </p>
                         </div>
-                        <img
-                          class="w-[181px] h-[107px] rounded-md border"
-                          src={elem.img}
-                          alt="profile"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-black text-[16px] font-bold font-['Poppins'] py-1">
-                          {/* {elem.name} */}Cheese
-                        </p>
-                      </div>
-                      <div>
-                        <p className="w-[181px] text-black text-[9px] font-normal font-['Poppins']">
-                          {elem.desc}
-                        </p>
-                      </div>
-                      <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
-                        <p className=" text-white text-[6.84px] font-bold font-['Poppins']">
-                          QTY {elem.qty}
-                        </p>
-                      </div>
-                      <div className="flex justify-end gap-1">
-                        <button className="w-[50px] h-auto bg-amber-500 rounded-[17.22px] px-3 py-1 flex items-center justify-center">
-                          <span className="text-white text-[8.11px] font-bold font-['Poppins']">
-                            Update
-                          </span>
-                        </button>
-                        <button className="w-[50px] h-auto bg-red-400 rounded-[17.22px] px-4 py-1 flex items-center justify-center">
-                          <span className="text-white text-[8.11px] font-bold font-['Poppins']">
-                            Delete
-                          </span>
-                        </button>
+                        <div>
+                          <p className="w-[181px] h-[29px] text-black text-[9px] font-normal font-['Poppins'] overflow-hidden ">
+                            {elem.description}
+                          </p>
+                        </div>
+                        <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
+                          <p className=" text-white text-[6.84px] font-bold font-['Poppins']">
+                            QTY {elem.stock}
+                          </p>
+                        </div>
+                        <div className="flex justify-end gap-1">
+                          <button className="w-[50px] h-auto bg-amber-500 rounded-[17.22px] px-3 py-1 flex items-center justify-center">
+                            <span className="text-white text-[8.11px] font-bold font-['Poppins']">
+                              Update
+                            </span>
+                          </button>
+                          <button className="w-[50px] h-auto bg-red-400 rounded-[17.22px] px-4 py-1 flex items-center justify-center">
+                            <span className="text-white text-[8.11px] font-bold font-['Poppins']">
+                              Delete
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div>Loading...</div>
+              )}
             </>
           )}
         </div>

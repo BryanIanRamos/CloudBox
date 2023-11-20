@@ -1,8 +1,25 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const SideNavBar = () => {
+  const handleLogout = () => {
+    setTimeout(() => {
+      // Delaying the execution of the following code by 1.5 seconds
+      toast.success(
+        "Logged out successfully!",
+        {
+          hideProgressBar: true,
+        },
+        2000
+      );
+      localStorage.clear();
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 3000); // Redirecting the user to the homepage upon logging out
+    }, 1500); // Delay for 1.5 seconds (1500 milliseconds)
+  };
   return (
     <>
       <div className="w-[245px] h-full bg-primaryColor px-6 py-7 z-[3]">
@@ -103,7 +120,7 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="eos-icons:admin"
@@ -116,9 +133,9 @@ const SideNavBar = () => {
                 </h1>
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className=" mt-10 flex flex-col gap-3">
+        <div className=" mt-20 flex flex-col gap-3">
           <div>
             <div className="flex gap-1 items-center  px-4 py-2  ">
               <Icon
@@ -138,13 +155,17 @@ const SideNavBar = () => {
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
+              <button
+                onClick={handleLogout}
+                className="text-center text-white text-[15px] font-['Poppins']"
+              >
                 Log out
-              </h1>
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
