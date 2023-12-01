@@ -6,6 +6,7 @@ import ProfileHdr from "../../Components/ProfileHdr";
 
 import Product from "./components.js/Product";
 import CircularProgressBar from "../../Components/CircularProgressBar";
+import ProgressBar from "../../Components/ProgressBar";
 
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
@@ -192,35 +193,141 @@ const Dashboard = () => {
 export default Dashboard;
 
 function ButtomSide() {
-  const color1 = "#155699";
-
   return (
     <>
       <div className="flex">
-        <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50">
-          <CircularProgressBar
-            percentage={40}
-            setRadius={45}
-            stroke={11}
-            // secColor={true}
-          />
+        <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50 p-4">
+          <div>
+            <h1 className=" text-blue-950 text-sm font-bold font-['Poppins'] mb-2">
+              Weekly Produce
+            </h1>
+          </div>
+          <div className="flex items-center h-fit gap-5">
+            <div>
+              <h2 className="text-black text-[35.04px] font-bold font-['Inria Sans']">
+                11,487
+                <span className="text-zinc-500 text-lg font-bold font-['Inria Sans']">
+                  Bottles
+                </span>
+              </h2>
+            </div>
+            <CircularProgressBar
+              percentage={40}
+              setRadius={45}
+              stroke={11}
+              // secColor={true}
+            />
+          </div>
+          <div className="px-4 flex gap-[10px] ">
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={85} percentage2={45} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                S
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={60} percentage2={21} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                M
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={72} percentage2={21} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                T
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={85} percentage2={67} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                W
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={70} percentage2={50} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                TF
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={45} percentage2={85} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                F
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={45} percentage2={85} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                S
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50">
-          <CircularProgressBar
-            percentage={95}
-            setRadius={45}
-            stroke={11}
-            secColor={true}
-          />
-          <div className="w-4 h-[100px] rotate-180 flex">
-            <div
-              className="w-2  bg-[#072060] border"
-              style={{ height: "26%", transition: "height 0.5s ease-in-out" }}
-            ></div>
-            <div
-              className="w-2  bg-[#145499] border"
-              style={{ height: "96%", transition: "height 0.5s ease-in-out" }}
-            ></div>
+        <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50 p-4">
+          <div>
+            <h1 className=" text-blue-950 text-sm font-bold font-['Poppins'] mb-2">
+              Weekly Sales
+            </h1>
+          </div>
+          <div className="flex items-center h-fit gap-5">
+            <div>
+              <h2 className="text-black text-[35.04px] font-bold font-['Inria Sans']">
+                11,017
+                <span className="text-zinc-500 text-lg font-bold font-['Inria Sans']">
+                  Bottles
+                </span>
+              </h2>
+            </div>
+            <CircularProgressBar
+              percentage={80}
+              setRadius={45}
+              stroke={11}
+              secColor={true}
+            />
+          </div>
+          <div className="px-4 flex gap-[10px] ">
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={85} percentage2={45} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                S
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={60} percentage2={21} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                M
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={72} percentage2={21} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                T
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={85} percentage2={67} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                W
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={70} percentage2={50} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                TF
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={45} percentage2={85} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                F
+              </span>
+            </div>
+            <div className="flex flex-col justify-center w-fit">
+              <ProgressBar percentage1={45} percentage2={85} secColor={true} />
+              <span className=" h-[23.08px] text-center text-zinc-500 text-[13.19px] font-bold font-['Inria Sans']">
+                S
+              </span>
+            </div>
           </div>
         </div>
       </div>

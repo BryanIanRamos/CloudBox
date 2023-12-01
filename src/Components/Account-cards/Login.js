@@ -33,6 +33,7 @@ function Login() {
 
   const handleLogin = async () => {
     const url = "http://localhost:1337/api/auth/local";
+    // const url = "http://practicemain.test/api/login";
 
     console.log("email", user.identifier);
     console.log("password", user.password);

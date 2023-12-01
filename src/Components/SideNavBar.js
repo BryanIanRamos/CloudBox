@@ -120,20 +120,20 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div>
-          {/* <div>
+          <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="eos-icons:admin"
                 style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
-              <Link to="/notes">
+              <Link to="/permission">
                 <h1 className="text-center text-white text-[15px] font-['Poppins']">
-                  Notes
+                  Permission
                 </h1>
               </Link>
             </div>
-          </div> */}
+          </div>
         </div>
         <div className=" mt-20 flex flex-col gap-3">
           <div>

@@ -1,7 +1,8 @@
 .circular-progress {
   display: block;
-  margin: 20px auto;
-  width: 120px;
+  /* margin: 20px auto; */
+  /* width: 130px; */
+  height: auto;
 
 }
 
