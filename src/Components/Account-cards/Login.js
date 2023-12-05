@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { storeUser } from "../Account-cards/extensionAuth/helper";
 
-const initialUser = { password: "", identifier: "" };
+const initialUser = { password: "", email: "" };
 
 function Login() {
   // left
@@ -32,26 +32,30 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    const url = "http://localhost:1337/api/auth/local";
+    // const url = "http://localhost:1337/api/auth/local";
+    const url = "http://cloudbox-backend.test/api/login";
     // const url = "http://practicemain.test/api/login";
 
-    console.log("email", user.identifier);
+    console.log("email", user.email);
     console.log("password", user.password);
 
     try {
-      if (user.identifier && user.password) {
+      if (user.email && user.password) {
         const { data } = await axios.post(url, user);
         console.log({ data });
-        if (data.jwt) {
+        if (data.token) {
+          //from data.jwt to data.token
           toast.success("Log in sucessful", {});
           setTimeout(() => {
             navigate("/dashboard");
           }, 2000);
+
           storeUser(data);
+          console.log(storeUser);
         }
       }
     } catch (error) {
-      console.error("Login failed:", error.message);
+      console.error(error.message);
       toast.error("Invalid email or password!", {});
     }
   };
@@ -77,8 +81,8 @@ function Login() {
         <input
           // id="email"
           type="email"
-          name="identifier"
-          value={user.identifier}
+          name="email"
+          value={user.email}
           placeholder="Email"
           className="w-[295px] h-[43px] px-4 py-2 border border-gray-300 text-base text-gray-700 focus:outline-none focus:border-blue-500 mt-[20px]"
           onChange={

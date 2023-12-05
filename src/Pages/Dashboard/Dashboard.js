@@ -3,7 +3,6 @@ import SideNavBar from "../../Components/SideNavBar";
 import { Icon } from "@iconify/react";
 import TransData from "../../tempData/TransData";
 import ProfileHdr from "../../Components/ProfileHdr";
-
 import Product from "./components.js/Product";
 import CircularProgressBar from "../../Components/CircularProgressBar";
 import ProgressBar from "../../Components/ProgressBar";

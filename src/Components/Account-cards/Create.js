@@ -15,17 +15,24 @@ function Create() {
 
   const signUp = async () => {
     try {
-      const url = `http://localhost:1337/api/auth/local/register`;
+      const url = `http://cloudbox-backend.test/api/user`;
+      // const url = `http://localhost:1337/api/auth/local/register`;
       console.log("User", user.username);
       console.log("pass", user.password);
       console.log("email", user.email);
-      if (user.username && user.email && user.password) {
+      console.log("confirmpass", user.password_confirmation);
+      if (
+        user.username &&
+        user.email &&
+        user.password &&
+        user.password_confirmation
+      ) {
         const res = await axios.post(url, user);
         // console.log("res", );
 
         if (res.statusText === "OK") {
           toast.success("Registered successfully!", {
-            hideProgressBar: true,
+            hideProgressBar: false,
           });
           setUser(initialUser);
           console.log("res", res);
@@ -136,6 +143,27 @@ function Create() {
             {/* <InputDisplay text={"Re-password"} /> */}
           </div>
 
+          <div className="flex flex-cols gap-6 mt-[25px] justify-center">
+            {/* <InputDisplay text={"Password"} /> */}
+            <div className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold"></div>
+            <div>
+              <div className=" ">
+                <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+                  Confirm Password
+                </h1>
+                <input
+                  type="password"
+                  name="password_confirmation"
+                  value={user.password_confirmation}
+                  onChange={handleUserChange}
+                  // placeholder="Enter password"
+                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
+                />
+              </div>
+            </div>
+
+            {/* <InputDisplay text={"Re-password"} /> */}
+          </div>
           <div className="ml-[5%] mt-[35px] absolute flex flex-col justify-center items-center">
             <div className="">{/* <DateForm /> */}</div>
             <button
