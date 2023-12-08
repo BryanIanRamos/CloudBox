@@ -32,10 +32,9 @@ function Card3() {
         CloudBox
       </h2>
       <p className="text-center  text-white mt-6">
-        Simply dummy text of the printing and typesetting industry. Lorem Ipsum
-        has been the industry's standard dummy text ever since the 1500s, when
-        an unknown printer took a galley of type and scrambled it to make a type
-        specimen book.
+        Transform Your Business with CloudBox: Your Gateway to a Secure,
+        Efficient, and Future-Ready Cloud Infrastructure. Say Goodbye to Costly
+        Physical Systems and Embrace Seamless Management
       </p>
     </div>
   );

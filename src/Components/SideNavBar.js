@@ -64,7 +64,7 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="tabler:mail-filled"
@@ -77,7 +77,7 @@ const SideNavBar = () => {
                 </h1>
               </Link>
             </div>
-          </div>
+          </div> */}
           <div>
             <div className="flex gap-1 items-center">
               <Icon
@@ -92,7 +92,7 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="eos-icons:project"
@@ -105,8 +105,8 @@ const SideNavBar = () => {
                 </h1>
               </Link>
             </div>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="icon-park-solid:notes"
@@ -119,8 +119,8 @@ const SideNavBar = () => {
                 </h1>
               </Link>
             </div>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="eos-icons:admin"
@@ -133,7 +133,7 @@ const SideNavBar = () => {
                 </h1>
               </Link>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className=" mt-20 flex flex-col gap-3">
           <div>
