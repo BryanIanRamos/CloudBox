@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { storeUser } from "../Account-cards/extensionAuth/helper";
 
-const initialUser = { password: "", identifier: "" };
+const initialUser = { password: "", email: "" };
 
 function Login() {
   // left
@@ -32,26 +32,41 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    const url = "http://localhost:1337/api/auth/local";
+    // const url = "http://localhost:1337/api/auth/local";
+    const url = "http://cloudbox.test/api/login";
+    // const url = "http://cloudbox-backend.test/api/login";
     // const url = "http://practicemain.test/api/login";
 
-    console.log("email", user.identifier);
+    console.log("email", user.email);
     console.log("password", user.password);
 
+    // const csrfToken = document
+    //   .querySelector('meta[name="csrf-token"]')
+    //   .getAttribute("content");
+
+    // // const headers = {
+    // //   "Content-Type": "application/json",
+    // //   "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers
+    // // };
+
     try {
-      if (user.identifier && user.password) {
+      if (user.email && user.password) {
         const { data } = await axios.post(url, user);
+        // console.error(data.token);
         console.log({ data });
-        if (data.jwt) {
+        if (data.token) {
+          //from data.jwt to data.token
           toast.success("Log in sucessful", {});
           setTimeout(() => {
             navigate("/dashboard");
           }, 2000);
+
           storeUser(data);
+          console.log(storeUser);
         }
       }
     } catch (error) {
-      console.error("Login failed:", error.message);
+      console.error(error.message);
       toast.error("Invalid email or password!", {});
     }
   };
@@ -61,9 +76,19 @@ function Login() {
     handleLogin(); // Call signUp when form is submitted
   };
 
+  const ScapeRoute = () => {
+    navigate("/dashboard");
+    console.log("SCAPED");
+  };
+
   return (
     <div className="text-center w-[296px] h-[400px] absolute pt-[20px]  items-start">
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={
+          // handleSubmit
+          null
+        }
+      >
         <ToastContainer />
         <h1 className="text-left text-black text-[26px] font-bold font-['Poppins'] not-italic ">
           Sign In
@@ -77,8 +102,8 @@ function Login() {
         <input
           // id="email"
           type="email"
-          name="identifier"
-          value={user.identifier}
+          name="email"
+          value={user.email}
           placeholder="Email"
           className="w-[295px] h-[43px] px-4 py-2 border border-gray-300 text-base text-gray-700 focus:outline-none focus:border-blue-500 mt-[20px]"
           onChange={
@@ -137,6 +162,7 @@ function Login() {
             // onClick={handleLogin}
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  w-[294px] mt-3 h-[43px]"
+            onClick={ScapeRoute}
           >
             Sign In
           </button>
