@@ -7,6 +7,7 @@ import ProfileHdr from "../../Components/ProfileHdr";
 import Product from "./components.js/Product";
 import CircularProgressBar from "../../Components/CircularProgressBar";
 import ProgressBar from "../../Components/ProgressBar";
+import useFetch from "../../API/useFetch";
 
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
@@ -15,25 +16,26 @@ const Dashboard = () => {
     setNextPage((prevState) => !prevState);
   };
 
+  // const { date: TransData, loading, error } = useFetch('');
+
   return (
     <div className="flex w-screen h-screen ">
       <SideNavBar />
       <div className="w-full h-full">
         <ProfileHdr />
-        <div className="flex border w-full h-[95%] bg-[#EBEEF5] ">
+        <div className="flex w-full h-[95%] bg-[#EBEEF5] mx-0">
           <div
             // bg-[#EBEEF5]
-            className="
-            w-[100%] mt-8"
+            className="w-full"
           >
             {!nextPage ? (
-              <div className="flex flex-col  px-20 gap-6 ">
+              <div className="flex flex-col h-full max-lg:px-[15px] px-[60px] gap-6 border overflow-y-scroll pt-[30px]">
                 <div className="flex relative h-10 items-center">
                   <h1 className=" text-blue-950 text-[32px] font-bold font-['Poppins'] absolute">
                     Dashboard
                   </h1>
                   <button
-                    className="flex items-center  gap-2 absolute right-0 bg-primaryColor py-1 px-3 rounded-md"
+                    className="flex items-center  gap-2 absolute right-10 bg-primaryColor py-1 px-3 rounded-md"
                     onClick={handleClick}
                   >
                     <Icon
@@ -45,10 +47,10 @@ const Dashboard = () => {
                   </button>
                 </div>
                 <div>
-                  <div className="flex gap-[5%]">
+                  <div className="flex gap-[5%] max-md:flex-col max-md:justify-center max-md:items-center max-md:mt-10">
                     <div
-                      className="w-[284px] h-[232px] bg-gray-50 border border-zinc-500 border-opacity-50
-                              flex flex-col gap-2 p-8"
+                      className="w-[284px] max-md:w-[327px] h-[232px] bg-gray-50 border border-zinc-500 border-opacity-50
+                                 flex flex-col gap-2 p-8  max-md:mb-10"
                     >
                       <div>
                         <div className="text-black text-[33.61px] font-bold font-['Poppins']">
@@ -138,7 +140,7 @@ const Dashboard = () => {
               />
             )}
           </div>
-          <div className=" bg-[#113F8D] max-w-[378px] pt-[4%] px-5 ">
+          <div className=" bg-[#113F8D] w-[378px] pt-[4%] px-5 max-xl:hidden">
             <div className="">
               <h1 className="text-center text-white text-[30px] font-bold font-['Poppins']">
                 Transactions
@@ -157,30 +159,31 @@ const Dashboard = () => {
               {/* TransData */}
 
               <div className="flex flex-col gap-7">
-                {TransData.map((elem, index) => (
-                  <div key={index}>
-                    <div className="flex gap-4 px-3">
-                      <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
-                        <span className="font-bold text-white text-[23px]">
-                          {elem.initial}
-                        </span>
+                {TransData &&
+                  TransData.map((elem, index) => (
+                    <div key={index}>
+                      <div className="flex gap-4 px-3">
+                        <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
+                          <span className="font-bold text-white text-[23px]">
+                            {elem.initial}
+                          </span>
+                        </div>
+                        {/* <div className="flex gap-5 border"> */}
+                        <div className="flex flex-col  w-[120px] ">
+                          <p className=" text-white text-xs font-bold font-['Poppins'] ">
+                            {elem.name}
+                          </p>
+                          <p className="text-white text-xs font-normal font-['Poppins'] mr-5">
+                            {elem.date}
+                          </p>
+                        </div>
+                        <div className=" text-white text-[10.32px] font-bold font-['Poppins']">
+                          ${elem.amount}
+                        </div>
+                        {/* </div> */}
                       </div>
-                      {/* <div className="flex gap-5 border"> */}
-                      <div className="flex flex-col  w-[120px] ">
-                        <p className=" text-white text-xs font-bold font-['Poppins'] ">
-                          {elem.name}
-                        </p>
-                        <p className="text-white text-xs font-normal font-['Poppins'] mr-5">
-                          {elem.date}
-                        </p>
-                      </div>
-                      <div className=" text-white text-[10.32px] font-bold font-['Poppins']">
-                        ${elem.amount}
-                      </div>
-                      {/* </div> */}
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>
@@ -195,8 +198,8 @@ export default Dashboard;
 function ButtomSide() {
   return (
     <>
-      <div className="flex">
-        <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50 p-4">
+      <div className="flex max-md:flex-col max-md:justify-center max-md:items-center">
+        <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50 p-4 overflow-hidden max-md:mb-10">
           <div>
             <h1 className=" text-blue-950 text-sm font-bold font-['Poppins'] mb-2">
               Weekly Produce

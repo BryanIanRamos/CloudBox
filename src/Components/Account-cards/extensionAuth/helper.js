@@ -6,7 +6,7 @@ export const storeUser = (data) => {
     "user",
     JSON.stringify({
       username: data.user.username,
-      jwt: data.token,
+      jwt: data.jwt,
     })
   );
 };

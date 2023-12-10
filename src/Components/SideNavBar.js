@@ -22,43 +22,40 @@ const SideNavBar = () => {
   };
   return (
     <>
-      <div className="w-[245px] h-full bg-primaryColor px-6 py-7 z-[3]">
+      <div className="w-fit h-full bg-primaryColor max-lg:px-3 px-6 py-7 z-[3]">
         <div>
           <div className="flex items-center gap-1">
             <Icon
               icon="solar:box-bold-duotone"
-              style={{ color: "white" }}
-              className="h-[53px] w-[48px]"
+              className="h-[53px] w-[48px] text-white"
             />
-            <h1 className="w-[100px] h-[29.61px] text-center text-white text-xl font-bold font-['Poppins']">
+            <h1 className="w-[100px] h-[29.61px] text-center text-white text-xl font-bold font-['Poppins'] max-lg:hidden">
               CloudBox
             </h1>
           </div>
         </div>
         <div className="w-full h-auto flex flex-col gap-7 px-4 py-6 mt-5">
           <div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center text-white hover:text-blue-400">
               <Icon
                 icon="material-symbols:dashboard"
-                style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
               <Link to="/dashboard">
-                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
                   Dashboard
                 </h1>
               </Link>
             </div>
           </div>
           <div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center text-white hover:text-blue-400">
               <Icon
                 icon="fluent:calendar-date-28-filled"
-                style={{ color: "white" }}
                 className="h-[24px] w-[24px]"
               />
               <Link to="/calendar">
-                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
                   Calendar
                 </h1>
               </Link>
@@ -79,14 +76,13 @@ const SideNavBar = () => {
             </div>
           </div> */}
           <div>
-            <div className="flex gap-1 items-center">
+            <div className="flex gap-1 items-center text-white hover:text-blue-400 ">
               <Icon
                 icon="mingcute:chat-4-fill"
-                style={{ color: "white" }}
-                className="h-[24px] w-[24px]"
+                className="h-[24px] w-[24px] "
               />
               <Link to="/report">
-                <h1 className="text-center text-white text-[15px] font-['Poppins']">
+                <h1 className="text-center  text-[15px] font-['Poppins'] max-lg:hidden">
                   Reports
                 </h1>
               </Link>
@@ -137,27 +133,19 @@ const SideNavBar = () => {
         </div>
         <div className=" mt-20 flex flex-col gap-3">
           <div>
-            <div className="flex gap-1 items-center  px-4 py-2  ">
-              <Icon
-                icon="solar:settings-bold"
-                style={{ color: "white" }}
-                className="h-[24px] w-[24px]"
-              />
-              <h1 className="text-center text-white text-[15px] font-['Poppins']">
+            <div className="flex gap-1 items-center  px-4 py-2 text-white hover:text-blue-400">
+              <Icon icon="solar:settings-bold" className="h-[24px] w-[24px]" />
+              <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
                 Settings
               </h1>
             </div>
           </div>
           <div>
-            <div className="flex gap-1 items-center px-4 py-2 ">
-              <Icon
-                icon="ic:round-logout"
-                style={{ color: "white" }}
-                className="h-[24px] w-[24px]"
-              />
+            <div className="flex gap-1 items-center px-4 py-2 text-white hover:text-blue-400">
+              <Icon icon="ic:round-logout" className="h-[24px] w-[24px]" />
               <button
                 onClick={handleLogout}
-                className="text-center text-white text-[15px] font-['Poppins']"
+                className="text-center text-[15px] font-['Poppins'] max-lg:hidden"
               >
                 Log out
               </button>

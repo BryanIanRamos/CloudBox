@@ -73,7 +73,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin(); // Call signUp when form is submitted
+    // handleLogin(); // Call signUp when form is submitted
   };
 
   const ScapeRoute = () => {
@@ -86,7 +86,8 @@ function Login() {
       <form
         onSubmit={
           // handleSubmit
-          null
+          ScapeRoute
+          // null
         }
       >
         <ToastContainer />
@@ -162,7 +163,7 @@ function Login() {
             // onClick={handleLogin}
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  w-[294px] mt-3 h-[43px]"
-            onClick={ScapeRoute}
+            // onClick={ScapeRoute}
           >
             Sign In
           </button>

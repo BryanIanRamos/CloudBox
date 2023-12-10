@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import SideNavBar from "../../Components/SideNavBar";
 import ProfileHdr from "../../Components/ProfileHdr";
 import CircularProgressBar from "../../Components/CircularProgressBar";
+import useFetch from "../../API/useFetch";
 
 const Report = () => {
+  const { data, loading, error } = useFetch("http://cloudbox.test/api/user");
+  console.log("Report Data:", data);
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -71,13 +74,13 @@ const Report = () => {
     },
   ]);
 
-  const [employees, setEmployees] = useState([
-    { id: 1, name: "Aron Fernandez", date: "June 6, 2023" },
-    { id: 2, name: "Aron Fernandez", date: "June 6, 2023" },
-    { id: 3, name: "Aron Fernandez", date: "June 6, 2023" },
-    { id: 4, name: "Aron Fernandez", date: "June 6, 2023" },
-    { id: 5, name: "Aron Fernandez", date: "June 6, 2023" },
-  ]);
+  // const [employees, setEmployees] = useState([
+  //   { id: 1, name: "Aron Fernandez", date: "June 6, 2023" },
+  //   { id: 2, name: "Aron Fernandez", date: "June 6, 2023" },
+  //   { id: 3, name: "Aron Fernandez", date: "June 6, 2023" },
+  //   { id: 4, name: "Aron Fernandez", date: "June 6, 2023" },
+  //   { id: 5, name: "Aron Fernandez", date: "June 6, 2023" },
+  // ]);
 
   return (
     <>
@@ -91,7 +94,7 @@ const Report = () => {
                 Reports
               </h1>
               <div className="flex gap-10">
-                <div class="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div class="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 overflow-hidden">
                   <div className="mb-2">
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Product
@@ -101,7 +104,7 @@ const Report = () => {
                     </h2>
                   </div>
                   {/* table Body */}
-                  <div className="flex">
+                  <div className="flex  w-full">
                     <div className="w-[70.30px] h-[25.52px] bg-blue-950 rounded-tl border border-slate-100 flex items-center justify-center">
                       <p className="text-white text-[11.79px] font-medium font-['Poppins']">
                         ID#
@@ -134,40 +137,41 @@ const Report = () => {
                     </div>
                   </div>
                   <div className="border h-[155px] overflow-y-auto  scroll-snap-type-y w-fit">
-                    {products.map((elem) => (
-                      <div key={elem.id} className="flex">
-                        <div className="w-[70.30px] h-[25.52px] bg-[#DCE0E9]  border border-slate-100 flex items-center justify-center">
-                          <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                            {elem.id}
-                          </p>
+                    {products &&
+                      products.map((elem) => (
+                        <div key={elem.id} className="flex">
+                          <div className="w-[70.30px] h-[25.52px] bg-[#DCE0E9]  border border-slate-100 flex items-center justify-center">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                              {elem.id}
+                            </p>
+                          </div>
+                          <div class="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                              {elem.name}
+                            </p>
+                          </div>
+                          <div class="w-[63.77px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                              {elem.prodID}
+                            </p>
+                          </div>
+                          <div class="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                              {elem.prodName}
+                            </p>
+                          </div>
+                          <div class="w-[80.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                              {elem.date}
+                            </p>
+                          </div>
+                          <div class="w-[82.38px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                              {elem.action}
+                            </p>
+                          </div>
                         </div>
-                        <div class="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
-                          <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                            {elem.name}
-                          </p>
-                        </div>
-                        <div class="w-[63.77px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
-                          <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                            {elem.prodID}
-                          </p>
-                        </div>
-                        <div class="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
-                          <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                            {elem.prodName}
-                          </p>
-                        </div>
-                        <div class="w-[80.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
-                          <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                            {elem.date}
-                          </p>
-                        </div>
-                        <div class="w-[82.38px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
-                          <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                            {elem.action}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
                 <div class="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
@@ -199,28 +203,33 @@ const Report = () => {
                     </div>
                     {/* Table side  */}
                     <div className="h-[155px] overflow-y-auto scroll-snap-type-y">
-                      {employees.map((elem) => (
-                        <div className="flex">
-                          <div
-                            key={elem.id}
-                            className="w-[67.97px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center"
-                          >
-                            <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
-                              {elem.id}
-                            </p>
+                      {data &&
+                        data.map((elem) => (
+                          <div className="flex">
+                            <div
+                              key={elem.id}
+                              className="w-[67.97px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center"
+                            >
+                              <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
+                                {elem.id}
+                              </p>
+                            </div>
+                            <div className="w-[113.65px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
+                                {elem.name}
+                              </p>
+                            </div>
+                            <div className="w-[89.22px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
+                                {new Date(elem.created_at).toLocaleDateString()}
+                                {/* {new Date(elem.created_at).toLocaleString(
+                                  "default",
+                                  { month: "long", day: "numeric" }
+                                )} */}
+                              </p>
+                            </div>
                           </div>
-                          <div className="w-[113.65px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
-                              {elem.name}
-                            </p>
-                          </div>
-                          <div className="w-[89.22px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
-                              {elem.date}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>

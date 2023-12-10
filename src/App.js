@@ -26,17 +26,34 @@ function App() {
         <Route path="/status" element={<Verify />} />
         <Route path="/business" element={<BusReg />} />
         <Route path="/businessInfo" element={<BusID />} />
+        <Route
+          path="/dashboard"
+          // element={<Protector Component={Dashboard} />}
+          element={<Dashboard />}
+        />
+        <Route
+          path="/calendar"
+          // element={<Protector Component={Dashboard} />}
+          element={<Calendar />}
+        />
+        <Route
+          path="/report"
+          // element={<Protector Component={Dashboard} />}
+          element={<Report />}
+        />
 
         {/* Pages  */}
-        <Route
+        {/* <Route
           path="/dashboard"
           element={<Protector Component={Dashboard} />}
         />
         <Route path="/calendar" element={<Protector Component={Calendar} />} />
         <Route path="/mail" element={<Protector Component={Mail} />} />
-        <Route path="/report" element={<Protector Component={Report} />} />
+        <Route path="/report" element={<Protector Component={Report} />} /> */}
+
         {/* <Route path="/statistics" element={<Statistics />} /> */}
-        <Route
+
+        {/* <Route
           path="/file_manager"
           element={<Protector Component={FileManager} />}
         />
@@ -44,7 +61,7 @@ function App() {
         <Route
           path="/Permission"
           element={<Protector Component={Permission} />}
-        />
+        /> */}
       </Routes>
     </Routers>
   );

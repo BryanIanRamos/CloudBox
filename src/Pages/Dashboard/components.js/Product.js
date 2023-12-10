@@ -49,7 +49,7 @@ const Product = ({ trigger }) => {
       })
       .then((data) => {
         // console.log("Product Data::", data);
-        // console.log("Data::", data);
+        console.log("Data::", data);
 
         setProduct(data);
       })
@@ -61,7 +61,7 @@ const Product = ({ trigger }) => {
   // console.log("Product::", product);
 
   return (
-    <div className="relative">
+    <div className="relative pt-[30px]">
       <AddProduct trigger={addProduct} closeUI={closeUI} />
       <div className="px-20">
         <div className="flex relative items-center h-10 mb-5">
@@ -183,7 +183,7 @@ const Product = ({ trigger }) => {
                           </div>
                           <div>
                             <p className="w-[181px] h-[29px] text-black text-[9px] font-normal font-['Poppins'] overflow-hidden ">
-                              <span> {elem.status}</span>
+                              <span> {elem.description}</span>
                             </p>
                           </div>
                           <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
@@ -263,7 +263,7 @@ const Product = ({ trigger }) => {
                           </div>
                           <div>
                             <p className="w-[181px] h-[42px] text-black text-[12px] font-normal font-['Poppins'] overflow-hidden">
-                              {elem.status}
+                              {elem.description}
                             </p>
                           </div>
                           {/* <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
