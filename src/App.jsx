@@ -1,21 +1,21 @@
 import { useState } from "react";
 import "./App.css";
-import SignIn from "./Pages/SignIn.js";
+import SignIn from "./Pages/SignIn";
 import SignUp from "./Pages/SignUp";
 import Verify from "./Pages/Verify";
 import BusReg from "./Pages/BusReg";
-import BusID from "./Pages/BusID.js";
+import BusID from "./Pages/BusID";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 // ---
-import Calendar from "./Pages/Calendar/Calendar.js";
+import Calendar from "./Pages/Calendar/Calendar";
 import { BrowserRouter as Routers, Routes, Route } from "react-router-dom";
-import Mail from "./Pages/Mail/Mail.js";
-import Report from "./Pages/Reports/Report.js";
+// import Mail from "./Pages/Mail/Mail.js";
+import Report from "./Pages/Reports/Report";
 // import Statistics from "./Pages/Reports/Report.js";
-import FileManager from "./Pages/File Maneger/FileManager.js";
-import Notes from "./Pages/Notes/Notes.js";
-import Permission from "./Pages/Permission/Permission.js";
-import { Protector } from "./Components/Account-cards/extensionAuth/helper.js";
+// import FileManager from "./Pages/File Maneger/FileManager.js";
+// import Notes from "./Pages/Notes/Notes.js";
+// import Permission from "./Pages/Permission/Permission.js";
+// import { Protector } from "./Components/Account-cards/extensionAuth/helper.js";
 
 function App() {
   return (
@@ -64,6 +64,11 @@ function App() {
         /> */}
       </Routes>
     </Routers>
+    // <div>Hello Bryan</div>
+    // <>
+    //   <SignIn />
+    //   {/* <div className="bg-green-300 w-20 h-64"></div> */}
+    // </>
   );
 }
 

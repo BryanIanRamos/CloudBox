@@ -1,26 +1,26 @@
-import React from "react";
-import Screen from "../Components/LoginScreen.js";
-import BusInfo from "../Components/Account-cards/BusInfo.js";
+import React, { useState } from "react";
+import Screen from "../Components/LoginScreen";
+import CreateBus from "../Components/Account-cards/CreatBus";
 
 // Registration
-function BusID() {
+function BusReg() {
   return (
     <>
       <Screen
         position1={"left"}
         position2={"right"}
-        Card1={BusInfo}
-        Card2={Card3}
+        Card1={CreateBus}
+        Card2={Card2}
       />
     </>
   );
 }
 
-function Card3() {
+function Card2() {
   return (
     <div className={`absolute right-[10%] top-[5%] w-[450px] `}>
       <h1 className="text-white font-bold text-[36px] text-left">
-        We would like to know your business balbla
+        We would like to know your business
       </h1>
 
       <p className="text-white mt-6 text-[24px] text-left">
@@ -30,4 +30,4 @@ function Card3() {
   );
 }
 
-export default BusID;
+export default BusReg;

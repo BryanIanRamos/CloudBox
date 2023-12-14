@@ -94,7 +94,7 @@ const Report = () => {
                 Reports
               </h1>
               <div className="flex gap-10">
-                <div class="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 overflow-hidden">
+                <div className="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 overflow-hidden">
                   <div className="mb-2">
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Product
@@ -110,27 +110,27 @@ const Report = () => {
                         ID#
                       </p>
                     </div>
-                    <div class="w-[114.53px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
+                    <div className="w-[114.53px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
                       <p className="text-white text-[11.79px] font-medium font-['Poppins']">
                         Name
                       </p>
                     </div>
-                    <div class="w-[63.77px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
+                    <div className="w-[63.77px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
                       <p className="text-white text-[9.79px] font-medium font-['Poppins']">
                         Product ID
                       </p>
                     </div>
-                    <div class="px-2 h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
+                    <div className="px-2 h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
                       <p className="text-white text-[8.79px] font-medium font-['Poppins']">
                         Product Name
                       </p>
                     </div>
-                    <div class="w-[80.27px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
+                    <div className="w-[80.27px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
                       <p className="text-white text-[11.79px] font-medium font-['Poppins']">
                         Date
                       </p>
                     </div>
-                    <div class="w-[82.38px] h-[25.52px] bg-blue-950 rounded-tr border border-slate-100 flex items-center justify-center">
+                    <div className="w-[82.38px] h-[25.52px] bg-blue-950 rounded-tr border border-slate-100 flex items-center justify-center">
                       <p className="text-white text-[11.79px] font-medium font-['Poppins']">
                         Activity
                       </p>
@@ -145,27 +145,27 @@ const Report = () => {
                               {elem.id}
                             </p>
                           </div>
-                          <div class="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                          <div className="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.name}
                             </p>
                           </div>
-                          <div class="w-[63.77px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                          <div className="w-[63.77px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.prodID}
                             </p>
                           </div>
-                          <div class="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                          <div className="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.prodName}
                             </p>
                           </div>
-                          <div class="w-[80.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                          <div className="w-[80.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.date}
                             </p>
                           </div>
-                          <div class="w-[82.38px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                          <div className="w-[82.38px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.action}
                             </p>
@@ -174,7 +174,7 @@ const Report = () => {
                       ))}
                   </div>
                 </div>
-                <div class="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
                   <div className="mb-2">
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Employees
@@ -204,12 +204,9 @@ const Report = () => {
                     {/* Table side  */}
                     <div className="h-[155px] overflow-y-auto scroll-snap-type-y">
                       {data &&
-                        data.map((elem) => (
-                          <div className="flex">
-                            <div
-                              key={elem.id}
-                              className="w-[67.97px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center"
-                            >
+                        data.map((elem, index) => (
+                          <div className="flex" key={index}>
+                            <div className="w-[67.97px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
                               <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
                                 {elem.id}
                               </p>
@@ -236,7 +233,7 @@ const Report = () => {
               </div>
 
               <div className="flex gap-10">
-                <div class="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div className="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
                   <div>
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Stack and Sales
@@ -272,7 +269,7 @@ const Report = () => {
                     </div>
                   </div>
                 </div>
-                <div class="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
                   <div>
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Annual Sales

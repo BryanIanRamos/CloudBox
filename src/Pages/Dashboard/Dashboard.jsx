@@ -4,19 +4,29 @@ import { Icon } from "@iconify/react";
 import TransData from "../../tempData/TransData";
 import ProfileHdr from "../../Components/ProfileHdr";
 
-import Product from "./components.js/Product";
+import Product from "./components/Product";
 import CircularProgressBar from "../../Components/CircularProgressBar";
 import ProgressBar from "../../Components/ProgressBar";
 import useFetch from "../../API/useFetch";
+import Select from "react-select";
+import { userData } from "../../Components/Account-cards/extensionAuth/helper";
+import AddTransaction from "../../Components/AddTransaction";
 
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
+  const [transaction, setTransaction] = useState(false);
+
+  const UIclose = () => {
+    setTransaction(false);
+  };
 
   const handleClick = () => {
     setNextPage((prevState) => !prevState);
   };
 
-  // const { date: TransData, loading, error } = useFetch('');
+  const handleTransaction = () => {
+    setTransaction(true);
+  };
 
   return (
     <div className="flex w-screen h-screen ">
@@ -26,8 +36,11 @@ const Dashboard = () => {
         <div className="flex w-full h-[95%] bg-[#EBEEF5] mx-0">
           <div
             // bg-[#EBEEF5]
-            className="w-full"
+            className="w-full relative"
           >
+            {/* Popup Transaction here  */}
+            <AddTransaction trigger={transaction} UIclose={UIclose} />
+
             {!nextPage ? (
               <div className="flex flex-col h-full max-lg:px-[15px] px-[60px] gap-6 border overflow-y-scroll pt-[30px]">
                 <div className="flex relative h-10 items-center">
@@ -73,16 +86,24 @@ const Dashboard = () => {
                           +6.5 % ($680)
                         </p>
                       </div>
-                      <div className="w-[204px] h-10 bg-[#155699] rounded-tl-[9px] rounded-tr-[9px] rounded-br-[9px] flex gap-8 items-center justify-center">
-                        <p className="text-white">ADD FUNDS</p>
-                        <div className="w-[29px] h-[26.85px] bg-primaryColor bg-opacity-50 rounded-full flex items-center justify-center">
+                      <button
+                        className="w-[204px] h-10 bg-[#155699] hover:bg-[#227AD5] rounded-[9px]  flex gap-8 items-center justify-center
+                                          font-semibold mt-3"
+                      >
+                        <button
+                          className="text-white"
+                          onClick={handleTransaction}
+                        >
+                          Add Transactions
+                        </button>
+                        {/* <div className="w-[29px] h-[26.85px] bg-primaryColor bg-opacity-50 rounded-full flex items-center justify-center">
                           <Icon
                             icon="iconamoon:arrow-down-2"
                             style={{ color: "white" }}
                             className="h-[18px] w-[18px] -rotate-90"
                           />
-                        </div>
-                      </div>
+                        </div> */}
+                      </button>
                     </div>
                     <div className="w-[327px] h-[232px] bg-gray-50 border border-zinc-500 border-opacity-50 p-5">
                       <h1 className="text-center text-blue-950 text-base font-bold font-['Poppins']">

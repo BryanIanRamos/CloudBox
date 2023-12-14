@@ -4,12 +4,16 @@ import ProdData from "../../../tempData/ProdData";
 import useFetch from "../../../API/useFetch";
 import IMG from "../../../Assets/box-medium.png";
 import AddProduct from "../../../Components/AddProduct";
+import UpdateProd from "./UpdateProd";
+// import Process from ".env";
+
 // src\Assets\box-medium.png
 
 const Product = ({ trigger }) => {
   const [filter, setFilter] = useState(false);
   const [Back, setBack] = useState(true);
   const [product, setProduct] = useState([]);
+  const urlAPI = import.meta.env.VITE_PRODUCT_API_URL;
   // const [isShowed] = AddProduct({
   //   trigger: false,
   // });
@@ -40,7 +44,7 @@ const Product = ({ trigger }) => {
 
   // console.log("test:", process.env.REACT_APP_PRODUCT_STOCK_API_URL);
   useEffect(() => {
-    fetch(process.env.REACT_APP_PRODUCT_STOCK_API_URL)
+    fetch(urlAPI)
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");
@@ -63,6 +67,7 @@ const Product = ({ trigger }) => {
   return (
     <div className="relative pt-[30px]">
       <AddProduct trigger={addProduct} closeUI={closeUI} />
+      <UpdateProd />
       <div className="px-20">
         <div className="flex relative items-center h-10 mb-5">
           <div className="text-blue-950 text-[32px] font-bold font-['Poppins']">

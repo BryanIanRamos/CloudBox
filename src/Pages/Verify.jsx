@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Screen from "../Components/LoginScreen.js";
-import Create from "../Components/Account-cards/Create.js";
+import Screen from "../Components/LoginScreen";
+import Create from "../Components/Account-cards/Create";
 
 function Verify() {
   return (

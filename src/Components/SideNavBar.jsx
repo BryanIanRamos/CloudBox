@@ -2,11 +2,33 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { userData } from "./Account-cards/extensionAuth/helper";
 
 const SideNavBar = () => {
-  const handleLogout = () => {
+  const { jwt } = userData();
+
+  const handleLogout = async () => {
+    // Delay for 1.5 seconds (1500 milliseconds)
+    // localStorage.clear();
+    // window.location.href = "/";
+
+    console.log("token", jwt);
+
+    // try {
+    //   let response = await fetch("http://cloudbox.test/api/logout", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${jwt}`,
+    //     },
+    //   });
+
+    // console.log(response.ok);
+
+    // if (response.ok) {
     setTimeout(() => {
       // Delaying the execution of the following code by 1.5 seconds
+      console.log("logout!");
       toast.success(
         "Logged out successfully!",
         {
@@ -18,7 +40,11 @@ const SideNavBar = () => {
       setTimeout(() => {
         window.location.href = "/";
       }, 3000); // Redirecting the user to the homepage upon logging out
-    }, 1500); // Delay for 1.5 seconds (1500 milliseconds)
+    }, 1200);
+    // }
+    // } catch {
+    //   console.log();
+    // }
   };
   return (
     <>

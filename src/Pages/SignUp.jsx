@@ -1,7 +1,7 @@
 import React from "react";
 
-import LoginScreen from "../Components/LoginScreen.js";
-import Create from "../Components/Account-cards/Create.js";
+import LoginScreen from "../Components/LoginScreen";
+import Create from "../Components/Account-cards/Create";
 
 function SignUp() {
   return (

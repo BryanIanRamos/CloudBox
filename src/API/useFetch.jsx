@@ -14,7 +14,7 @@ const useFetch = (api) => {
         return res.json();
       })
       .then((data) => {
-        console.log("Data::", data);
+        // console.log("Data::", data);
         setData(data);
         setLoading(false);
       })

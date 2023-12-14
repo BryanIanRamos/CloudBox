@@ -1,6 +1,6 @@
 import React from "react";
-import Screen from "../Components/LoginScreen.js";
-import Login from "../Components/Account-cards/Login.js";
+import Screen from "../Components/LoginScreen";
+import Login from "../Components/Account-cards/Login";
 import CloudBoxMedium from "../Assets/box-medium.png";
 
 // Registration
@@ -19,14 +19,14 @@ function SignIn() {
 
 function Card3() {
   return (
-    <div className={`relative right-[0%] top-[2%] w-[450px]  `}>
+    <div className="relative right-[0%] top-[2%] w-[450px]  ">
       <h1 className="text-white font-bold text-[32px] text-center">
         Welcome to
       </h1>
       <img
         src={CloudBoxMedium}
         alt="CloudBoxMedium"
-        className={`w-[133px] left-[20%] ml-[35%] mt-[20px]`}
+        className="w-[133px] left-[20%] ml-[35%] mt-[20px]"
       />
       <h2 className="text-center text-[24px] font-bold text-white font-['poppins'] mt-[10px]">
         CloudBox

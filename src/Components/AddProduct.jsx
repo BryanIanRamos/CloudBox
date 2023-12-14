@@ -236,7 +236,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                       <input
                         type="checkbox"
                         name="status"
-                        value={'test'}
+                        value={"test"}
                         checked={isChecked}
                         onChange={handleCheckBoxChange}
                         className="mr-2" // Optional: Use Tailwind CSS for styling

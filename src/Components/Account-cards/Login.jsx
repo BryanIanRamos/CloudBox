@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Google from "../Assets/google.png";
-import axios from "axios";
+// import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { storeUser } from "../Account-cards/extensionAuth/helper";
+import { storeUser } from "./extensionAuth/helper";
 
 const initialUser = { password: "", email: "" };
 
@@ -18,9 +18,6 @@ function Login() {
     setIsChecked(!isChecked); // Toggle the checkbox state
   };
 
-  // const [email, setEmail] = useState("");
-  // const [pwd, setPwd] = useState("");
-
   const [user, setUser] = useState(initialUser);
 
   const handleChange = ({ target }) => {
@@ -31,66 +28,74 @@ function Login() {
     }));
   };
 
-  const handleLogin = async () => {
-    // const url = "http://localhost:1337/api/auth/local";
-    const url = "http://cloudbox.test/api/login";
-    // const url = "http://cloudbox-backend.test/api/login";
-    // const url = "http://practicemain.test/api/login";
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const email = user.email;
+    const password = user.password;
 
-    console.log("email", user.email);
-    console.log("password", user.password);
-
-    // const csrfToken = document
-    //   .querySelector('meta[name="csrf-token"]')
-    //   .getAttribute("content");
-
-    // // const headers = {
-    // //   "Content-Type": "application/json",
-    // //   "X-CSRF-TOKEN": csrfToken, // Include the CSRF token in the headers
-    // // };
+    console.log(email);
+    console.log(password);
 
     try {
-      if (user.email && user.password) {
-        const { data } = await axios.post(url, user);
-        // console.error(data.token);
-        console.log({ data });
+      let response = await fetch("http://cloudbox.test/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      console.log(response.ok);
+
+      if (response.ok) {
+        console.log("response OK");
+        const { data } = await response.json();
+        // console.log(data.data.token);
+        console.log("test", data.user.data);
+
         if (data.token) {
-          //from data.jwt to data.token
-          toast.success("Log in sucessful", {});
+          console.log("data token okay");
+          console.log("Logged In");
+
+          toast.success(
+            "Log in successful",
+            {
+              hideProgressBar: true,
+            },
+            200
+          );
+
           setTimeout(() => {
             navigate("/dashboard");
-          }, 2000);
+          });
+          // console.log("test here", data.user.email);
 
-          storeUser(data);
-          console.log(storeUser);
+          // Perform actions upon successful login (e.g., store user data, navigate to dashboard)
+          storeUser(data); // Assuming storeUser function stores user data
+          // Navigate to the dashboard or any desired route
+          // For example, assuming you're using react-router-dom:
+          // navigate("/dashboard");
+        } else {
+          toast.error("Invalid email or password!", {});
         }
+      } else {
+        // Handle HTTP error status codes (non 2xx codes)
+        throw new Error("Login failed with status: " + response.status);
       }
     } catch (error) {
-      console.error(error.message);
-      toast.error("Invalid email or password!", {});
+      console.error("Login failed:", error);
+      toast.error("Login failed. Please try again later.", {});
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // handleLogin(); // Call signUp when form is submitted
-  };
-
-  const ScapeRoute = () => {
-    navigate("/dashboard");
-    console.log("SCAPED");
   };
 
   return (
     <div className="text-center w-[296px] h-[400px] absolute pt-[20px]  items-start">
-      <form
-        onSubmit={
-          // handleSubmit
-          ScapeRoute
-          // null
-        }
-      >
-        <ToastContainer />
+      <form onSubmit={handleLogin}>
+        {/* <ToastContainer /> */}
         <h1 className="text-left text-black text-[26px] font-bold font-['Poppins'] not-italic ">
           Sign In
         </h1>
