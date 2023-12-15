@@ -27,16 +27,13 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const [amount, setAmount] = useState(0);
   const [total_amount, setTotalAmount] = useState(0);
   const [prod_id, setProduct] = useState(null);
-  const [trans_id, setTrans_id] = useState(1);
+  const [trans_id, setTrans_id] = useState(31);
 
   //   Product
   const [selectedProd, setSelectedProd] = useState([]);
   const [selectedTrans, setSelectedTrans] = useState([]);
   const [selectedSales, setSelectedSales] = useState([]);
   const [filProd, setFilProd] = useState([]);
-
-  const [productName, setProductName] = useState("");
-  const [prodPrice, setProdPrice] = useState(0);
 
   const formSalesData = {
     quantity,
@@ -46,10 +43,22 @@ const AddTransaction = ({ trigger, UIclose }) => {
   };
 
   const { data: products } = useFetch("http://cloudbox.test/api/product");
-  // const { data: transDT } = useFetch("http://cloudbox.test/api/transaction");
+  const { data: transDT } = useFetch("http://cloudbox.test/api/transaction");
 
-  // const transLength = transDT.length;
-  // setTrans_id(transDT[transLength].trans_id);
+  useEffect(() => {
+    if (transDT !== null) {
+      const transLength = transDT.length;
+
+      if (transLength > 0) {
+        setTrans_id(transDT[transLength - 1].trans_id);
+        console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
+      } else {
+        console.log("The transDT array is empty");
+      }
+    } else {
+      console.log("transDT is null or undefined");
+    }
+  }, [transDT]);
 
   useEffect(() => {
     setIsShowed(trigger); // Set isShowed directly based on the trigger prop
@@ -71,91 +80,100 @@ const AddTransaction = ({ trigger, UIclose }) => {
   }, [selectedProd, qty]);
 
   useEffect(() => {
-    setTotalAmount(amountsArray.reduce((acc, curr) => acc + curr, 0)); // Sum all amounts in the array
+    const newTotalAmount = amountsArray.reduce((acc, curr) => acc + curr, 0);
+    setTotalAmount(newTotalAmount);
+    // setTotalAmount(amountsArray.reduce((acc, curr) => acc + curr, 0)); // Sum all amounts in the array
   }, [amountsArray]);
 
   const prodDisply = () => {
-    if (products && products.length > 0) {
+    if (quantity > 0 && prod_id) {
       const filteredProduct = products.find(
         (product) => product.prod_id === prod_id
       );
 
-      setSelectedSales((prevSelectedSales) => [
-        ...prevSelectedSales,
-        formSalesData,
-      ]);
-
-      setQty((quant) => [...quant, quantity]);
-
       if (filteredProduct) {
-        setFilProd(filteredProduct);
+        const amountToAdd = quantity * (filteredProduct?.price || 0);
+
+        setSelectedSales((prevSelectedSales) => [
+          ...prevSelectedSales,
+          formSalesData,
+        ]);
+        setQty((prevQty) => [...prevQty, quantity]);
+        setAmountsArray((prevAmounts) => [...prevAmounts, amountToAdd]);
+
         setSelectedProd((prevSelectedProd) => [
           ...prevSelectedProd,
           filteredProduct,
         ]);
+        setFilProd(filteredProduct);
 
-        setAmountsArray((prevAmounts) => [
-          ...prevAmounts,
-          quantity * (filteredProduct?.price || 0),
-        ]); // Update amounts array
-      }
-    }
-    manageSales();
-  };
-
-  const manageSales = async () => {
-    // e.preventDefault();
-
-    console.log("Transaction Data::");
-    console.log("Transaction Type:", trans_type);
-    console.log("quantity: ", quantity);
-    console.log("income: ", income);
-    console.log("description: ", description);
-    console.log("Location: ", location);
-    console.log("Account ID: ", account_id);
-
-    //Sales Data
-    console.log("Sales Data::");
-    console.log("QTY", quantity);
-    console.log("Total Amount", total_amount);
-    console.log("Product ID", prod_id);
-    console.log("Transaction ID", trans_id);
-
-    // console.log("JSON FILE: ", formSalesData);
-
-    if (quantity && total_amount && prod_id && trans_id) {
-      try {
-        const resSales = await fetch("http://cloudbox.test/api/sales", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // Accept: "application/json",
-          },
-          body: JSON.stringify(
-            // { quantity, total_amount, prod_id, trans_id }
-            formSalesData
-          ), // Use salesData here instead of resSales
-        });
-
-        if (resSales.ok) {
-          // If the response is okay (status 200-299), do something with the response data
-          const salesData = await resSales.json();
-          console.log("Response from Sales API:", salesData);
-          console.log("Post sales successful");
-          // Perform any action needed after a successful POST request
-        } else {
-          // Handle error cases for the POST request
-          throw new Error(`Error: ${resSales.status} - ${resSales.statusText}`);
-        }
-      } catch (error) {
-        // Catch any errors that occur during the fetch request
-        console.error("Error while fetching data:", error);
-        // Perform actions (if any) for error handling
+        setTotalAmount((prevTotalAmount) => prevTotalAmount + amountToAdd);
+      } else {
+        console.log("Product not found");
       }
     } else {
-      console.log("INVALID SALES!");
+      console.log("Quantity or Product ID is invalid");
     }
   };
+
+  // MANAGE SALES
+  useEffect(() => {
+    const manageSales = async () => {
+      console.log("Transaction Data::");
+      console.log("Transaction Type:", trans_type);
+      console.log("quantity: ", quantity);
+      console.log("income: ", income);
+      console.log("description: ", description);
+      console.log("Location: ", location);
+      console.log("Account ID: ", account_id);
+
+      //Sales Data
+      console.log("Sales Data::");
+      console.log("QTY", quantity);
+      console.log("Total Amount", total_amount);
+      console.log("Product ID", prod_id);
+      console.log("Transaction ID", trans_id);
+
+      // console.log("JSON FILE: ", formSalesData);
+
+      if (quantity && total_amount && prod_id && trans_id) {
+        try {
+          const resSales = await fetch("http://cloudbox.test/api/sales", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // Accept: "application/json",
+            },
+            body: JSON.stringify(
+              // { quantity, total_amount, prod_id, trans_id }
+              formSalesData
+            ), // Use salesData here instead of resSales
+          });
+
+          if (resSales.ok) {
+            // If the response is okay (status 200-299), do something with the response data
+            const salesData = await resSales.json();
+            console.log("Response from Sales API:", salesData);
+            console.log("Post sales successful");
+            // Perform any action needed after a successful POST request
+          } else {
+            // Handle error cases for the POST request
+            throw new Error(
+              `Error: ${resSales.status} - ${resSales.statusText}`
+            );
+          }
+        } catch (error) {
+          // Catch any errors that occur during the fetch request
+          console.error("Error while fetching data:", error);
+          // Perform actions (if any) for error handling
+        }
+      } else {
+        console.log("INVALID SALES!");
+      }
+    };
+
+    manageSales();
+  }, [selectedSales]);
 
   // const manageSales = async () => {
   //   try {
@@ -183,7 +201,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
   // };
 
   const handleTransaction = async (e) => {
-    //   Transaction Data
+    e.preventDefault();
 
     const formTransData = {
       trans_type,
@@ -215,17 +233,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
               "Content-Type": "application/json",
               Accept: "application/json",
             },
-            body: JSON.stringify(
-              //     {
-              //   trans_type,
-              //   income,
-              //   description,
-              //   update_balance,
-              //   location,
-              //   account_id,
-              // }
-              formTransData
-            ), // Use salesData here instead of resSales
+            body: JSON.stringify(formTransData),
           }
         );
 
@@ -236,29 +244,13 @@ const AddTransaction = ({ trigger, UIclose }) => {
           console.log("Response from  Transaction API:", transData);
           setTrans_id(transData.trans_id);
           console.log("Transaction ID ++: ", transData.trans_id);
-
-          // Perform any action needed after a successful POST request
-
-          // setTimeout(() => {
-          //   UIclose();
-          //   toast.success(
-          //     "Transaction Successful",
-          //     {
-          //       hideProgressBar: true,
-          //     },
-          //     200
-          //   );
-          // }, 380);
         } else {
-          // Handle error cases for the POST request
           throw new Error(
             `Error: ${resTransaction.status} - ${resTransaction.statusText}`
           );
         }
       } catch (error) {
-        // Catch any errors that occur during the fetch request
         console.error("Error while fetching data:", error);
-        // Perform actions (if any) for error handling
       }
     } else {
       console.log("INVALID TRANSACTION");
