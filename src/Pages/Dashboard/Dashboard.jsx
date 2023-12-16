@@ -11,10 +11,17 @@ import useFetch from "../../API/useFetch";
 import Select from "react-select";
 import { userData } from "../../Components/Account-cards/extensionAuth/helper";
 import AddTransaction from "../../Components/AddTransaction";
+import useJoinTables from "../../API/useJoinTables";
 
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
   const [transaction, setTransaction] = useState(false);
+
+  const { data: transactions } = useFetch(
+    "http://cloudbox.test/api/transaction"
+  );
+
+  console.log("Data:", transactions);
 
   const UIclose = () => {
     setTransaction(false);
@@ -27,6 +34,14 @@ const Dashboard = () => {
   const handleTransaction = () => {
     setTransaction(true);
   };
+
+  const { mergedData: userTransAPI } = useJoinTables(
+    "http://cloudbox.test/api/transaction",
+    "http://cloudbox.test/api/user"
+  );
+
+  console.log("Joined API: ", userTransAPI);
+  // console.log("Parsed API: ", userTransAPI.transactions[0].location);
 
   return (
     <div className="flex w-screen h-screen ">
@@ -161,6 +176,8 @@ const Dashboard = () => {
               />
             )}
           </div>
+
+          {/* TRANSACTION CONTENT HERE  */}
           <div className=" bg-[#113F8D] w-[378px] pt-[4%] px-5 max-xl:hidden">
             <div className="">
               <h1 className="text-center text-white text-[30px] font-bold font-['Poppins']">
@@ -180,13 +197,13 @@ const Dashboard = () => {
               {/* TransData */}
 
               <div className="flex flex-col gap-7">
-                {TransData &&
-                  TransData.map((elem, index) => (
+                {transactions &&
+                  transactions.map((elem, index) => (
                     <div key={index}>
                       <div className="flex gap-4 px-3">
                         <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
                           <span className="font-bold text-white text-[23px]">
-                            {elem.initial}
+                            {/* {elem.initial} */}P
                           </span>
                         </div>
                         {/* <div className="flex gap-5 border"> */}

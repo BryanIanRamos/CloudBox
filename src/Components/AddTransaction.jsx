@@ -51,12 +51,12 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       if (transLength > 0) {
         setTrans_id(transDT[transLength - 1].trans_id);
-        console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
+        // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
       } else {
-        console.log("The transDT array is empty");
+        // console.log("The transDT array is empty");
       }
     } else {
-      console.log("transDT is null or undefined");
+      // console.log("transDT is null or undefined");
     }
   }, [transDT]);
 
@@ -109,30 +109,30 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
         setTotalAmount((prevTotalAmount) => prevTotalAmount + amountToAdd);
       } else {
-        console.log("Product not found");
+        // console.log("Product not found");
       }
     } else {
-      console.log("Quantity or Product ID is invalid");
+      // console.log("Quantity or Product ID is invalid");
     }
   };
 
   // MANAGE SALES
   useEffect(() => {
     const manageSales = async () => {
-      console.log("Transaction Data::");
-      console.log("Transaction Type:", trans_type);
-      console.log("quantity: ", quantity);
-      console.log("income: ", income);
-      console.log("description: ", description);
-      console.log("Location: ", location);
-      console.log("Account ID: ", account_id);
+      // console.log("Transaction Data::");
+      // console.log("Transaction Type:", trans_type);
+      // console.log("quantity: ", quantity);
+      // console.log("income: ", income);
+      // console.log("description: ", description);
+      // console.log("Location: ", location);
+      // console.log("Account ID: ", account_id);
 
       //Sales Data
-      console.log("Sales Data::");
-      console.log("QTY", quantity);
-      console.log("Total Amount", total_amount);
-      console.log("Product ID", prod_id);
-      console.log("Transaction ID", trans_id);
+      // console.log("Sales Data::");
+      // console.log("QTY", quantity);
+      // console.log("Total Amount", total_amount);
+      // console.log("Product ID", prod_id);
+      // console.log("Transaction ID", trans_id);
 
       // console.log("JSON FILE: ", formSalesData);
 
@@ -174,31 +174,6 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
     manageSales();
   }, [selectedSales]);
-
-  // const manageSales = async () => {
-  //   try {
-  //     const resSales = await fetch("http://cloudbox.test/api/sales", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         // Add other necessary headers if required by the API
-  //       },
-  //       body: JSON.stringify(formSalesData),
-  //     });
-
-  //     if (resSales.ok) {
-  //       const salesData = await resSales.json();
-  //       console.log("Response from Sales API:", salesData);
-  //       console.log("Post sales successful");
-  //       // Perform actions after a successful POST request
-  //     } else {
-  //       throw new Error(`Error: ${resSales.status} - ${resSales.statusText}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error while fetching data:", error);
-  //     // Handle error cases (e.g., display an error message to the user)
-  //   }
-  // };
 
   const handleTransaction = async (e) => {
     e.preventDefault();
@@ -296,13 +271,6 @@ const AddTransaction = ({ trigger, UIclose }) => {
                     </div>
                   ))}
               </div>
-              {/* <div className="flex  text-sky-800 text-[10px] font-['Poppins'] mt-1">
-                <p className="w-[65px] mr-2 overflow-hidden">
-                  1 | <span>Product 1</span>
-                </p>
-                <span className="w-[30px] mr-[25px] overflow-hidden">12</span>
-                <span className="w-[60px] overflow-hidden">Total</span>
-              </div> */}
             </div>
             <div className="text-sky-800 text-base font-bold font-['Poppins'] p-2">
               <p>Total ${total_amount.toFixed(2)}</p>
