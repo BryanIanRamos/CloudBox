@@ -16,6 +16,7 @@ import useJoinTables from "../../API/useJoinTables";
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
   const [transaction, setTransaction] = useState(false);
+  const [movement, setMovement] = useState(0);
 
   const { data: transactions } = useFetch(
     "http://cloudbox.test/api/transaction"
@@ -37,10 +38,13 @@ const Dashboard = () => {
 
   const { mergedData: userTransAPI } = useJoinTables(
     "http://cloudbox.test/api/transaction",
-    "http://cloudbox.test/api/user"
+    "http://cloudbox.test/api/user",
+    "account_id"
+    // { transaction }
   );
 
   console.log("Joined API: ", userTransAPI);
+  // console.log("Value API: ", userTransAPI.joinedData[0].name);
   // console.log("Parsed API: ", userTransAPI.transactions[0].location);
 
   return (
@@ -184,39 +188,49 @@ const Dashboard = () => {
                 Transactions
               </h1>
 
-              <div className="flex items-center">
+              <div className="flex items-center  mt-6 mb-3">
                 <hr className="w-full border-2" />
                 <Icon
                   icon="icon-park-solid:check-one"
                   style={{ color: "white" }}
-                  className="h-[125px] w-[125px] mx-2"
+                  className="h-fit w-[125px] mx-2 "
                 />
                 <hr className="w-full border-2" />
               </div>
 
               {/* TransData */}
 
-              <div className="flex flex-col gap-7">
-                {transactions &&
-                  transactions.map((elem, index) => (
+              <div className="flex flex-col gap-7 h-[500px] w-auto overflow-y-auto py-3">
+                {userTransAPI &&
+                  userTransAPI.map((elem, index) => (
                     <div key={index}>
                       <div className="flex gap-4 px-3">
                         <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
-                          <span className="font-bold text-white text-[23px]">
-                            {/* {elem.initial} */}P
+                          <span className="font-bold text-white text-[17px]">
+                            {elem.joinedData &&
+                              elem.joinedData.length > 0 &&
+                              elem.joinedData[0].name
+                                .split(" ")
+                                .map((word) => word.charAt(0).toUpperCase())
+                                .join("")}
                           </span>
                         </div>
                         {/* <div className="flex gap-5 border"> */}
                         <div className="flex flex-col  w-[120px] ">
-                          <p className=" text-white text-xs font-bold font-['Poppins'] ">
-                            {elem.name}
+                          <p className="text-white text-xs font-bold font-Poppins">
+                            {elem.joinedData[0].name}
                           </p>
-                          <p className="text-white text-xs font-normal font-['Poppins'] mr-5">
-                            {elem.date}
+                          <p className="text-white text-xs font-normal font-['Poppins'] mr-5 mt-1">
+                            {/* {new Date(elem.created_at).toLocaleDateString()} */}
+
+                            {new Date(elem.created_at).toLocaleTimeString(
+                              "en-US",
+                              { hour: "numeric", minute: "numeric" }
+                            )}
                           </p>
                         </div>
                         <div className=" text-white text-[10.32px] font-bold font-['Poppins']">
-                          ${elem.amount}
+                          ${elem.income}
                         </div>
                         {/* </div> */}
                       </div>

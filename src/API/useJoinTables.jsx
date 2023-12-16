@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useJoinTables = (leftAPI, rightAPI) => {
+const useJoinTables = (leftAPI, rightAPI, joinAttribute) => {
   const [mergedData, setMergedData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -9,25 +9,38 @@ const useJoinTables = (leftAPI, rightAPI) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersResponse = await axios.get(leftAPI);
-        const transactionsResponse = await axios.get(rightAPI);
+        const leftResponse = await axios.get(leftAPI);
+        const rightResponse = await axios.get(rightAPI);
 
-        if (!usersResponse.data || !transactionsResponse.data) {
+        if (!leftResponse.data || !rightResponse.data) {
           throw new Error("Data is not fetched");
         }
 
-        const usersData = usersResponse.data;
-        const transactionsData = transactionsResponse.data;
+        const leftData = leftResponse.data;
+        const rightData = rightResponse.data;
 
-        // Joining logic based on a common attribute, such as user ID
-        const merged = usersData.map((user) => {
-          const relatedTransactions = transactionsData.filter(
-            (transaction) => transaction.userId === user.id
+        const merged = leftData.map((leftItem) => {
+          const relatedItems = rightData.filter(
+            (rightItem) => rightItem[joinAttribute] === leftItem[joinAttribute]
           );
-          return { ...user, transactions: relatedTransactions };
+          return { ...leftItem, joinedData: relatedItems };
         });
 
-        setMergedData(merged);
+        // Sort the merged data in reverse order (from bottom to top)
+        const sortedMerged = merged.reverse();
+
+        // Filter the sorted merged data for records matching the present date
+        const today = new Date(); // Get today's date
+        const presentDateData = sortedMerged.filter((item) => {
+          const itemDate = new Date(item.created_at);
+          return (
+            itemDate.getFullYear() === today.getFullYear() &&
+            itemDate.getMonth() === today.getMonth() &&
+            itemDate.getDate() === today.getDate()
+          );
+        });
+
+        setMergedData(presentDateData);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error.message);
@@ -37,7 +50,7 @@ const useJoinTables = (leftAPI, rightAPI) => {
     };
 
     fetchData();
-  }, [leftAPI, rightAPI]);
+  }, [leftAPI, rightAPI, joinAttribute]);
 
   return { mergedData, loading, error };
 };

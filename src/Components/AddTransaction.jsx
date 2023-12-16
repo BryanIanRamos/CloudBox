@@ -14,7 +14,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
   //   Transaction Data
   const [qty, setQty] = useState([]);
   const [trans_type, setType] = useState("");
-  const [income, setIncome] = useState(500);
+  const [parIncome, setIncome] = useState(404);
   const [description, setDescription] = useState("Transaction Description");
   const [update_balance, setUpdate_balance] = useState(1500);
   const [location, setLocation] = useState("Sample City");
@@ -24,7 +24,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
   //   Sales Data
   const [quantity, setQuantity] = useState(0);
-  const [amount, setAmount] = useState(0);
+  // const [amount, setAmount] = useState(500);
   const [total_amount, setTotalAmount] = useState(0);
   const [prod_id, setProduct] = useState(null);
   const [trans_id, setTrans_id] = useState(31);
@@ -68,21 +68,22 @@ const AddTransaction = ({ trigger, UIclose }) => {
   //   useEffect(() => {
   const [amountsArray, setAmountsArray] = useState([]);
 
-  useEffect(() => {
-    const qtyLength = qty.length;
-    // console.log("::", qty.length);
-    if (qtyLength === 0) {
-      // Set amount to a default value or handle the empty condition as needed
-      setAmount(0 * (filProd?.price || 0)); // Replace DEFAULT_VALUE with the value you want to set
-    } else {
-      setAmount(qty[qtyLength - 1] * (filProd?.price || 0));
-    }
-  }, [selectedProd, qty]);
+  // useEffect(() => {
+  //   const qtyLength = qty.length;
+  //   // console.log("::", qty.length);
+  //   if (qtyLength === 0) {
+  //     // Set amount to a default value or handle the empty condition as needed
+  //     setAmount(0 * (filProd?.price || 0)); // Replace DEFAULT_VALUE with the value you want to set
+  //   } else {
+  //     setAmount(qty[qtyLength - 1] * (filProd?.price || 0));
+  //   }
+  // }, [selectedProd, qty]);
 
   useEffect(() => {
     const newTotalAmount = amountsArray.reduce((acc, curr) => acc + curr, 0);
     setTotalAmount(newTotalAmount);
-    // setTotalAmount(amountsArray.reduce((acc, curr) => acc + curr, 0)); // Sum all amounts in the array
+    setIncome(newTotalAmount);
+    // Other code...
   }, [amountsArray]);
 
   const prodDisply = () => {
@@ -175,8 +176,15 @@ const AddTransaction = ({ trigger, UIclose }) => {
     manageSales();
   }, [selectedSales]);
 
+  console.log("AMOUNT:", parIncome);
+
   const handleTransaction = async (e) => {
     e.preventDefault();
+
+    // setIncome(parseFloat(total_amount.toFixed(2)));
+
+    const income = parseInt(parIncome.toFixed(0));
+    console.log("INCOME", parIncome);
 
     const formTransData = {
       trans_type,
@@ -186,6 +194,12 @@ const AddTransaction = ({ trigger, UIclose }) => {
       location,
       account_id,
     };
+
+    console.log("trans_type", trans_type);
+    console.log("income", income);
+    console.log("description", description);
+    console.log("update_balance", update_balance);
+    console.log("location", location);
 
     const updateTransaction = [...selectedTrans, formTransData];
     setSelectedTrans(updateTransaction);
