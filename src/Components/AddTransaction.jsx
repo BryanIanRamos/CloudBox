@@ -27,7 +27,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
   // const [amount, setAmount] = useState(500);
   const [total_amount, setTotalAmount] = useState(0);
   const [prod_id, setProduct] = useState(null);
-  const [trans_id, setTrans_id] = useState(31);
+  const [trans_id, setTrans_id] = useState(0);
 
   //   Product
   const [selectedProd, setSelectedProd] = useState([]);

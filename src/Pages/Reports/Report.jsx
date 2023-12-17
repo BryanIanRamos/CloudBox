@@ -138,8 +138,8 @@ const Report = () => {
                   </div>
                   <div className="border h-[155px] overflow-y-auto  scroll-snap-type-y w-fit">
                     {products &&
-                      products.map((elem) => (
-                        <div key={elem.id} className="flex">
+                      products.map((elem, index) => (
+                        <div key={index} className="flex">
                           <div className="w-[70.30px] h-[25.52px] bg-[#DCE0E9]  border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.id}
@@ -208,10 +208,10 @@ const Report = () => {
                           <div className="flex" key={index}>
                             <div className="w-[67.97px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
                               <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
-                                {elem.id}
+                                {elem.account_id}
                               </p>
                             </div>
-                            <div className="w-[113.65px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
+                            <div className="w-[113.65px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-left items-center pl-2">
                               <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
                                 {elem.name}
                               </p>

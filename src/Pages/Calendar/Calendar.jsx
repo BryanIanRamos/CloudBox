@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SideNavBar from "../../Components/SideNavBar";
 import ProfileHdr from "../../Components/ProfileHdr";
+import useJoinTables from "../../API/useJoinTables";
 
 const Calendar = () => {
   const [tempDate, setTempDate] = useState([
@@ -15,72 +16,82 @@ const Calendar = () => {
     { date: 9 },
     { date: 10 },
   ]);
-  const [trans, setTrans] = useState([
-    {
-      id: 1,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 2,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 3,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 4,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 5,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 6,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 7,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-    {
-      id: 8,
-      name: "Bryan Ian Ramos",
-      qty: 20,
-      sold: 30,
-      date: "june 6, 2023",
-      total: 285,
-    },
-  ]);
+
+  const { mergedData } = useJoinTables(
+    "http://cloudbox.test/api/transaction",
+    "http://cloudbox.test/api/user",
+    "account_id"
+    // { transaction }
+  );
+
+  console.log("Data:", mergedData);
+
+  // const [trans, setTrans] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Bryan Ian Ramos",
+  //     qty: 20,
+  //     sold: 30,
+  //     date: "june 6, 2023",
+  //     total: 285,
+  //   },
+  // ]);
 
   return (
     <>
@@ -137,12 +148,12 @@ const Calendar = () => {
                       </div>
                       <div className="w-[100.30px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
                         <p className="text-white text-[15px] font-medium font-['Poppins']">
-                          QTY#
+                          Type
                         </p>
                       </div>
                       <div className="w-[119.04px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
                         <p className="text-white text-[15px] font-medium font-['Poppins']">
-                          Sold
+                          Income
                         </p>
                       </div>
                       <div className="w-[157.48px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
@@ -157,40 +168,44 @@ const Calendar = () => {
                       </div>
                     </div>
                     <div className="h-[273px] overflow-y-auto">
-                      {trans.map((elem) => (
-                        <div className="flex">
-                          <div className="w-[119.98px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                              {elem.id}
-                            </p>
+                      {mergedData &&
+                        mergedData.map((elem, index) => (
+                          <div className="flex" key={index}>
+                            <div className="w-[119.98px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
+                                {elem.account_id}
+                              </p>
+                            </div>
+                            <div className="w-[200.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
+                                {/* {elem.name} */}
+                                {elem.joinedData[0].name}
+                              </p>
+                            </div>
+                            <div className="w-[100.30px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
+                                {/* {elem.quantity} */}
+                                {elem.trans_type}
+                              </p>
+                            </div>
+                            <div className="w-[119.04px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
+                                {/* {elem.type} */}
+                                {elem.income}
+                              </p>
+                            </div>
+                            <div className="w-[157.48px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
+                                {new Date(elem.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="w-[140.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
+                                {elem.update_balance}php
+                              </p>
+                            </div>
                           </div>
-                          <div className="w-[200.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                              {elem.name}
-                            </p>
-                          </div>
-                          <div className="w-[100.30px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                              {elem.qty}
-                            </p>
-                          </div>
-                          <div className="w-[119.04px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                              {elem.sold}
-                            </p>
-                          </div>
-                          <div className="w-[157.48px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                              {elem.date}
-                            </p>
-                          </div>
-                          <div className="w-[140.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                            <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                              {elem.total}php
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>

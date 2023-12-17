@@ -12,8 +12,8 @@ import UpdateProd from "./UpdateProd";
 const Product = ({ trigger }) => {
   const [filter, setFilter] = useState(false);
   const [Back, setBack] = useState(true);
-  const [product, setProduct] = useState([]);
-  const urlAPI = import.meta.env.VITE_PRODUCT_API_URL;
+  // const [product, setProduct] = useState([]);
+  // const urlAPI = import.meta.env.VITE_PRODUCT_API_URL;
   // const [isShowed] = AddProduct({
   //   trigger: false,
   // });
@@ -37,14 +37,13 @@ const Product = ({ trigger }) => {
 
   const openUIProd = () => {
     setAddProduct(true);
-    // setTimeout(() => {
-    //   setAddProduct(false);
-    // }, 1000);
   };
 
-  // console.log("test:", process.env.REACT_APP_PRODUCT_STOCK_API_URL);
+  const [product, setProduct] = useState();
+  // const { data } = useFetch("http://cloudbox.test/api/product");
+
   useEffect(() => {
-    fetch(urlAPI)
+    fetch("http://cloudbox.test/api/product")
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");
@@ -52,17 +51,23 @@ const Product = ({ trigger }) => {
         return res.json();
       })
       .then((data) => {
-        // console.log("Product Data::", data);
-        console.log("Data::", data);
-
-        setProduct(data);
+        // Reverse the order of the data array before setting it in the state
+        const reversedData = data.reverse();
+        setProduct(reversedData);
       })
       .catch((e) => {
         console.log(e.message);
       });
-  }, []);
+  }, [addProduct]);
 
-  // console.log("Product::", product);
+  console.log("Product_Data: ", product);
+
+  if (product) {
+    product.forEach((item) => {
+      console.log("Product Image:", item.description); // Access description of each product item
+      console.log("Image:", item.image_url); // Access image of each product item
+    });
+  }
 
   return (
     <div className="relative pt-[30px]">
@@ -113,7 +118,7 @@ const Product = ({ trigger }) => {
                 filter ? "bg-white" : "bg-[#E8E8E8]"
               } rounded-tl-[25px] rounded-tr-[25px] border border-stone-300 
                             flex gap-3 items-center justify-center z-[0]`}
-              onClick={(e) => {
+              onClick={() => {
                 setFilter(true);
               }}
             >
@@ -174,7 +179,8 @@ const Product = ({ trigger }) => {
                             </div>
                             <img
                               className="w-[181px] h-[107px] rounded-md border bg-gray-400"
-                              // src={elem.img}
+                              // src={elem.image_url}
+                              src={`${elem.image_url}`}
                               // src={elem.thumbnail}
                               alt="profile"
                             />
@@ -239,30 +245,29 @@ const Product = ({ trigger }) => {
                   </button>
                 </div>
 
-                {product ? (
+                {product && (
                   <div
                     className="grid grid-cols-3 gap-2 px-[30px] overflow-auto"
                     style={{ scrollBehavior: "smooth" }}
                   >
                     {product.map((elem, index) => (
-                      <div key={elem.id}>
+                      <div key={index}>
                         <div className="w-[205px] h-[237px] bg-white rounded-md border border-zinc-500 border-opacity-50 p-[10px]">
                           <div className="relative">
-                            <div className=" bg-amber-500 rounded-2xl flex items-center justify-center px-3 py-1 absolute m-2">
-                              <p className=" text-white text-[7px] font-bold font-['Poppins']">
+                            <div className="bg-amber-500 rounded-2xl flex items-center justify-center px-3 py-1 absolute m-2">
+                              <p className="text-white text-[7px] font-bold font-['Poppins']">
                                 {elem.price} php
                               </p>
                             </div>
                             <img
                               className="w-[181px] h-[107px] rounded-md border bg-gray-400"
-                              // src={elem.img}
-                              // src={elem.thumbnail}
-                              alt="profile"
+                              // src={elem.image_url}
+                              src={elem.image_url}
+                              alt={elem.prod_name}
                             />
                           </div>
                           <div>
                             <p className="text-black text-[16px] font-bold font-['Poppins'] py-1">
-                              {/* {elem.name} */}
                               {elem.prod_name}
                             </p>
                           </div>
@@ -271,11 +276,6 @@ const Product = ({ trigger }) => {
                               {elem.description}
                             </p>
                           </div>
-                          {/* <div className="w-fit h-[15.14px] bg-sky-800 rounded-xl flex items-center justify-center px-3 py-2 mt-1">
-                          <p className=" text-white text-[6.84px] font-bold font-['Poppins']">
-                            QTY {elem.stock}
-                          </p>
-                        </div> */}
                           <div className="flex justify-end gap-1 mt-2">
                             <div className="w-auto h-auto bg-sky-800 rounded-[17.22px] px-4 py-1 flex items-center justify-center">
                               <span className="text-white text-[9.11px] font-bold font-['Poppins']">
@@ -287,8 +287,6 @@ const Product = ({ trigger }) => {
                       </div>
                     ))}
                   </div>
-                ) : (
-                  <div>Loading...</div>
                 )}
               </>
             )}

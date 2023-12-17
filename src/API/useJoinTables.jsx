@@ -50,6 +50,7 @@ const useJoinTables = (leftAPI, rightAPI, joinAttribute) => {
     };
 
     fetchData();
+    console.log("Data Received");
   }, [leftAPI, rightAPI, joinAttribute]);
 
   return { mergedData, loading, error };

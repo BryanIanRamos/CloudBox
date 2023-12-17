@@ -3,31 +3,55 @@ import Select from "react-select";
 import { Icon } from "@iconify/react";
 import useFetch from "../API/useFetch";
 import axios from "axios";
+import { userData } from "./Account-cards/extensionAuth/helper";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddProduct = ({ trigger, closeUI }) => {
   const [isShowed, setIsShowed] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [price, setPrice] = useState(0.0);
-  const [quantity, setQuantity] = useState(0.0);
-  const [productName, setProductName] = useState("");
-  // const [option, setOption] = useState({
-  //   category: null,
-  // });
-  const [option, setOption] = useState([]);
-  const [prodData, setProdData] = useState({
-    prod_name: "",
-    price: 0,
-    description: "",
-    status: false,
-    category_id: "",
-  });
-  const [stockAmount, setStockAmount] = useState(0);
+  const { id } = userData();
 
-  // const options = [
-  //   { value: "chocolate", label: "Chocolate" },
-  //   { value: "strawberry", label: "Strawberry" },
-  //   { value: "vanilla", label: "Vanilla" },
-  // ];
+  // Attribute for Product
+  const [prod_name, setProd_name] = useState("");
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("Not Available");
+  const [category_id, setCategory_id] = useState(1);
+  const [image, setImage] = useState("Text");
+
+  // Attribute for Stock
+  const [quantity, setQuantity] = useState(0);
+  const [prod_id, setProd_id] = useState(0);
+  const [account_id, setAccount_id] = useState(0);
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); // Toggles the isChecked state between true and false
+
+    if (isChecked) {
+      setStatus("Not Available");
+    } else {
+      setStatus("Available");
+    }
+  };
+
+  const formProdData = {
+    prod_name,
+    price,
+    description,
+    status,
+    category_id,
+    // image,
+  };
+
+  const formStockData = {
+    quantity,
+    prod_id,
+    account_id,
+    status,
+    category_id,
+    // image,
+  };
 
   useEffect(() => {
     setIsShowed(trigger);
@@ -38,77 +62,142 @@ const AddProduct = ({ trigger, closeUI }) => {
     closeUI();
   };
 
-  const {
-    data: categories,
-    loading,
-    error,
-  } = useFetch("http://cloudbox.test/api/category");
+  const { data: categories } = useFetch("http://cloudbox.test/api/category");
+  // const [categories, setCategories] = useState();
 
-  const display = () => {
-    console.log("Product Name: ", prodData.prod_name);
-    console.log("Price: ", prodData.price);
-    console.log("description: ", prodData.description);
-    // console.log("Quantity: ", prodData.status);
-    console.log("Available: ", prodData.status);
-    console.log("Category: ", prodData.category_name);
-  };
+  // useEffect(() => {
+  //   const display = () => {
+  //     fetch("http://cloudbox.test/api/category")
+  //       .then((res) => {
+  //         if (!res.ok) {
+  //           throw Error("Data is not fetch");
+  //         }
+  //         return res.json();
+  //       })
+  //       .then((data) => {
+  //         // console.log("Data::", data);
+  //         setCategories(data);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e.message);
+  //       });
+  //   };
+  //   display();
+  // }, [prod_id, account_id]);
+
+  // const display = () => {
+  //   // console.log("Product Name: ", prodData.prod_name);
+  //   // console.log("Price: ", prodData.price);
+  //   // console.log("description: ", prodData.description);
+  //   // // console.log("Quantity: ", prodData.status);
+  //   // console.log("Available: ", prodData.status);
+  //   // console.log("Category: ", prodData.category_name);
+  // };
+
+  // useEffect(() => {
+  //   setProd_name("");
+  //   setPrice(0);
+  //   setDescription("");
+  //   setStatus("Not Available");
+  //   setCategory_id(1);
+  //   setImage("Text");
+  // }, []);
 
   useEffect(() => {
-    if (categories) {
-      const mappedOptions = categories.map((category) => ({
-        value: category.category_id,
-        label: category.category_name,
-      }));
-      setOption(mappedOptions);
-      console.log("mapped", mappedOptions);
-    }
-  }, [categories]);
+    console.log("quantity : ", quantity);
+    console.log("prod_id : ", prod_id);
+    console.log("account_id :", account_id);
+    const submitStock = async () => {
+      if (quantity && prod_id && account_id) {
+        try {
+          const resStock = await fetch("http://cloudbox.test/api/stock", {
+            method: "POST",
+            headers: {
+              "COntent-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(formStockData),
+          });
 
-  const submitProduct = async () => {
-    console.log("data}} ", prodData);
-    display();
-
-    try {
-      const resProduct = await axios.post(
-        "http://cloudbox.test/api/product",
-        prodData
-      );
-
-      if (resProduct.ok) {
-        console.log("Product information successfully stored.");
-      } else {
-        console.log("Failed to store product information.");
+          if (resStock) {
+            // console.log("Stock POST successfully!");
+            toast.success(
+              "Stock POST successfully!",
+              {
+                hideProgressBar: true,
+              },
+              200
+            );
+          } else {
+            toast.success(
+              "POST Stock Error!",
+              {
+                hideProgressBar: true,
+              },
+              200
+            );
+          }
+        } catch (error) {
+          console.error("Error while fetching data:", error);
+        }
       }
-    } catch (e) {
-      console.error("Error:", e);
+    };
+    submitStock();
+  }, [prod_id, account_id]);
+
+  const handleSubmit = async () => {
+    // console.log("data}} ", prodData);
+    // display();
+
+    if (prod_name && price && description && status && category_id) {
+      try {
+        const resProduct = await fetch("http://cloudbox.test/api/product", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(formProdData),
+        });
+
+        // console.log("resProduct", resProduct);
+
+        if (resProduct.ok) {
+          const data = await resProduct.json();
+          setProd_id(data.prod_id);
+          setAccount_id(id);
+          // console.log("Product POST successfully!");
+          toast.success(
+            "Product POST successfully!",
+            {
+              hideProgressBar: true,
+            },
+            200
+          );
+          // setTimeout(() => {
+          //   closeUI();
+          // }, 2000);
+        } else {
+          toast.success(
+            "Adding Product Error!",
+            {
+              hideProgressBar: true,
+            },
+            200
+          );
+        }
+      } catch (error) {
+        console.error("Error while fetching data:", error);
+      }
+    } else {
+      toast.info(
+        "Invalid Credentials!",
+        {
+          hideProgressBar: true,
+        },
+        200
+      );
     }
-  };
-
-  const handleProductChange = (e) => {
-    const { name, value } = e.target;
-    setProdData({
-      ...prodData,
-      [name]: value,
-    });
-  };
-
-  const handleCategoryChange = (selectedOption) => {
-    if (selectedOption && selectedOption.value) {
-      setProdData({
-        ...prodData,
-        category_name: selectedOption.value, // Ensure the correct property is updated
-      });
-      console.log("Selected category:", selectedOption.value);
-    }
-  };
-
-  const handleCheckBoxChange = (e) => {
-    const { checked } = e.target;
-    setProdData({
-      ...prodData,
-      status: checked, // Update prodData.status based on the checkbox
-    });
-    setIsChecked(checked); // Update the isChecked state
   };
 
   return [
@@ -117,6 +206,7 @@ const AddProduct = ({ trigger, closeUI }) => {
       className={`absolute z-20 w-full h-full py-[120px] px-[18%] ${
         isShowed ? "block" : "hidden"
       }`}
+      key={null}
     >
       <div className="h-full flex justify-center items-center">
         <div className="w-full h-full bg-white rounded-[18px] flex flex-col items-center p-7 border-2 shadow-md">
@@ -152,9 +242,8 @@ const AddProduct = ({ trigger, closeUI }) => {
                     <input
                       placeholder="Milk Bar"
                       name="prod_name"
-                      value={prodData.prod_name}
                       className="w-[138px] h-[36px] bg-zinc-100 rounded-[5px] pl-2 placeholder-gray-500"
-                      onChange={handleProductChange}
+                      onChange={(e) => setProd_name(e.target.value)}
                     />
                   </div>
 
@@ -162,22 +251,32 @@ const AddProduct = ({ trigger, closeUI }) => {
                     <h3 className="text-white text-[14px] font-semibold font-['Poppins']">
                       Category
                     </h3>
-                    {/* <Select
-                      className="w-[135px] h-[29px]"
+                    <select
+                      className="w-[138px] h-[36px] bg-zinc-100 rounded-[5px] pl-2 placeholder-gray-500"
                       name="category_name"
-                      options={option}
+                      // options={option}
                       // value={prodData.category_name}
-                      value={prodData.category_name}
-                      onChange={handleCategoryChange}
-                    /> */}
-                    <Select
+                      // value={category_id}
+                      onChange={(e) => setCategory_id(e.target.value)}
+                    >
+                      {categories &&
+                        categories.map((elem) => (
+                          <option
+                            key={elem.category_id}
+                            value={elem.category_id}
+                          >
+                            {elem.category_name}
+                          </option>
+                        ))}
+                    </select>
+                    {/* <Select
                       className="w-[135px] h-[29px]"
                       options={option}
                       value={option.find(
-                        (option) => option.value === prodData.category_name
+                        (option) => option.value === setCategory_id(category_id)
                       )}
-                      onChange={handleCategoryChange}
-                    />
+                      // onChange={handleCategoryChange}
+                    /> */}
                   </div>
 
                   <div>
@@ -188,12 +287,11 @@ const AddProduct = ({ trigger, closeUI }) => {
                       <div className="bg-zinc-100 pl-2 w-fit rounded-[5px] flex items-center">
                         <span className="text-sky-800 font-['Poppins']">$</span>
                         <input
-                          id="price"
-                          name="price"
                           type="number"
-                          value={prodData.price}
-                          onChange={handleProductChange}
                           className="w-[108px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
+                          // step="0.01" // Define the step to allow two decimal places
+                          placeholder="Enter price"
+                          onChange={(e) => setPrice(parseFloat(e.target.value))}
                         />
                       </div>
                     </div>
@@ -206,12 +304,12 @@ const AddProduct = ({ trigger, closeUI }) => {
                     </h3>
                     <textarea
                       name="description"
-                      value={prodData.description}
+                      // value={prodData.description}
                       // Adjust the number of columns as needed
                       style={{ resize: "none" }}
                       className="border border-gray-300 p-2 rounded-md w-full "
                       placeholder="Product description..."
-                      onChange={handleProductChange}
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
                   <div className="flex flex-col gap-5">
@@ -223,8 +321,8 @@ const AddProduct = ({ trigger, closeUI }) => {
                         <input
                           type="number"
                           // name="description"
-                          value={quantity}
-                          onChange={handleProductChange}
+                          // value={quantity}
+                          onChange={(e) => setQuantity(e.target.value)}
                           className="w-[108px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
                         />
                       </div>
@@ -236,9 +334,8 @@ const AddProduct = ({ trigger, closeUI }) => {
                       <input
                         type="checkbox"
                         name="status"
-                        value={"test"}
-                        checked={isChecked}
-                        onChange={handleCheckBoxChange}
+                        checked={isChecked} // Use the state variable to determine checked status
+                        onChange={handleCheckboxChange} // Toggle isChecked state when checkbox is clicked
                         className="mr-2" // Optional: Use Tailwind CSS for styling
                       />
                     </div>
@@ -256,11 +353,11 @@ const AddProduct = ({ trigger, closeUI }) => {
                   className="w-[159.62px] h-[30.14px] bg-amber-500 hover:bg-white rounded-[25.61px] flex justify-center items-center text-white hover:text-amber-500"
                   onClick={
                     // display
-                    submitProduct
+                    handleSubmit
                   }
                 >
                   <p className="text-[14px] font-bold font-['Poppins']">
-                    Register
+                    handleSubmit
                   </p>
                 </button>
               </div>
