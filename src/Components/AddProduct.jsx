@@ -16,7 +16,7 @@ const AddProduct = ({ trigger, closeUI }) => {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("Not Available");
   const [category_id, setCategory_id] = useState(1);
-  const [image, setImage] = useState("Text");
+  const [image, setImage] = useState(null);
 
   // Attribute for Stock
   const [quantity, setQuantity] = useState(0);
@@ -35,14 +35,14 @@ const AddProduct = ({ trigger, closeUI }) => {
     }
   };
 
-  const formProdData = {
-    prod_name,
-    price,
-    description,
-    status,
-    category_id,
-    // image,
-  };
+  // const formProdData = {
+  //   prod_name,
+  //   price,
+  //   description,
+  //   status,
+  //   category_id,
+  //   image,
+  // };
 
   const formStockData = {
     quantity,
@@ -92,6 +92,7 @@ const AddProduct = ({ trigger, closeUI }) => {
   //   // // console.log("Quantity: ", prodData.status);
   //   // console.log("Available: ", prodData.status);
   //   // console.log("Category: ", prodData.category_name);
+  console.log("IMage: ", image);
   // };
 
   // useEffect(() => {
@@ -148,16 +149,21 @@ const AddProduct = ({ trigger, closeUI }) => {
   const handleSubmit = async () => {
     // console.log("data}} ", prodData);
     // display();
+    const formProdData = new FormData();
+    formProdData.append("prod_name", prod_name);
+    formProdData.append("price", price);
+    formProdData.append("description", description);
+    formProdData.append("status", status);
+    formProdData.append("category_id", category_id);
+    formProdData.append("image", image);
 
     if (prod_name && price && description && status && category_id) {
       try {
         const resProduct = await fetch("http://cloudbox.test/api/product", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(formProdData),
+         
+          // body: JSON.stringify(formProdData),
+          body: formProdData,
         });
 
         // console.log("resProduct", resProduct);
@@ -178,8 +184,8 @@ const AddProduct = ({ trigger, closeUI }) => {
           //   closeUI();
           // }, 2000);
         } else {
-          toast.success(
-            "Adding Product Error!",
+          toast.info(
+            "POST Product Error!",
             {
               hideProgressBar: true,
             },
@@ -277,6 +283,14 @@ const AddProduct = ({ trigger, closeUI }) => {
                       )}
                       // onChange={handleCategoryChange}
                     /> */}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files[0]; // Get the file object
+                        setImage(file); // Set the file object to state
+                      }}
+                    />
                   </div>
 
                   <div>
@@ -288,7 +302,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                         <span className="text-sky-800 font-['Poppins']">$</span>
                         <input
                           type="number"
-                          className="w-[108px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
+                          className="border border-3 w-[18px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
                           // step="0.01" // Define the step to allow two decimal places
                           placeholder="Enter price"
                           onChange={(e) => setPrice(parseFloat(e.target.value))}
@@ -311,23 +325,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                       placeholder="Product description..."
                       onChange={(e) => setDescription(e.target.value)}
                     />
-                  </div>
-                  <div className="flex flex-col gap-5">
-                    <div>
-                      <h3 className="text-white text-[14px] font-semibold font-['Poppins']">
-                        Quantity
-                      </h3>
-                      <div className="bg-zinc-100 pl-2 w-fit rounded-[5px] flex items-center">
-                        <input
-                          type="number"
-                          // name="description"
-                          // value={quantity}
-                          onChange={(e) => setQuantity(e.target.value)}
-                          className="w-[108px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-center mt-2">
                       <h3 className="text-[12px] font-bold text-white font-['Poppins']">
                         Available:
                       </h3>
@@ -339,6 +337,34 @@ const AddProduct = ({ trigger, closeUI }) => {
                         className="mr-2" // Optional: Use Tailwind CSS for styling
                       />
                     </div>
+                  </div>
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <h3 className="text-white text-[14px] font-semibold font-['Poppins']">
+                        Quantity
+                      </h3>
+                      <div className="bg-zinc-100 pl-2 w-fit rounded-[5px] flex items-center">
+                        <input
+                          type="number" 
+                          // name="description"
+                          // value={quantity}
+                          onChange={(e) => setQuantity(e.target.value)}
+                          className="w-[108px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                    {/* <div className="flex gap-2 items-center">
+                      <h3 className="text-[12px] font-bold text-white font-['Poppins']">
+                        Available:
+                      </h3>
+                      <input
+                        type="checkbox"
+                        name="status"
+                        checked={isChecked} // Use the state variable to determine checked status
+                        onChange={handleCheckboxChange} // Toggle isChecked state when checkbox is clicked
+                        className="mr-2" // Optional: Use Tailwind CSS for styling
+                      />
+                    </div> */}
                     {/* <input
                       type="file"
                       accept="image/*"
@@ -348,7 +374,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-center mt-[10%]">
+              <div className="flex justify-center mt-[2%]">
                 <button
                   className="w-[159.62px] h-[30.14px] bg-amber-500 hover:bg-white rounded-[25.61px] flex justify-center items-center text-white hover:text-amber-500"
                   onClick={
@@ -357,7 +383,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                   }
                 >
                   <p className="text-[14px] font-bold font-['Poppins']">
-                    handleSubmit
+                    Submit
                   </p>
                 </button>
               </div>
