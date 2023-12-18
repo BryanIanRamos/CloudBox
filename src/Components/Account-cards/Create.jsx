@@ -33,6 +33,7 @@ function Create() {
 
       if (first_name && last_name && email && password) {
         // const resRegister = await fetch("http://cloudbox.test/api/user", {
+        console.log("API:: ", apiUrl);
         const resRegister = await fetch(`${apiUrl}/api/user`, {
           method: "POST",
           body: formData,
@@ -56,6 +57,14 @@ function Create() {
             navigate("/");
           }, 3000);
         }
+      } else {
+        toast.info(
+          "Invalid Credentials",
+          {
+            hideProgressBar: true,
+          },
+          200
+        );
       }
     } catch (error) {
       toast.error(error.message, {

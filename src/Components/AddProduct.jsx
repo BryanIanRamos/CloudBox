@@ -25,6 +25,8 @@ const AddProduct = ({ trigger, closeUI }) => {
 
   const [isChecked, setIsChecked] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
+
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked); // Toggles the isChecked state between true and false
 
@@ -62,7 +64,7 @@ const AddProduct = ({ trigger, closeUI }) => {
     closeUI();
   };
 
-  const { data: categories } = useFetch("http://cloudbox.test/api/category");
+  const { data: categories } = useFetch(`${apiUrl}/api/category`);
   // const [categories, setCategories] = useState();
 
   // useEffect(() => {
@@ -111,7 +113,7 @@ const AddProduct = ({ trigger, closeUI }) => {
     const submitStock = async () => {
       if (quantity && prod_id && account_id) {
         try {
-          const resStock = await fetch("http://cloudbox.test/api/stock", {
+          const resStock = await fetch(`${apiUrl}/api/stock`, {
             method: "POST",
             headers: {
               "COntent-Type": "application/json",
@@ -160,7 +162,7 @@ const AddProduct = ({ trigger, closeUI }) => {
 
     if (prod_name && price && description && status && category_id) {
       try {
-        const resProduct = await fetch("http://cloudbox.test/api/product", {
+        const resProduct = await fetch(`${apiUrl}/api/product`, {
           method: "POST",
 
           // body: JSON.stringify(formProdData),

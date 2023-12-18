@@ -296,7 +296,7 @@ const Report = () => {
                     <div className="flex justify-center gap-[65px] h-auto">
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
-                          percentage={totalQuantity}
+                          percentage={24}
                           setRadius={100}
                           stroke={23}
                           // secColor={true}
@@ -308,7 +308,8 @@ const Report = () => {
                       </div>
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
-                          percentage={totalQuantitySales}
+                          // totalQuantitySales
+                          percentage={87}
                           setRadius={100}
                           stroke={23}
                           secColor={true}

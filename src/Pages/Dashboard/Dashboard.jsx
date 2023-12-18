@@ -8,7 +8,6 @@ import Product from "./components/Product";
 import CircularProgressBar from "../../Components/CircularProgressBar";
 import ProgressBar from "../../Components/ProgressBar";
 import useFetch from "../../API/useFetch";
-import Select from "react-select";
 import { userData } from "../../Components/Account-cards/extensionAuth/helper";
 import AddTransaction from "../../Components/AddTransaction";
 import useJoinTables from "../../API/useJoinTables";
@@ -18,32 +17,41 @@ const Dashboard = () => {
   const [transaction, setTransaction] = useState(false);
   const [movement, setMovement] = useState(0);
   const [balance, setBalance] = useState(0);
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
-  const { data: transactions } = useFetch(
-    "http://cloudbox.test/api/transaction"
-  );
+  const { data: transactions } = useFetch(`${apiUrl}/api/transaction`);
+  const { data: latestBalance } = useFetch(`${apiUrl}/api/BalanceTrans`);
 
   // console.log("Data:", transactions);
 
-  useEffect(() => {
-    if (transactions !== null) {
-      const transLength = transactions.length;
+  // useEffect(() => {
+  //   if (transactions !== null) {
+  //     const transLength = transactions.length;
 
-      if (transLength > 0) {
-        console.log("transLength", transLength);
-        setBalance(transactions[transLength - 1].update_balance);
-        console.log("BALAANCE:", balance);
-        // setTrans_id(transDT[transLength - 1].trans_id);
-        // setUpdate_balance(transDT[transLength - 1].update_balance);
-        // console.log("BALANCE", update_balance);
-        // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
-      } else {
-        // console.log("The transDT array is empty");
-      }
-    } else {
-      // console.log("transDT is null or undefined");
+  //     if (transLength > 0) {
+  //       console.log("transLength", transLength);
+  //       setBalance(transactions[transLength - 1].update_balance);
+  //       console.log("BALAANCE-:>", balance);
+  //       // setTrans_id(transDT[transLength - 1].trans_id);
+  //       // setUpdate_balance(transDT[transLength - 1].update_balance);
+  //       // console.log("BALANCE", update_balance);
+  //       // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
+  //     } else {
+  //       // console.log("The transDT array is empty");
+  //     }
+  //   } else {
+  //     // console.log("transDT is null or undefined");
+  //   }
+  // }, [transactions]);
+
+  // console.log("BALAANCE-:>", latestBalance.currentbalance);
+  useEffect(() => {
+    if (latestBalance && latestBalance[0]?.currentbalance > 0) {
+      const value = latestBalance[0].currentbalance;
+      setBalance(value);
+      // console.log("balance", balance);
     }
-  }, [transactions]);
+  }, [latestBalance]);
 
   const UIclose = () => {
     setTransaction(false);
@@ -58,8 +66,8 @@ const Dashboard = () => {
   };
 
   const { mergedData: userTransAPI } = useJoinTables(
-    "http://cloudbox.test/api/transaction",
-    "http://cloudbox.test/api/user",
+    `${apiUrl}/api/transaction`,
+    `${apiUrl}/api/user`,
     "account_id"
     // { transaction }
   );
@@ -69,7 +77,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Make an API request to fetch the data
-    fetch("http://cloudbox.test/api/sales")
+    fetch(`${apiUrl}/api/sales`)
       .then((response) => response.json())
       .then((sumDataSales) => {
         setSumDataSales(sumDataSales); // Save the fetched data to the state
@@ -385,7 +393,7 @@ function ButtomSide({ totalQuantitySales }) {
               </h2>
             </div>
             <CircularProgressBar
-              percentage={totalQuantitySales}
+              percentage={43}
               setRadius={45}
               stroke={11}
               secColor={true}

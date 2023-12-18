@@ -54,7 +54,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       if (transLength > 0) {
         setTrans_id(transDT[transLength - 1].trans_id);
-        setUpdate_balance(transDT[transLength - 1].update_balance);
+        // setUpdate_balance(transDT[transLength - 1].update_balance);
         console.log("BALANCE", update_balance);
         // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
       } else {

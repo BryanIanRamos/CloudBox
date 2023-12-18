@@ -14,6 +14,8 @@ const Product = ({ trigger }) => {
   const [isShowed, setIsShowed] = useState(false);
   const [ID, setID] = useState(0);
 
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
+
   const [Back, setBack] = useState(true);
   // const [product, setProduct] = useState([]);
   // const urlAPI = import.meta.env.VITE_PRODUCT_API_URL;
@@ -50,7 +52,7 @@ const Product = ({ trigger }) => {
   // const { data } = useFetch("http://cloudbox.test/api/product");
 
   useEffect(() => {
-    fetch("http://cloudbox.test/api/product")
+    fetch(`${apiUrl}/api/product`)
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");

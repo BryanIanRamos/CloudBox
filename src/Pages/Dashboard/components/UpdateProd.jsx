@@ -14,58 +14,78 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
   const [status, setStatus] = useState("Not Available");
   const [category_id, setCategory_id] = useState(1);
   const [image, setImage] = useState(null);
-  console.log("image", image);
+  // console.log("image", image);
 
   // Attribute for Stock
-  const [quantity, setQuantity] = useState(0);
-  const [prod_id, setProd_id] = useState(0);
-  const [account_id, setAccount_id] = useState(0);
+  // const [quantity, setQuantity] = useState(0);
+  // const [prod_id, setProd_id] = useState(0);
+  // const [account_id, setAccount_id] = useState(0);
 
   // const { data: prodData } = useFetch("http://cloudbox.test/api/product");
   const [prodData, setProdData] = useState([]);
   console.log("prod_name:::", prod_name);
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
-  const formProdData = new FormData();
+  // const formProdData = new FormData();
 
   const { data: categories } = useFetch(`${apiUrl}/api/category`);
 
   const submit = async () => {
-    formProdData.append("prod_name", prod_name);
-    formProdData.append("price", price);
-    formProdData.append("description", description);
-    formProdData.append("status", status);
-    formProdData.append("category_id", category_id);
-    formProdData.append("image", image);
+    // formProdData.append("prod_name", prod_name);
+    // formProdData.append("price", price);
+    // formProdData.append("description", description);
+    // formProdData.append("status", status);
+    // formProdData.append("category_id", category_id);
+    // formProdData.append("image", image);
 
-    console.log("prod_name:", formProdData.get("prod_name"));
-    console.log("price:", formProdData.get("price"));
-    console.log("description:", formProdData.get("description"));
-    console.log("status:", formProdData.get("status"));
-    console.log("category_id:", formProdData.get("category_id"));
-    console.log("image:", formProdData.get("image"));
+    const formProdData = {
+      prod_name,
+      price,
+      description,
+      status,
+      category_id,
+    };
+
+    console.log(image);
+
+    // console.log("prod_name:", formProdData.get("prod_name"));
+    // console.log("price:", formProdData.get("price"));
+    // console.log("description:", formProdData.get("description"));
+    // console.log("status:", formProdData.get("status"));
+    // console.log("category_id:", formProdData.get("category_id"));
+    // console.log("image:", formProdData.get("image"));
 
     if (prod_name && price && description && status && category_id) {
       try {
         const parsedID = parseInt(id, 10);
-        const resProduct = await fetch(
+        let resProduct = await fetch(
           // `http://cloudbox.test/api/product/${parsedID}`,
           // `http://cloudbox.test/api/product/1`,
-          `${apiUrl}/api/${parsedID}`,
+          `${apiUrl}/api/product/${parsedID}`,
           {
             method: "POST",
+            // headers: {
+            //   "Content-Type": "application/json",/
+            //   Accept: "application/json",
+            // },
             body: formProdData,
           }
         );
+
+        console.log("formProdData", formProdData);
+        console.log("resProduct", resProduct);
 
         if (resProduct.ok) {
           toast.success("Update Product Successfully!", {
             hideProgressBar: true,
           });
 
-          const data = await resProduct.json();
-          console.log("Expect: ", data);
-          // Add additional logic here after successful update if needed
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+          // const data = await resProduct.json();
+          // console.log("Expect: ", data);
+          // // Add additional logic here after successful update if needed
         } else {
           toast.error("Failed to update product!");
         }
