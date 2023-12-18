@@ -1,12 +1,15 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { userData } from "./Account-cards/extensionAuth/helper";
+// import { userData } from "./Account-cards/extensionAuth/helper";
 
 import "react-toastify/dist/ReactToastify.css";
 
 const ProfileHdr = () => {
-  const { username } = userData();
-  // console.log("username:", username);
+  // const { username } = userData();
+  // const { username } = localStorage.getItem("first_name" + "last_name");
+  let first_name = localStorage.getItem("first_name");
+  let last_name = localStorage.getItem("last_name");
+  // console.log("first_name:", first_name);
 
   return (
     <div className="w-full h-[5%]  bg-white shadow border border-white flex items-center px-4">
@@ -29,8 +32,10 @@ const ProfileHdr = () => {
                 style={{ color: "#072060" }}
                 className="h-[18px] w-[18px]"
               />
-              {/* <p>{username ? { username } : "Null Name"}</p> */}
-              <p>{username}</p>
+              {/* <p>{first_name ? { first_name } : "Null Name"}</p> */}
+              <p>
+                {first_name} {last_name}
+              </p>
             </div>
             <button className="text-[13px] font-semibold">
               <Icon

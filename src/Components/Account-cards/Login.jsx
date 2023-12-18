@@ -4,7 +4,7 @@ import Google from "../Assets/google.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-import { storeUser } from "./extensionAuth/helper";
+// import { storeUser } from "./extensionAuth/helper";
 
 const initialUser = { password: "", email: "" };
 
@@ -49,45 +49,45 @@ function Login() {
           password,
         }),
       });
+      const data = await response.json();
 
-      console.log(response.ok);
+      console.log(data);
 
-      if (response.ok) {
+      if (response) {
         console.log("response OK");
-        const { data } = await response.json();
+
+        localStorage.setItem("account_id", data?.data?.user?.account_id);
+        localStorage.setItem("first_name", data?.data?.user?.first_name);
+        localStorage.setItem("last_name", data?.data?.user?.last_name);
+        // const data  = await response.json();
         // console.log(data.data.token);
-        console.log("test", data.user.data);
+        // console.log("test", data.user.data);
 
-        if (data.token) {
-          console.log("data token okay");
-          console.log("Logged In");
+        console.log("data token okay");
+        console.log("Logged In");
 
-          storeUser(data);
+        // storeUser(data);
 
-          toast.success(
-            "Log in successful",
-            {
-              hideProgressBar: true,
-            },
-            200
-          );
+        toast.success(
+          "Log in successful",
+          {
+            hideProgressBar: true,
+          },
+          200
+        );
 
-          setTimeout(() => {
-            navigate("/dashboard");
-          });
-          // console.log("test here", data.user.email);
+        setTimeout(() => {
+          navigate("/dashboard");
+        });
+        // console.log("test here", data.user.email);
 
-          // Perform actions upon successful login (e.g., store user data, navigate to dashboard)
-          // Assuming storeUser function stores user data
-          // Navigate to the dashboard or any desired route
-          // For example, assuming you're using react-router-dom:
-          // navigate("/dashboard");
-        } else {
-          toast.error("Invalid email or password!", {});
-        }
+        // Perform actions upon successful login (e.g., store user data, navigate to dashboard)
+        // Assuming storeUser function stores user data
+        // Navigate to the dashboard or any desired route
+        // For example, assuming you're using react-router-dom:
+        // navigate("/dashboard");
       } else {
-        // Handle HTTP error status codes (non 2xx codes)
-        throw new Error("Login failed with status: " + response.status);
+        toast.error("Invalid email or password!", {});
       }
     } catch (error) {
       toast.error(
