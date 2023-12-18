@@ -49,6 +49,8 @@ const Product = ({ trigger }) => {
   };
 
   const [product, setProduct] = useState();
+  const [prodLength, setProdLength] = useState(0);
+
   // const { data } = useFetch("http://cloudbox.test/api/product");
 
   useEffect(() => {
@@ -60,6 +62,9 @@ const Product = ({ trigger }) => {
         return res.json();
       })
       .then((data) => {
+        // console.log("Set Data for length", data.length);
+        setProdLength(data.length);
+
         // Reverse the order of the data array before setting it in the state
         const reversedData = data.reverse();
         setProduct(reversedData);
@@ -109,7 +114,7 @@ const Product = ({ trigger }) => {
                 className={`w-[35px] h-[17px] bg-gray-200 rounded-[7px] flex items-center justify-center `}
               >
                 <span className="text-zinc-500 text-[9px] font-semibold font-['Poppins']">
-                  283
+                  {prodLength}
                 </span>
               </div>
             </button>
@@ -127,7 +132,8 @@ const Product = ({ trigger }) => {
               </span>
               <div className="w-[35px] h-[17px] bg-gray-200 rounded-[7px] flex items-center justify-center ">
                 <span className="text-zinc-500 text-[9px] font-semibold font-['Poppins']">
-                  283
+                  {/* filer length */}
+                  {prodLength}
                 </span>
               </div>
             </button>

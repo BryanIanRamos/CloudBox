@@ -9,14 +9,13 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const [isShowed, setIsShowed] = useState(false);
   const [isOk, SetIsOk] = useState(false);
 
-  //   console.log("ID=>", id);
-
   //   Transaction Data
   const [qty, setQty] = useState([]);
   const [trans_type, setType] = useState("");
   const [parIncome, setIncome] = useState(404);
   const [description, setDescription] = useState("Transaction Description");
   const [update_balance, setUpdate_balance] = useState(1);
+  const [temp_balance, setTemp_balance] = useState(0);
   const [location, setLocation] = useState("Sample City");
   const [account_id, setAccount_id] = useState(id);
   const [image, setImage] = useState(null);
@@ -29,6 +28,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const [total_amount, setTotalAmount] = useState(0);
   const [prod_id, setProduct] = useState(null);
   const [trans_id, setTrans_id] = useState(0);
+
+  console.log("temp_balance:::>", temp_balance);
 
   //   Product
   const [selectedProd, setSelectedProd] = useState([]);
@@ -54,7 +55,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       if (transLength > 0) {
         setTrans_id(transDT[transLength - 1].trans_id);
-        // setUpdate_balance(transDT[transLength - 1].update_balance);
+        setUpdate_balance(transDT[transLength - 1].update_balance);
         console.log("BALANCE", update_balance);
         // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
       } else {
@@ -115,6 +116,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
         setFilProd(filteredProduct);
 
         setTotalAmount((prevTotalAmount) => prevTotalAmount + amountToAdd);
+
+        // HERE HERE HERE
       } else {
         // console.log("Product not found");
       }
@@ -149,6 +152,16 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
   // MANAGE SALES
   useEffect(() => {
+    // setTemp_balance(update_balance + total_amount);
+    // Assuming update_balance is a string like "200.000"
+    const currentBalance = parseFloat(update_balance); // Convert the string to a floating-point number
+
+    // Assuming total_amount is the value you want to add to the balance
+    const newBalance = currentBalance + total_amount; // Perform the addition
+
+    // Set the updated balance to the state
+    setUpdate_balance(newBalance.toFixed(3)); // Convert back to string and update state
+
     const manageSales = async () => {
       // console.log("Transaction Data::");
       // console.log("Transaction Type:", trans_type);
@@ -167,7 +180,14 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       // console.log("JSON FILE: ", formSalesData);
 
-      if (quantity && total_amount && prod_id && trans_id) {
+      if (
+        quantity &&
+        total_amount &&
+        prod_id &&
+        trans_id
+
+        // false
+      ) {
         try {
           const resSales = await fetch(`${apiUrl}/api/sales`, {
             method: "POST",
@@ -211,6 +231,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const handleTransaction = async (e) => {
     e.preventDefault();
 
+    console.log("update_balance :::", update_balance);
+
     // setIncome(parseFloat(total_amount.toFixed(2)));
     const parsedParIncome = parseFloat(parIncome).toFixed(2); // Parse 'parIncome' to a two-decimal value
     setUpdate_balance(parseFloat(update_balance) + parseFloat(parsedParIncome));
@@ -236,6 +258,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
     const updateTransaction = [...selectedTrans, formTransData];
     setSelectedTrans(updateTransaction);
 
+    console.log("update_balance:++", formTransData.update_balance);
+
     // Transaction POST
     if (
       trans_type &&
@@ -244,6 +268,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
       update_balance &&
       location &&
       account_id
+      // false
     ) {
       try {
         const resTransaction = await fetch(`${apiUrl}/api/transaction`, {
@@ -277,8 +302,6 @@ const AddTransaction = ({ trigger, UIclose }) => {
       console.log("INVALID TRANSACTION");
     }
   };
-
-  console.log("filProd.img_url ", filProd.img_url);
 
   return (
     <div className={isShowed ? " " : "hidden"}>

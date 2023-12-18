@@ -21,30 +21,9 @@ const Dashboard = () => {
 
   const { data: transactions } = useFetch(`${apiUrl}/api/transaction`);
   const { data: latestBalance } = useFetch(`${apiUrl}/api/BalanceTrans`);
+  // const { data: userTransAPI } = useFetch(`${apiUrl}/api/BalanceTrans`);
+  const { data: userTransAPI } = useFetch(`${apiUrl}/api/userTrans`);
 
-  // console.log("Data:", transactions);
-
-  // useEffect(() => {
-  //   if (transactions !== null) {
-  //     const transLength = transactions.length;
-
-  //     if (transLength > 0) {
-  //       console.log("transLength", transLength);
-  //       setBalance(transactions[transLength - 1].update_balance);
-  //       console.log("BALAANCE-:>", balance);
-  //       // setTrans_id(transDT[transLength - 1].trans_id);
-  //       // setUpdate_balance(transDT[transLength - 1].update_balance);
-  //       // console.log("BALANCE", update_balance);
-  //       // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
-  //     } else {
-  //       // console.log("The transDT array is empty");
-  //     }
-  //   } else {
-  //     // console.log("transDT is null or undefined");
-  //   }
-  // }, [transactions]);
-
-  // console.log("BALAANCE-:>", latestBalance.currentbalance);
   useEffect(() => {
     if (latestBalance && latestBalance[0]?.currentbalance > 0) {
       const value = latestBalance[0].currentbalance;
@@ -54,6 +33,8 @@ const Dashboard = () => {
   }, [latestBalance]);
 
   const UIclose = () => {
+    window.location.reload();
+
     setTransaction(false);
   };
 
@@ -64,13 +45,6 @@ const Dashboard = () => {
   const handleTransaction = () => {
     setTransaction(true);
   };
-
-  const { mergedData: userTransAPI } = useJoinTables(
-    `${apiUrl}/api/transaction`,
-    `${apiUrl}/api/user`,
-    "account_id"
-    // { transaction }
-  );
 
   const [sumDataSales, setSumDataSales] = useState([]);
   const [totalQuantitySales, setTotalQuantitySales] = useState(0);
@@ -97,10 +71,6 @@ const Dashboard = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-
-  // console.log("Joined API: ", userTransAPI);
-  // console.log("Value API: ", userTransAPI.joinedData[0].name);
-  // console.log("Parsed API: ", userTransAPI.transactions[0].location);
 
   return (
     <div className="flex w-screen h-screen ">
@@ -263,19 +233,14 @@ const Dashboard = () => {
                       <div className="flex gap-4 px-3">
                         <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
                           <span className="font-bold text-white text-[17px]">
-                            {elem.joinedData[0].first_name
-                              ? elem.joinedData[0].first_name.charAt(0)
-                              : ""}
-                            {elem.joinedData[0].last_name
-                              ? elem.joinedData[0].last_name.charAt(0)
-                              : ""}
+                            {elem.first_name ? elem.first_name.charAt(0) : ""}
+                            {elem.last_name ? elem.last_name.charAt(0) : ""}
                           </span>
                         </div>
                         {/* <div className="flex gap-5 border"> */}
                         <div className="flex flex-col  w-[120px] ">
                           <p className="text-white text-xs font-bold font-Poppins">
-                            {elem.joinedData[0].first_name}{" "}
-                            {elem.joinedData[0].last_name}
+                            {elem.first_name} {elem.last_name}
                           </p>
                           <p className="text-white text-xs font-normal font-['Poppins'] mr-5 mt-1">
                             {/* {new Date(elem.created_at).toLocaleDateString()} */}

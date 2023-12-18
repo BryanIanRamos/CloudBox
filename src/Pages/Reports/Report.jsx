@@ -5,8 +5,12 @@ import CircularProgressBar from "../../Components/CircularProgressBar";
 import useFetch from "../../API/useFetch";
 
 const Report = () => {
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
   const { data, loading, error } = useFetch("http://cloudbox.test/api/user");
   console.log("Report Data:", data);
+
+  const { data: activityLog } = useFetch(`${apiUrl}/api/activity-log`);
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -73,6 +77,8 @@ const Report = () => {
       action: "Update",
     },
   ]);
+
+  console.log("Activities::++", activityLog);
 
   // const [employees, setEmployees] = useState([
   //   { id: 1, name: "Aron Fernandez", date: "June 6, 2023" },
@@ -149,7 +155,7 @@ const Report = () => {
                 <div className="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 overflow-hidden">
                   <div className="mb-2">
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
-                      Product
+                      Activity Log
                       <span className="text-blue-950 text-xs font-normal font-['Poppins']">
                         6 Activities
                       </span>
@@ -188,38 +194,42 @@ const Report = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="border h-[155px] overflow-y-auto  scroll-snap-type-y w-fit">
-                    {products &&
-                      products.map((elem, index) => (
+                  <div className="h-[155px] overflow-y-auto  scroll-snap-type-y w-fit">
+                    {/* activityLog */}
+                    {activityLog &&
+                      activityLog.map((elem, index) => (
                         <div key={index} className="flex">
                           <div className="w-[70.30px] h-[25.52px] bg-[#DCE0E9]  border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                              {elem.id}
+                              {elem.account_id}
                             </p>
                           </div>
                           <div className="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                              {elem.name}
+                              {elem.user_name}
                             </p>
                           </div>
                           <div className="w-[63.77px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                              {elem.prodID}
+                              {elem.prod_id}
                             </p>
                           </div>
                           <div className="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                              {elem.prodName}
+                              {elem.prod_name}
                             </p>
                           </div>
                           <div className="w-[80.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                              {elem.date}
+                              {/* {elem.created_at}*/}
+                              {new Date(elem.created_at).toLocaleDateString(
+                                "en-GB"
+                              )}
                             </p>
                           </div>
                           <div className="w-[82.38px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
-                              {elem.action}
+                              {elem.type}
                             </p>
                           </div>
                         </div>

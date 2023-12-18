@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import SideNavBar from "../../Components/SideNavBar";
 import ProfileHdr from "../../Components/ProfileHdr";
 import useJoinTables from "../../API/useJoinTables";
+import useFetch from "../../API/useFetch";
 
 const Calendar = () => {
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
+
   const [tempDate, setTempDate] = useState([
     { date: 1 },
     { date: 2 },
@@ -17,12 +20,14 @@ const Calendar = () => {
     { date: 10 },
   ]);
 
-  const { mergedData } = useJoinTables(
-    "http://cloudbox.test/api/transaction",
-    "http://cloudbox.test/api/user",
-    "account_id"
-    // { transaction }
-  );
+  // const { mergedData } = useJoinTables(
+  //   "http://cloudbox.test/api/transaction",
+  //   "http://cloudbox.test/api/user",
+  //   "account_id"
+  //   // { transaction }
+  // );
+
+  const { data: mergedData } = useFetch(`${apiUrl}/api/userTrans`);
 
   console.log("Data:", mergedData);
 
@@ -179,8 +184,7 @@ const Calendar = () => {
                             <div className="w-[200.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
                               <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
                                 {/* {elem.name} */}
-                                {elem.joinedData[0].first_name}{" "}
-                                {elem.joinedData[0].last_name}
+                                {elem.first_name} {elem.last_name}
                               </p>
                             </div>
                             <div className="w-[100.30px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
