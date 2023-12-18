@@ -16,9 +16,10 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const [trans_type, setType] = useState("");
   const [parIncome, setIncome] = useState(404);
   const [description, setDescription] = useState("Transaction Description");
-  const [update_balance, setUpdate_balance] = useState(1500);
+  const [update_balance, setUpdate_balance] = useState(1);
   const [location, setLocation] = useState("Sample City");
   const [account_id, setAccount_id] = useState(id);
+  const [image, setImage] = useState(null);
 
   // const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -41,9 +42,11 @@ const AddTransaction = ({ trigger, UIclose }) => {
     prod_id,
     trans_id,
   };
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
-  const { data: products } = useFetch("http://cloudbox.test/api/product");
-  const { data: transDT } = useFetch("http://cloudbox.test/api/transaction");
+  const { data: products } = useFetch(`${apiUrl}/api/product`);
+  const { data: transDT } = useFetch(`${apiUrl}/api/transaction`);
+  // const { data: transDT } = useFetch("http://cloudbox.test/api/transaction");
 
   useEffect(() => {
     if (transDT !== null) {
@@ -51,6 +54,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       if (transLength > 0) {
         setTrans_id(transDT[transLength - 1].trans_id);
+        setUpdate_balance(transDT[transLength - 1].update_balance);
+        console.log("BALANCE", update_balance);
         // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
       } else {
         // console.log("The transDT array is empty");
@@ -87,6 +92,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
   }, [amountsArray]);
 
   const prodDisply = () => {
+    fetchProductByID();
     if (quantity > 0 && prod_id) {
       const filteredProduct = products.find(
         (product) => product.prod_id === prod_id
@@ -117,6 +123,30 @@ const AddTransaction = ({ trigger, UIclose }) => {
     }
   };
 
+  const fetchProductByID = async () => {
+    // console.log("IDD", productId);
+
+    try {
+      const response = await fetch(`${apiUrl}/api/product/${prod_id}`);
+      console.log("Triggered");
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const productData = await response.json();
+      console.log("POST OKAY");
+      console.log("Proceed", productData.image_url);
+      setImage(productData.image_url);
+
+      return productData; // Return the filtered product data
+    } catch (error) {
+      console.error("Error fetching product data:", error.message);
+      // You can handle the error accordingly
+      return null;
+    }
+  };
+
   // MANAGE SALES
   useEffect(() => {
     const manageSales = async () => {
@@ -139,7 +169,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       if (quantity && total_amount && prod_id && trans_id) {
         try {
-          const resSales = await fetch("http://cloudbox.test/api/sales", {
+          const resSales = await fetch(`${apiUrl}/api/sales`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -176,15 +206,17 @@ const AddTransaction = ({ trigger, UIclose }) => {
     manageSales();
   }, [selectedSales]);
 
-  console.log("AMOUNT:", parIncome);
+  // console.log("AMOUNT:", parIncome);
 
   const handleTransaction = async (e) => {
     e.preventDefault();
 
     // setIncome(parseFloat(total_amount.toFixed(2)));
+    const parsedParIncome = parseFloat(parIncome).toFixed(2); // Parse 'parIncome' to a two-decimal value
+    setUpdate_balance(parseFloat(update_balance) + parseFloat(parsedParIncome));
 
     const income = parseInt(parIncome.toFixed(0));
-    console.log("INCOME", parIncome);
+    // console.log("INCOME", parIncome);
 
     const formTransData = {
       trans_type,
@@ -195,11 +227,11 @@ const AddTransaction = ({ trigger, UIclose }) => {
       account_id,
     };
 
-    console.log("trans_type", trans_type);
-    console.log("income", income);
-    console.log("description", description);
-    console.log("update_balance", update_balance);
-    console.log("location", location);
+    // console.log("trans_type", trans_type);
+    // console.log("income", income);
+    // console.log("description", description);
+    // console.log("update_balance", update_balance);
+    // console.log("location", location);
 
     const updateTransaction = [...selectedTrans, formTransData];
     setSelectedTrans(updateTransaction);
@@ -214,21 +246,21 @@ const AddTransaction = ({ trigger, UIclose }) => {
       account_id
     ) {
       try {
-        const resTransaction = await fetch(
-          "http://cloudbox.test/api/transaction",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(formTransData),
-          }
-        );
+        const resTransaction = await fetch(`${apiUrl}/api/transaction`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(formTransData),
+        });
 
         if (resTransaction.ok) {
           // If the response is okay (status 200-299), do something with the response data
           const transData = await resTransaction.json();
+          toast.success("Transaction Successful!", {
+            hideProgressBar: true,
+          });
           console.log("Post Transaction successful");
           console.log("Response from  Transaction API:", transData);
           setTrans_id(transData.trans_id);
@@ -246,6 +278,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
     }
   };
 
+  console.log("filProd.img_url ", filProd.img_url);
+
   return (
     <div className={isShowed ? " " : "hidden"}>
       {/* <button onClick={UIclose}>Back</button> */}
@@ -255,7 +289,12 @@ const AddTransaction = ({ trigger, UIclose }) => {
       >
         <div className="w-full h-[465px] bg-[#072060] flex relative ">
           <div className="bg-[#F2EFEF] h-full w-[217px]">
-            <img className="w-full h-[136px]" src="#" alt="Product_img"></img>
+            <img
+              className="w-full h-[136px]"
+              src={image}
+              alt="Product_img"
+            ></img>
+
             <h2 className="w-full text-center text-sky-800 text-[16px] font-bold font-['Poppins'] py-1">
               {filProd ? `${filProd.prod_name}` : "...."}
             </h2>
@@ -291,11 +330,17 @@ const AddTransaction = ({ trigger, UIclose }) => {
             </div>
           </div>
           <div className="absolute right-[50px] w-[400px] h-full flex ">
-            <div className=" w-full flex flex-col  items-center mt-5">
+            <div className=" w-full flex flex-col  items-center mt-5 relative">
+              <div className="absolute right-0 top-2" onClick={UIclose}>
+                <Icon
+                  icon="tabler:circle-x-filled"
+                  // style={{ color: "#FD6E67" }}
+                  className="h-[35px] w-[35px] text-[#FD6E67] hover:text-white"
+                />
+              </div>
               <Icon
                 icon="solar:box-bold-duotone"
-                className="h-[68px] w-[64px] text-white"
-                onClick={UIclose}
+                className="h-[68px] w-[64px] text-white mt-4"
               />
               <h2 className="text-white text-xl font-bold font-['Poppins'] uppercase">
                 Transaction

@@ -179,7 +179,8 @@ const Calendar = () => {
                             <div className="w-[200.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
                               <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
                                 {/* {elem.name} */}
-                                {elem.joinedData[0].name}
+                                {elem.joinedData[0].first_name}{" "}
+                                {elem.joinedData[0].last_name}
                               </p>
                             </div>
                             <div className="w-[100.30px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">

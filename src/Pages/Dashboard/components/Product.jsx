@@ -11,6 +11,9 @@ import UpdateProd from "./UpdateProd";
 
 const Product = ({ trigger }) => {
   const [filter, setFilter] = useState(false);
+  const [isShowed, setIsShowed] = useState(false);
+  const [ID, setID] = useState(0);
+
   const [Back, setBack] = useState(true);
   // const [product, setProduct] = useState([]);
   // const urlAPI = import.meta.env.VITE_PRODUCT_API_URL;
@@ -19,7 +22,11 @@ const Product = ({ trigger }) => {
   // });
   const [addProduct, setAddProduct] = useState(false);
 
-  console.log("Set:", addProduct);
+  // console.log("Set:", addProduct);
+
+  const triggerUI = () => {
+    setIsShowed(!isShowed);
+  };
 
   const closeUI = () => {
     setAddProduct(false);
@@ -60,19 +67,10 @@ const Product = ({ trigger }) => {
       });
   }, [addProduct]);
 
-  console.log("Product_Data: ", product);
-
-  if (product) {
-    product.forEach((item) => {
-      console.log("Product Image:", item.description); // Access description of each product item
-      console.log("Image:", item.image_url); // Access image of each product item
-    });
-  }
-
   return (
     <div className="relative pt-[30px]">
       <AddProduct trigger={addProduct} closeUI={closeUI} />
-      <UpdateProd />
+      <UpdateProd setOpen={isShowed} triggerUI={triggerUI} id={ID} />
       <div className="px-20">
         <div className="flex relative items-center h-10 mb-5">
           <div className="text-blue-950 text-[32px] font-bold font-['Poppins']">
@@ -203,7 +201,13 @@ const Product = ({ trigger }) => {
                             </p>
                           </div>
                           <div className="flex justify-end gap-1">
-                            <button className="w-[50px] h-auto bg-amber-500 rounded-[17.22px] px-3 py-1 flex items-center justify-center">
+                            <button
+                              className="w-[50px] h-auto bg-amber-500 rounded-[17.22px] px-3 py-1 flex items-center justify-center"
+                              onClick={() => {
+                                triggerUI();
+                                setID(elem.prod_id);
+                              }}
+                            >
                               <span className="text-white text-[8.11px] font-bold font-['Poppins']">
                                 Update
                               </span>
@@ -238,11 +242,11 @@ const Product = ({ trigger }) => {
                     />
                     <input onChange={(e) => {}} className=" w-fit h-6 p-1" />
                   </div>
-                  <button className="w-[74px] h-[27px] bg-sky-800 rounded-[25.48px] absolute right-0 flex items-center justify-center">
+                  {/* <button className="w-[74px] h-[27px] bg-sky-800 rounded-[25.48px] absolute right-0 flex items-center justify-center">
                     <span className="text-white text-xs font-bold font-['Poppins']">
                       Add
                     </span>
-                  </button>
+                  </button> */}
                 </div>
 
                 {product && (

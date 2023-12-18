@@ -92,7 +92,7 @@ const AddProduct = ({ trigger, closeUI }) => {
   //   // // console.log("Quantity: ", prodData.status);
   //   // console.log("Available: ", prodData.status);
   //   // console.log("Category: ", prodData.category_name);
-  console.log("IMage: ", image);
+  // console.log("IMage: ", image);
   // };
 
   // useEffect(() => {
@@ -105,9 +105,9 @@ const AddProduct = ({ trigger, closeUI }) => {
   // }, []);
 
   useEffect(() => {
-    console.log("quantity : ", quantity);
-    console.log("prod_id : ", prod_id);
-    console.log("account_id :", account_id);
+    // console.log("quantity : ", quantity);
+    // console.log("prod_id : ", prod_id);
+    // console.log("account_id :", account_id);
     const submitStock = async () => {
       if (quantity && prod_id && account_id) {
         try {
@@ -151,7 +151,8 @@ const AddProduct = ({ trigger, closeUI }) => {
     // display();
     const formProdData = new FormData();
     formProdData.append("prod_name", prod_name);
-    formProdData.append("price", price);
+    const priceValue = parseFloat(price);
+    formProdData.append("price", priceValue);
     formProdData.append("description", description);
     formProdData.append("status", status);
     formProdData.append("category_id", category_id);
@@ -161,7 +162,7 @@ const AddProduct = ({ trigger, closeUI }) => {
       try {
         const resProduct = await fetch("http://cloudbox.test/api/product", {
           method: "POST",
-         
+
           // body: JSON.stringify(formProdData),
           body: formProdData,
         });
@@ -240,7 +241,7 @@ const AddProduct = ({ trigger, closeUI }) => {
           <div className="w-full h-full bg-sky-800 rounded-[18px] py-4 px-[10%] flex flex-col gap-5 ">
             <div className="flex flex-col h-full px-0 py-3">
               <div className="flex gap-5 flex-col justify-center items-center">
-                <div className="flex flex-row gap-6">
+                <div className="flex flex-row gap-6  w-full justify-center mt-3">
                   <div>
                     <h3 className="text-white text-[14px] font-semibold font-['Poppins']">
                       Product Name
@@ -283,14 +284,17 @@ const AddProduct = ({ trigger, closeUI }) => {
                       )}
                       // onChange={handleCategoryChange}
                     /> */}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files[0]; // Get the file object
-                        setImage(file); // Set the file object to state
-                      }}
-                    />
+                    {/* <div className="border">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="w-full h-full"
+                        onChange={(e) => {
+                          const file = e.target.files[0]; // Get the file object
+                          setImage(file); // Set the file object to state
+                        }}
+                      />
+                    </div> */}
                   </div>
 
                   <div>
@@ -302,7 +306,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                         <span className="text-sky-800 font-['Poppins']">$</span>
                         <input
                           type="number"
-                          className="border border-3 w-[18px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
+                          className=" w-[85px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none text-[12px]"
                           // step="0.01" // Define the step to allow two decimal places
                           placeholder="Enter price"
                           onChange={(e) => setPrice(parseFloat(e.target.value))}
@@ -311,7 +315,7 @@ const AddProduct = ({ trigger, closeUI }) => {
                     </div>
                   </div>
                 </div>
-                <div className=" flex w-full gap-10">
+                <div className=" flex w-full gap-10  justify-center">
                   <div className="w-[50%]">
                     <h3 className="text-white text-[14px] font-semibold font-['Poppins']">
                       Description
@@ -338,18 +342,29 @@ const AddProduct = ({ trigger, closeUI }) => {
                       />
                     </div>
                   </div>
-                  <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-5 ">
                     <div>
                       <h3 className="text-white text-[14px] font-semibold font-['Poppins']">
                         Quantity
                       </h3>
                       <div className="bg-zinc-100 pl-2 w-fit rounded-[5px] flex items-center">
                         <input
-                          type="number" 
+                          type="number"
                           // name="description"
                           // value={quantity}
                           onChange={(e) => setQuantity(e.target.value)}
                           className="w-[108px] h-[36px] bg-zinc-100 pl-2 rounded-[5px] focus:outline-none"
+                        />
+                      </div>
+                      <div className="text-[9px] mt-3 w-[128px]">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="w-full h-full"
+                          onChange={(e) => {
+                            const file = e.target.files[0]; // Get the file object
+                            setImage(file); // Set the file object to state
+                          }}
                         />
                       </div>
                     </div>

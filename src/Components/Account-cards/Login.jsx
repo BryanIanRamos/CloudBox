@@ -12,6 +12,7 @@ function Login() {
   // left
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
   // Function to handle checkbox change
   const handleCheckboxChange = () => {
@@ -37,7 +38,7 @@ function Login() {
     console.log(password);
 
     try {
-      let response = await fetch("http://cloudbox.test/api/login", {
+      let response = await fetch(`${apiUrl}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,6 +62,8 @@ function Login() {
           console.log("data token okay");
           console.log("Logged In");
 
+          storeUser(data);
+
           toast.success(
             "Log in successful",
             {
@@ -75,7 +78,7 @@ function Login() {
           // console.log("test here", data.user.email);
 
           // Perform actions upon successful login (e.g., store user data, navigate to dashboard)
-          storeUser(data); // Assuming storeUser function stores user data
+          // Assuming storeUser function stores user data
           // Navigate to the dashboard or any desired route
           // For example, assuming you're using react-router-dom:
           // navigate("/dashboard");
@@ -87,15 +90,21 @@ function Login() {
         throw new Error("Login failed with status: " + response.status);
       }
     } catch (error) {
+      toast.error(
+        "Login failed. Please try again later.",
+        {
+          hideProgressBar: true,
+        },
+        200
+      );
       console.error("Login failed:", error);
-      toast.error("Login failed. Please try again later.", {});
     }
   };
 
   return (
     <div className="text-center w-[296px] h-[400px] absolute pt-[20px]  items-start">
       <form onSubmit={handleLogin}>
-        {/* <ToastContainer /> */}
+        <ToastContainer />
         <h1 className="text-left text-black text-[26px] font-bold font-['Poppins'] not-italic ">
           Sign In
         </h1>

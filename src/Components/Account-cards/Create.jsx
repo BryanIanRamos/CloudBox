@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,25 +10,47 @@ const initialUser = { email: "", password: "", username: "" };
 function Create() {
   // const [user, setUser] = useState(initialUser);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
-  const [user, setUser] = useState({ username: "", email: "", password: "" });
+  // const [name, setName] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const signUp = async () => {
     try {
-      const url = `http://localhost:1337/api/auth/local/register`;
-      console.log("User", user.username);
-      console.log("pass", user.password);
-      console.log("email", user.email);
-      if (user.username && user.email && user.password) {
-        const res = await axios.post(url, user);
-        // console.log("res", );
+      const formData = new FormData();
+      // formData.append("name", name);
+      formData.append("first_name", first_name);
+      formData.append("last_name", last_name);
+      formData.append("email", email);
+      formData.append("password", password);
 
-        if (res.statusText === "OK") {
+      // console.log("User", name);
+      // console.log("pass", email);
+      // console.log("email", password);
+
+      if (first_name && last_name && email && password) {
+        // const resRegister = await fetch("http://cloudbox.test/api/user", {
+        const resRegister = await fetch(`${apiUrl}/api/user`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (resRegister.statusText === "OK") {
           toast.success("Registered successfully!", {
             hideProgressBar: true,
           });
-          setUser(initialUser);
-          console.log("res", res);
+          console.log("resRegister", resRegister);
+
+          toast.success(
+            "Account Registered",
+            {
+              hideProgressBar: true,
+            },
+            200
+          );
 
           setTimeout(() => {
             navigate("/");
@@ -43,18 +65,10 @@ function Create() {
     }
   };
 
-  const handleUserChange = ({ target }) => {
-    const { name, value } = target;
-    setUser((currentUser) => ({
-      ...currentUser,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    signUp(); // Call signUp when form is submitted
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   signUp(); // Call signUp when form is submitted
+  // };
 
   // useState(() => {
   //   signUp();
@@ -63,91 +77,88 @@ function Create() {
   return (
     <div className="absolute ">
       <ToastContainer />
-      <form
+      <div
         // method="POST"
-        onSubmit={handleSubmit}
-        className=" w-[445px] h-[400px] ml-[19%] text-center"
+        // onSubmit={signUp}
+        className=" w-[445px] h-[400px] ml-[19%] text-center "
       >
         <h1 className=" text-blue-900 text-[28px] font-bold font-['Poppins']">
           Registration
         </h1>
         {/* fill form  */}
         <div className="w-full h-[0px] border border-blue-900 mt-5"></div>
-        <div className="p-[12%] pt-0 mt-4 justify-center">
-          <div className="flex flex-cols gap-6 justify-center">
-            {/* Put here */}
-            <div>
-              <div className=" ">
-                <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
-                  Username
-                </h1>
-                <input
-                  type="username"
-                  name="username"
-                  value={user.username}
-                  onChange={handleUserChange}
-                  // placeholder="Enter your email"
-                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
-                />
-              </div>
+        <div className="p-[12%] pt-0 mt-4 justify-center  ">
+          <div className="flex flex-cols gap-6 justify-center w-auto mt-6">
+            <div className=" ">
+              <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+                First Name
+              </h1>
+              <input
+                type="text"
+                onChange={(e) => setFirst_name(e.target.value)}
+                className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                autoComplete="off" // Disable autocomplete
+              />
+            </div>{" "}
+            <div className=" ">
+              <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+                Last Name
+              </h1>
+              <input
+                type="text"
+                onChange={(e) => setLast_name(e.target.value)}
+                className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                autoComplete="off" // Disable autocomplete
+              />
             </div>
-            {/* <InputDisplay text={"First Name"} /> */}
-            {/* <InputDisplay text={"Last Name"} /> */}
-            {/* <InputDisplay text={"Position"} /> */}
           </div>
           <div className="flex flex-cols gap-6 mt-[25px] justify-center">
             {/* <InputDisplay text={"Location"} /> */}
-            <div>
-              <div className=" ">
-                <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+            <div className="flex gap-6">
+              <div>
+                <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold ">
                   Email
                 </h1>
                 <input
-                  type="email"
-                  name="email"
-                  value={user.email}
-                  onChange={handleUserChange}
-                  // placeholder="Enter your email"
-                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
+                  type="text"
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                  autoComplete="off" // Disable autocomplete
                 />
               </div>
+              <div>
+                <div className=" ">
+                  <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+                    Password
+                  </h1>
+                  <input
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                    autoComplete="off" // Disable autocomplete
+                  />
+                </div>
+              </div>
             </div>
-            {/* <InputDisplay text={"Email"} /> */}
           </div>
           <div className="flex flex-cols gap-6 mt-[25px] justify-center">
-            {/* <InputDisplay text={"Password"} /> */}
-            <div className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold"></div>
-            <div>
-              <div className=" ">
-                <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
-                  Password
-                </h1>
-                <input
-                  type="password"
-                  name="password"
-                  value={user.password}
-                  onChange={handleUserChange}
-                  // placeholder="Enter password"
-                  className="w-[149px] h-[27px] bg-white border border-green-400  mt-4"
-                />
-              </div>
-            </div>
-
-            {/* <InputDisplay text={"Re-password"} /> */}
+            <div className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold flex flex-start"></div>
+            <InputDisplay text={"Re-password"} />
           </div>
 
           <div className="ml-[5%] mt-[35px] absolute flex flex-col justify-center items-center">
-            <div className="">{/* <DateForm /> */}</div>
+            {/* <div className="">
+              <DateForm />
+            </div> */}
             <button
-              type="submit"
-              // onClick={signUp}
+              onClick={signUp}
               className=" w-[295px] h-[43px] bg-blue-900 hover:bg-blue-700 border border-black mt-[50px] flex justify-center items-center"
             >
               <h1 className=" text-center text-white font-bold ">Proceed</h1>
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

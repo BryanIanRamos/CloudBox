@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideNavBar from "../../Components/SideNavBar";
 import ProfileHdr from "../../Components/ProfileHdr";
 import CircularProgressBar from "../../Components/CircularProgressBar";
@@ -81,6 +81,58 @@ const Report = () => {
   //   { id: 4, name: "Aron Fernandez", date: "June 6, 2023" },
   //   { id: 5, name: "Aron Fernandez", date: "June 6, 2023" },
   // ]);
+
+  const [sumData, setSumData] = useState([]);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+
+  useEffect(() => {
+    // Make an API request to fetch the data
+    fetch("http://cloudbox.test/api/stock")
+      .then((response) => response.json())
+      .then((sumData) => {
+        setSumData(sumData); // Save the fetched data to the state
+
+        // Calculate the sum of 'quantity' values
+        const sum = sumData.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue.quantity;
+        }, 0);
+        console.log(sum);
+
+        setTotalQuantity(sum); // Save the total sum to the state
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  const [sumDataSales, setSumDataSales] = useState([]);
+  const [totalQuantitySales, setTotalQuantitySales] = useState(0);
+
+  useEffect(() => {
+    // Make an API request to fetch the data
+    fetch("http://cloudbox.test/api/sales")
+      .then((response) => response.json())
+      .then((sumDataSales) => {
+        setSumDataSales(sumDataSales); // Save the fetched data to the state
+
+        // Calculate the sum of 'quantity' values
+        const sum = sumDataSales.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue.quantity;
+        }, 0);
+
+        // Convert sum to an integer
+        const totalQuantityInteger = parseInt(sum);
+
+        console.log("totalQuantityInteger", totalQuantityInteger);
+        setTotalQuantitySales(totalQuantityInteger);
+        setSales(totalQuantityInteger); // Save the total sum as an integer to the state
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  console.log("totalQuantitySales", totalQuantitySales);
 
   return (
     <>
@@ -213,7 +265,7 @@ const Report = () => {
                             </div>
                             <div className="w-[113.65px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-left items-center pl-2">
                               <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
-                                {elem.name}
+                                {elem.first_name} {elem.last_name}
                               </p>
                             </div>
                             <div className="w-[89.22px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
@@ -236,7 +288,7 @@ const Report = () => {
                 <div className="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
                   <div>
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
-                      Stack and Sales
+                      Stock and Sales
                       <span className="text-blue-950 text-xs font-normal font-['Poppins']">
                         2023
                       </span>
@@ -244,7 +296,7 @@ const Report = () => {
                     <div className="flex justify-center gap-[65px] h-auto">
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
-                          percentage={40}
+                          percentage={totalQuantity}
                           setRadius={100}
                           stroke={23}
                           // secColor={true}
@@ -256,14 +308,14 @@ const Report = () => {
                       </div>
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
-                          percentage={78}
+                          percentage={totalQuantitySales}
                           setRadius={100}
                           stroke={23}
                           secColor={true}
                           isLarge={true}
                         />
                         <p className="text-center text-[#FEAC00] text-base font-bold font-['Poppins']">
-                          Total Stock
+                          Total sales
                         </p>
                       </div>
                     </div>

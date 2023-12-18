@@ -17,12 +17,33 @@ const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
   const [transaction, setTransaction] = useState(false);
   const [movement, setMovement] = useState(0);
+  const [balance, setBalance] = useState(0);
 
   const { data: transactions } = useFetch(
     "http://cloudbox.test/api/transaction"
   );
 
-  console.log("Data:", transactions);
+  // console.log("Data:", transactions);
+
+  useEffect(() => {
+    if (transactions !== null) {
+      const transLength = transactions.length;
+
+      if (transLength > 0) {
+        console.log("transLength", transLength);
+        setBalance(transactions[transLength - 1].update_balance);
+        console.log("BALAANCE:", balance);
+        // setTrans_id(transDT[transLength - 1].trans_id);
+        // setUpdate_balance(transDT[transLength - 1].update_balance);
+        // console.log("BALANCE", update_balance);
+        // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
+      } else {
+        // console.log("The transDT array is empty");
+      }
+    } else {
+      // console.log("transDT is null or undefined");
+    }
+  }, [transactions]);
 
   const UIclose = () => {
     setTransaction(false);
@@ -43,7 +64,33 @@ const Dashboard = () => {
     // { transaction }
   );
 
-  console.log("Joined API: ", userTransAPI);
+  const [sumDataSales, setSumDataSales] = useState([]);
+  const [totalQuantitySales, setTotalQuantitySales] = useState(0);
+
+  useEffect(() => {
+    // Make an API request to fetch the data
+    fetch("http://cloudbox.test/api/sales")
+      .then((response) => response.json())
+      .then((sumDataSales) => {
+        setSumDataSales(sumDataSales); // Save the fetched data to the state
+
+        // Calculate the sum of 'quantity' values
+        const sum = sumDataSales.reduce((accumulator, currentValue) => {
+          return accumulator + currentValue.quantity;
+        }, 0);
+
+        // Convert sum to an integer
+        const totalQuantityInteger = parseInt(sum);
+
+        console.log("totalQuantityInteger", totalQuantityInteger);
+        setTotalQuantitySales(totalQuantityInteger); // Save the total sum as an integer to the state
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  // console.log("Joined API: ", userTransAPI);
   // console.log("Value API: ", userTransAPI.joinedData[0].name);
   // console.log("Parsed API: ", userTransAPI.transactions[0].location);
 
@@ -87,9 +134,10 @@ const Dashboard = () => {
                       <div>
                         <div className="text-black text-[33.61px] font-bold font-['Poppins']">
                           <span className="text-zinc-500 text-2xl font-medium font-['Poppins']">
-                            $
+                            ₱{" "}
                           </span>
-                          25,685
+                          {/* 25,685 */}
+                          {balance}
                         </div>
                       </div>
                       <div className="flex gap-1">
@@ -170,7 +218,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <ButtomSide />
+                <ButtomSide totalQuantitySales={totalQuantitySales} />
               </div>
             ) : (
               <Product
@@ -207,18 +255,19 @@ const Dashboard = () => {
                       <div className="flex gap-4 px-3">
                         <div className="w-[36.71px] h-[36.71px] bg-[#155699] rounded flex items-center justify-center">
                           <span className="font-bold text-white text-[17px]">
-                            {elem.joinedData &&
-                              elem.joinedData.length > 0 &&
-                              elem.joinedData[0].name
-                                .split(" ")
-                                .map((word) => word.charAt(0).toUpperCase())
-                                .join("")}
+                            {elem.joinedData[0].first_name
+                              ? elem.joinedData[0].first_name.charAt(0)
+                              : ""}
+                            {elem.joinedData[0].last_name
+                              ? elem.joinedData[0].last_name.charAt(0)
+                              : ""}
                           </span>
                         </div>
                         {/* <div className="flex gap-5 border"> */}
                         <div className="flex flex-col  w-[120px] ">
                           <p className="text-white text-xs font-bold font-Poppins">
-                            {elem.joinedData[0].name}
+                            {elem.joinedData[0].first_name}{" "}
+                            {elem.joinedData[0].last_name}
                           </p>
                           <p className="text-white text-xs font-normal font-['Poppins'] mr-5 mt-1">
                             {/* {new Date(elem.created_at).toLocaleDateString()} */}
@@ -247,7 +296,7 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-function ButtomSide() {
+function ButtomSide({ totalQuantitySales }) {
   return (
     <>
       <div className="flex max-md:flex-col max-md:justify-center max-md:items-center">
@@ -327,14 +376,16 @@ function ButtomSide() {
           <div className="flex items-center h-fit gap-5">
             <div>
               <h2 className="text-black text-[35.04px] font-bold font-['Inria Sans']">
-                11,017
+                {/* 11,017 */}
+                {totalQuantitySales}{" "}
                 <span className="text-zinc-500 text-lg font-bold font-['Inria Sans']">
-                  Bottles
+                  {/* Bottles */}
+                  Products
                 </span>
               </h2>
             </div>
             <CircularProgressBar
-              percentage={80}
+              percentage={totalQuantitySales}
               setRadius={45}
               stroke={11}
               secColor={true}

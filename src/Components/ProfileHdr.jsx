@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const ProfileHdr = () => {
   const { username } = userData();
-  console.log("username:", username);
+  // console.log("username:", username);
 
   return (
     <div className="w-full h-[5%]  bg-white shadow border border-white flex items-center px-4">
