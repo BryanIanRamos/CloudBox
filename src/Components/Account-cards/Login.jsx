@@ -42,18 +42,20 @@ function Login() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json",
+          // Accept: "application/json",
         },
         body: JSON.stringify({
           email,
           password,
         }),
       });
-      const data = await response.json();
 
-      console.log(data);
+      console.log(response.status);
 
       if (response) {
+        const data = await response.json();
+
+        console.log(data);
         console.log("response OK");
 
         localStorage.setItem("account_id", data?.data?.user?.account_id);
