@@ -12,7 +12,9 @@ function Login() {
   // left
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
+  let apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
+
+  console.log("URL", apiUrl);
 
   // Function to handle checkbox change
   const handleCheckboxChange = () => {
@@ -41,8 +43,8 @@ function Login() {
       let response = await fetch(`${apiUrl}/api/login`, {
         method: "POST",
         headers: {
-          // "Content-Type": "application/json",
-          Accept: "application/json",
+          "Content-Type": "application/json",
+          // Accept: "application/json",
         },
         body: JSON.stringify({
           email,
