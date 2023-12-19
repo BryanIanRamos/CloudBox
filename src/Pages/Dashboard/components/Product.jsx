@@ -196,8 +196,8 @@ const Product = ({ trigger }) => {
                             </div>
                             <img
                               className="w-[181px] h-[107px] rounded-md border bg-gray-400"
-                              // src={`${elem.image_url}`}
-                              src={`${image}`}
+                              src={`${elem.image_url}`}
+                              // src={`${image}`}
                               alt="profile"
                             />
                           </div>

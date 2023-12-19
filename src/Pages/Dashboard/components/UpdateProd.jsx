@@ -29,8 +29,8 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
     formProdData.append("description", description);
     formProdData.append("status", status);
     formProdData.append("category_id", category_id);
-    formProdData.append("image", image);
-    console.log("Image in FormData:", formProdData.get("image"));
+    // formProdData.append("image", image);
+    // console.log("Image in FormData:", formProdData.get("image"));
 
     // const formProdData = {
     //   prod_name,
