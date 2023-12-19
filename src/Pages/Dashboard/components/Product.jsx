@@ -68,11 +68,22 @@ const Product = ({ trigger }) => {
         // Reverse the order of the data array before setting it in the state
         const reversedData = data.reverse();
         setProduct(reversedData);
+        console.log(reversedData);
       })
       .catch((e) => {
         console.log(e.message);
       });
   }, [addProduct]);
+
+  const [image, setImageData] = useState();
+  useEffect(() => {
+    // Fetch image data from your database or API
+    const receivedImageData =
+      "images/HbMK06ipOnUQhv0KRhgsMplHGSupSWs1qX0iQGEd.jpg"; // Replace this with the received image data
+
+    // Set the received image data to state
+    setImageData(receivedImageData);
+  }, []);
 
   return (
     <div className="relative pt-[30px]">
@@ -185,9 +196,8 @@ const Product = ({ trigger }) => {
                             </div>
                             <img
                               className="w-[181px] h-[107px] rounded-md border bg-gray-400"
-                              // src={elem.image_url}
-                              src={`${elem.image_url}`}
-                              // src={elem.thumbnail}
+                              // src={`${elem.image_url}`}
+                              src={`${image}`}
                               alt="profile"
                             />
                           </div>

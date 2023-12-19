@@ -14,39 +14,34 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
   const [status, setStatus] = useState("Not Available");
   const [category_id, setCategory_id] = useState(1);
   const [image, setImage] = useState(null);
-  // console.log("image", image);
 
-  // Attribute for Stock
-  // const [quantity, setQuantity] = useState(0);
-  // const [prod_id, setProd_id] = useState(0);
-  // const [account_id, setAccount_id] = useState(0);
-
-  // const { data: prodData } = useFetch("http://cloudbox.test/api/product");
   const [prodData, setProdData] = useState([]);
   console.log("prod_name:::", prod_name);
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
-  // const formProdData = new FormData();
+  const formProdData = new FormData();
 
   const { data: categories } = useFetch(`${apiUrl}/api/category`);
 
   const submit = async () => {
-    // formProdData.append("prod_name", prod_name);
-    // formProdData.append("price", price);
-    // formProdData.append("description", description);
-    // formProdData.append("status", status);
-    // formProdData.append("category_id", category_id);
-    // formProdData.append("image", image);
+    formProdData.append("prod_name", prod_name);
+    formProdData.append("price", price);
+    formProdData.append("description", description);
+    formProdData.append("status", status);
+    formProdData.append("category_id", category_id);
+    formProdData.append("image", image);
+    console.log("Image in FormData:", formProdData.get("image"));
 
-    const formProdData = {
-      prod_name,
-      price,
-      description,
-      status,
-      category_id,
-    };
+    // const formProdData = {
+    //   prod_name,
+    //   price,
+    //   description,
+    //   status,
+    //   category_id,
+    //   // image,
+    // };
 
-    console.log(image);
+    // console.log(image);
 
     // console.log("prod_name:", formProdData.get("prod_name"));
     // console.log("price:", formProdData.get("price"));
@@ -56,45 +51,38 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
     // console.log("image:", formProdData.get("image"));
 
     if (prod_name && price && description && status && category_id) {
+      const parsedID = parseInt(id, 10);
+
       try {
-        const parsedID = parseInt(id, 10);
         let resProduct = await fetch(
-          // `http://cloudbox.test/api/product/${parsedID}`,
-          // `http://cloudbox.test/api/product/1`,
+          //     // `http://cloudbox.test/api/product/${parsedID}`,
+          //     // `http://cloudbox.test/api/product/1`,
           `${apiUrl}/api/product/${parsedID}`,
           {
-            method: "POST",
+            method: "POST", // or 'PATCH' depending on your API
             // headers: {
-            //   "Content-Type": "application/json",/
-            //   Accept: "application/json",
+            //   "Content-Type": "application/json",
             // },
+            // body: JSON.stringify(formProdData),
             body: formProdData,
           }
-        );
-
-        console.log("formProdData", formProdData);
-        console.log("resProduct", resProduct);
-
-        if (resProduct.ok) {
-          toast.success("Update Product Successfully!", {
-            hideProgressBar: true,
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json(); // Parse JSON response
+          })
+          .then((data) => {
+            // Handle successful response
+            console.log("Data updated successfully:", data);
+          })
+          .catch((error) => {
+            console.error("There was a problem updating the data:", error);
           });
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 3000);
-          // const data = await resProduct.json();
-          // console.log("Expect: ", data);
-          // // Add additional logic here after successful update if needed
-        } else {
-          toast.error("Failed to update product!");
-        }
-      } catch (error) {
-        console.error("Error while updating product:", error);
-        toast.error("Error while updating product!");
+      } catch (e) {
+        console.log("Error!!!");
       }
-    } else {
-      toast.error("Invalid product details!");
     }
   };
 
