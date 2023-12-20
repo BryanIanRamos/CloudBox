@@ -52,14 +52,16 @@ function Login() {
         }),
       });
 
-      console.log(response.status);
+      // console.log("response:", response);
+
+      console.log(response.ok);
       if (response) {
         const { data } = await response.json();
 
         console.log(data.user);
 
         if (data.token) {
-          let isAuthenticated = localStorage.getItem("isLogged");
+          // let isAuthenticated = localStorage.getItem("isLogged");
           console.log("Login successful");
           // console.log("Account ID:", data.user.account_id);
           // console.log(object);

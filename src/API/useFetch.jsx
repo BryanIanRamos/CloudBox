@@ -9,15 +9,18 @@ const useFetch = (api) => {
   const { jwt } = userData();
 
   useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
-      },
-    };
+    // const requestOptions = {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+    //   },
+    // };
 
-    fetch(api, requestOptions)
+    fetch(
+      api
+      // , requestOptions
+    )
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");

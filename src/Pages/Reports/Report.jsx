@@ -94,16 +94,19 @@ const Report = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
-      },
-    };
+    // const requestOptions = {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+    //   },
+    // };
 
     // Make an API request to fetch the data
-    fetch(`${apiUrl}/api/stock`, requestOptions)
+    fetch(
+      `${apiUrl}/api/stock`
+      // , requestOptions
+    )
       .then((response) => response.json())
       .then((sumData) => {
         setSumData(sumData); // Save the fetched data to the state
