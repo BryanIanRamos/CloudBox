@@ -141,7 +141,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
       const productData = await response.json();
       console.log("POST OKAY");
-      console.log("Proceed", productData.image_url);
+      // console.log("Proceed", productData);
       setImage(productData.image_url);
 
       return productData; // Return the filtered product data

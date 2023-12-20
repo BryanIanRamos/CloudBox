@@ -56,26 +56,13 @@ const Product = ({ trigger }) => {
 
   // const { data } = useFetch("http://cloudbox.test/api/product");
 
-  // useEffect(() => {
-  //   fetch(`${apiUrl}/api/stock`)
-  //     .then((res) => {
-  //       if (!res.ok) {
-  //         throw Error("Data is not fetch");
-  //       }
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       console.log(object);
-  //       // setProdStock(data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e.message);
-  //     });
-  // }, [addProduct]);
+  
 
   useEffect(() => {
     fetch(`${apiUrl}/api/prod-stock`)
       .then((res) => {
+        console.log("res", res);
+
         if (!res.ok) {
           throw Error("Data is not fetch");
         }

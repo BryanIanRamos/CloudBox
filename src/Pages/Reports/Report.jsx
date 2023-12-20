@@ -4,6 +4,7 @@ import ProfileHdr from "../../Components/ProfileHdr";
 import CircularProgressBar from "../../Components/CircularProgressBar";
 import useFetch from "../../API/useFetch";
 import { userData } from "../../Components/Account-cards/extensionAuth/helper";
+import StatCalculator from "../../middleware/StatCalculator";
 
 const Report = () => {
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
@@ -15,6 +16,15 @@ const Report = () => {
 
   const [sumData, setSumData] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const { data: annualSales } = useFetch(`${apiUrl}/api/annual/2023`);
+  const { data: stockSum } = useFetch(`${apiUrl}/api/sum-stock`);
+
+  // console.log(object);
+  const { percentage: percentSales } = StatCalculator(15000, annualSales);
+  const { percentage: percentStock } = StatCalculator(3000, stockSum);
+
+  console.log("annualSales: ", percentSales);
+  console.log("stockSum: ", percentStock);
 
   useEffect(() => {
     // const requestOptions = {
@@ -242,7 +252,7 @@ const Report = () => {
                     <div className="flex justify-center gap-[65px] h-auto">
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
-                          percentage={24}
+                          percentage={percentStock}
                           setRadius={100}
                           stroke={23}
                           // secColor={true}
@@ -255,7 +265,7 @@ const Report = () => {
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
                           // totalQuantitySales
-                          percentage={87}
+                          percentage={percentSales}
                           setRadius={100}
                           stroke={23}
                           secColor={true}
