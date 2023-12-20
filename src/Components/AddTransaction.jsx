@@ -9,6 +9,8 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const [isShowed, setIsShowed] = useState(false);
   const [isOk, SetIsOk] = useState(false);
 
+  // let user_id = localStorage.getItem("account_id");
+
   //   Transaction Data
   const [qty, setQty] = useState([]);
   const [trans_type, setType] = useState("");
@@ -249,11 +251,12 @@ const AddTransaction = ({ trigger, UIclose }) => {
       account_id,
     };
 
-    // console.log("trans_type", trans_type);
-    // console.log("income", income);
-    // console.log("description", description);
-    // console.log("update_balance", update_balance);
-    // console.log("location", location);
+    console.log("trans_type", trans_type);
+    console.log("income", income);
+    console.log("description", description);
+    console.log("update_balance", update_balance);
+    console.log("location", location);
+    console.log("account_id", account_id);
 
     const updateTransaction = [...selectedTrans, formTransData];
     setSelectedTrans(updateTransaction);

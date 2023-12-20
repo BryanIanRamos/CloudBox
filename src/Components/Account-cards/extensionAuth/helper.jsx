@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export const storeUser = (data) => {
   // console.log("Stored DATA", data);
-  console.log("Stored", data.user.account_id);
+  console.log("Stored", data.user);
   // console.log("Stored", data.user.first_name);
   const fullName = data.user.first_name + " " + data.user.last_name;
 

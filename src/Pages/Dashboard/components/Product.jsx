@@ -13,6 +13,7 @@ const Product = ({ trigger }) => {
   const [filter, setFilter] = useState(false);
   const [isShowed, setIsShowed] = useState(false);
   const [ID, setID] = useState(0);
+  const [deleteID, setDeleteID] = useState(0);
 
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
@@ -75,15 +76,30 @@ const Product = ({ trigger }) => {
       });
   }, [addProduct]);
 
-  const [image, setImageData] = useState();
   useEffect(() => {
-    // Fetch image data from your database or API
-    const receivedImageData =
-      "images/HbMK06ipOnUQhv0KRhgsMplHGSupSWs1qX0iQGEd.jpg"; // Replace this with the received image data
+    const handleDelete = () => {
+      if (deleteID) {
+        const resourceIdToDelete = parseInt(deleteID, 10); // Example: ID of the resource you want to delete
+        fetch(`${apiUrl}/api/product/${resourceIdToDelete}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            console.log("Resource deleted successfully");
+            // Assuming you want to refetch the data after deletion
+            setAddProduct(!addProduct);
+          })
+          .catch((error) => {
+            console.error("There was a problem deleting the resource:", error);
+          });
+      }
+    };
 
-    // Set the received image data to state
-    setImageData(receivedImageData);
-  }, []);
+    handleDelete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteID]); // Ensure the effect runs when deleteID changes
 
   return (
     <div className="relative pt-[30px]">
@@ -230,7 +246,10 @@ const Product = ({ trigger }) => {
                                 Update
                               </span>
                             </button>
-                            <button className="w-[50px] h-auto bg-red-400 rounded-[17.22px] px-4 py-1 flex items-center justify-center">
+                            <button
+                              className="w-[50px] h-auto bg-red-400 rounded-[17.22px] px-4 py-1 flex items-center justify-center"
+                              onClick={() => setDeleteID(elem.prod_id)}
+                            >
                               <span className="text-white text-[8.11px] font-bold font-['Poppins']">
                                 Delete
                               </span>

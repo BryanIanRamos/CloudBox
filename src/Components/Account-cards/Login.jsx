@@ -4,7 +4,7 @@ import Google from "../Assets/google.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-// import { storeUser } from "./extensionAuth/helper";
+import { storeUser } from "./extensionAuth/helper";
 
 const initialUser = { password: "", email: "" };
 
@@ -53,43 +53,34 @@ function Login() {
       });
 
       console.log(response.status);
-
       if (response) {
-        const data = await response.json();
+        const { data } = await response.json();
 
-        console.log(data);
-        console.log("response OK");
+        console.log(data.user);
 
-        localStorage.setItem("account_id", data?.data?.user?.account_id);
-        localStorage.setItem("first_name", data?.data?.user?.first_name);
-        localStorage.setItem("last_name", data?.data?.user?.last_name);
-        // const data  = await response.json();
-        // console.log(data.data.token);
-        // console.log("test", data.user.data);
+        if (data.token) {
+          let isAuthenticated = localStorage.getItem("isLogged");
+          console.log("Login successful");
+          // console.log("Account ID:", data.user.account_id);
+          // console.log(object);
 
-        console.log("data token okay");
-        console.log("Logged In");
+          // Store user data or perform other actions upon successful login
+          // For example, storing user data to localStorage
+          storeUser(data);
 
-        // storeUser(data);
+          toast.success("Log in successful", { hideProgressBar: true });
 
-        toast.success(
-          "Log in successful",
-          {
-            hideProgressBar: true,
-          },
-          200
-        );
+          localStorage.setItem("isLogged", true);
+          // console.log("isAuthenticated", isAuthenticated);
 
-        setTimeout(() => {
-          navigate("/dashboard");
-        });
-        // console.log("test here", data.user.email);
-
-        // Perform actions upon successful login (e.g., store user data, navigate to dashboard)
-        // Assuming storeUser function stores user data
-        // Navigate to the dashboard or any desired route
-        // For example, assuming you're using react-router-dom:
-        // navigate("/dashboard");
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 4000);
+        } else {
+          // Handle scenario where the expected properties are missing in the response
+          toast.error("Invalid response data format");
+          console.error("Invalid response data:", data);
+        }
       } else {
         toast.error("Invalid email or password!", {});
       }

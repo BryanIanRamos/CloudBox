@@ -67,11 +67,11 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
             body: formProdData,
           }
         )
-          .then((response) => {
-            if (!response.ok) {
+          .then((resProduct) => {
+            if (!resProduct.ok) {
               throw new Error("Network response was not ok");
             }
-            return response.json(); // Parse JSON response
+            return resProduct.json(); // Parse JSON response
           })
           .then((data) => {
             // Handle successful response

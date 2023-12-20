@@ -152,7 +152,18 @@ function Create() {
           </div>
           <div className="flex flex-cols gap-6 mt-[25px] justify-center">
             <div className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold flex flex-start"></div>
-            <InputDisplay text={"Re-password"} />
+            {/* <InputDisplay text={"Re-password"} /> */}
+            <div className=" ">
+              <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+                Re-Password
+              </h1>
+              <input
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                autoComplete="off" // Disable autocomplete
+              />
+            </div>
           </div>
 
           <div className="ml-[5%] mt-[35px] absolute flex flex-col justify-center items-center">
