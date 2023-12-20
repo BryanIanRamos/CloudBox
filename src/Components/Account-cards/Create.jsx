@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { Icon } from "@iconify/react";
 
 const initialUser = { email: "", password: "", username: "" };
 
@@ -15,8 +16,29 @@ function Create() {
   // const [name, setName] = useState("");
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
+
+  // const [userFocus, setUserFocus] = useState(false);
+
+  //Must start lower or uppercase letter digit, hyphen or under scores
+  const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}@gmail\.com$/;
+  //requires at least one lowercase and upper case letter, one digit and one special character.
+  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+  // const [user, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
+
   const [password, setPassword] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [PwdFocus, setPwdFocus] = useState(false);
+
+  const [matchPwd, setMatchPwd] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const signUp = async () => {
     try {
@@ -39,7 +61,10 @@ function Create() {
           body: formData,
         });
 
-        if (resRegister.statusText === "OK") {
+        console.log("resRegister: ", resRegister);
+        console.log("ok?: ", resRegister.ok);
+
+        if (resRegister.ok) {
           toast.success("Registered successfully!", {
             hideProgressBar: true,
           });
@@ -74,14 +99,22 @@ function Create() {
     }
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   signUp(); // Call signUp when form is submitted
-  // };
+  useEffect(() => {
+    const result = USER_REGEX.test(email);
+    console.log("result", result);
+    console.log("user", email);
+    setValidName(result);
+  }, [email]);
 
-  // useState(() => {
-  //   signUp();
-  // });
+  useEffect(() => {
+    const result = PWD_REGEX.test(password);
+    console.log("result: ", result);
+    console.log("password: ", password);
+    setValidPwd(result);
+    const match = password === matchPwd;
+    console.log("match: ", match);
+    setValidMatch(match);
+  }, [password, matchPwd]);
 
   return (
     <div className="absolute ">
@@ -124,15 +157,21 @@ function Create() {
           <div className="flex flex-cols gap-6 mt-[25px] justify-center">
             {/* <InputDisplay text={"Location"} /> */}
             <div className="flex gap-6">
-              <div>
+              <div className="">
                 <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold ">
                   Email
                 </h1>
                 <input
                   type="text"
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                  aria-invalid={validName ? "false" : "true"}
+                  className={`w-[149px] h-[27px] bg-white border ${
+                    !validName && email ? "border-red-500" : "border-black"
+                  }  mt-4`}
                   autoComplete="off" // Disable autocomplete
+                  aria-describedby="uidnote"
+                  onFocus={() => setUserFocus(true)}
+                  onBlur={() => setUserFocus(false)}
                 />
               </div>
               <div>
@@ -143,30 +182,81 @@ function Create() {
                   <input
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+                    className={`w-[149px] h-[27px] bg-white border ${
+                      !validPwd && password ? "border-red-500" : "border-black"
+                    }  mt-4`}
                     autoComplete="off" // Disable autocomplete
+                    aria-invalid={validPwd ? "false" : "true"}
+                    aria-describedby="passidnote"
+                    onFocus={() => setPwdFocus(true)}
+                    onBlur={() => setPwdFocus(false)}
                   />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-cols gap-6 mt-[25px] justify-center">
-            <div className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold flex flex-start"></div>
+          <div className="flex flex-cols gap-6 mt-[20px] justify-left p-2">
+            <div className=" absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold flex flex-start"></div>
             {/* <InputDisplay text={"Re-password"} /> */}
-            <div className=" ">
+            <div className="">
               <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
                 Re-Password
               </h1>
               <input
                 type="password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setMatchPwd(e.target.value)}
                 className="w-[149px] h-[27px] bg-white border border-black  mt-4"
                 autoComplete="off" // Disable autocomplete
+                aria-invalid={validMatch ? "false" : "true"}
+                aria-describedby="passidnote"
+                onFocus={() => setMatchFocus(true)}
+                onBlur={() => setMatchFocus(false)}
               />
             </div>
           </div>
+          {userFocus && email && !validName ? (
+            <div
+              id="uidnote"
+              className=" text-center bg-gray-700 p-3 text-gray-300 text-[11px] w-full mt-3"
+            >
+              <span className="flex gap-1 justify-center">
+                <Icon icon="ph:info-fill" /> 4 to 24 characters.
+              </span>
+              <div className="mt-0 pt-0 ml-[16px]">
+                Must begin with a letter. Letter, number, underscore, hyphens
+                allowed.
+              </div>
+            </div>
+          ) : (
+            <p
+              id="passidnote"
+              className={` ${
+                PwdFocus && password && !validPwd ? "instruction" : "hidden"
+              } text-left bg-gray-700 p-5 text-gray-300 text-[10px]`}
+            >
+              <span className="flex gap-1 justify-center items-center">
+                <Icon icon="ph:info-fill" /> 8 to 24 characters.
+              </span>
+              <div className="mt-0 pt-0 ml-[16px] text-center">
+                Must include uppercase and lowercase letters. a number and
+                special character. Allowed special characters: !@#$%
+              </div>
+            </p>
+          )}
+          {validPwd && (
+            <p
+              id="passidnote"
+              className={` ${
+                matchFocus && matchPwd && !validMatch ? "instruction" : "hidden"
+              } text-left bg-gray-700 py-2 px-1  text-gray-300 text-[10px]`}
+            >
+              <span className="flex gap-1 justify-center items-center">
+                <Icon icon="ph:info-fill" /> Password didn't match.
+              </span>
+            </p>
+          )}
 
-          <div className="ml-[5%] mt-[35px] absolute flex flex-col justify-center items-center">
+          <div className="ml-[5%] absolute flex flex-col justify-center items-center">
             {/* <div className="">
               <DateForm />
             </div> */}
@@ -183,62 +273,62 @@ function Create() {
   );
 }
 
-function InputDisplay({ text }) {
-  return (
-    <div>
-      <div className=" ">
-        <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
-          {text}
-        </h1>
-        <input
-          type={
-            text === "Password" || text === "Re-password" ? "password" : " "
-          }
-          className="w-[149px] h-[27px] bg-white border border-black  mt-4"
-        ></input>
-      </div>
-    </div>
-  );
-}
+// function InputDisplay({ text }) {
+//   return (
+//     <div>
+//       <div className=" ">
+//         <h1 className="absolute bg-white ml-[8px] p-1 pb-0 text-[10px]  text-blue-900 font-bold">
+//           {text}
+//         </h1>
+//         <input
+//           type={
+//             text === "Password" || text === "Re-password" ? "password" : " "
+//           }
+//           className="w-[149px] h-[27px] bg-white border border-black  mt-4"
+//         ></input>
+//       </div>
+//     </div>
+//   );
+// }
 
-function DateForm() {
-  return (
-    <div className="flex flex-row gap-4">
-      <select
-        name="selectedFruit "
-        className="w-[70px] h-[30px] bg-white rounded border border-black"
-      >
-        <option value="" placeholder="Month">
-          Month
-        </option>
-        <option value="">1</option>
-        <option value="">2</option>
-        <option value="">3</option>
-      </select>
-      <select
-        name="selectedFruit "
-        className="w-[70px] h-[30px] bg-white rounded border border-black"
-      >
-        <option value="" placeholder="Day">
-          Day
-        </option>
-        <option value="">1</option>
-        <option value="">2</option>
-        <option value="">3</option>
-      </select>
-      <select
-        name="selectedFruit "
-        className="w-[70px] h-[30px] bg-white rounded border border-black"
-      >
-        <option value="" placeholder="Year">
-          Year
-        </option>
-        <option value="">2001</option>
-        <option value="">2002</option>
-        <option value="">2003</option>
-      </select>
-    </div>
-  );
-}
+// function DateForm() {
+//   return (
+//     <div className="flex flex-row gap-4">
+//       <select
+//         name="selectedFruit "
+//         className="w-[70px] h-[30px] bg-white rounded border border-black"
+//       >
+//         <option value="" placeholder="Month">
+//           Month
+//         </option>
+//         <option value="">1</option>
+//         <option value="">2</option>
+//         <option value="">3</option>
+//       </select>
+//       <select
+//         name="selectedFruit "
+//         className="w-[70px] h-[30px] bg-white rounded border border-black"
+//       >
+//         <option value="" placeholder="Day">
+//           Day
+//         </option>
+//         <option value="">1</option>
+//         <option value="">2</option>
+//         <option value="">3</option>
+//       </select>
+//       <select
+//         name="selectedFruit "
+//         className="w-[70px] h-[30px] bg-white rounded border border-black"
+//       >
+//         <option value="" placeholder="Year">
+//           Year
+//         </option>
+//         <option value="">2001</option>
+//         <option value="">2002</option>
+//         <option value="">2003</option>
+//       </select>
+//     </div>
+//   );
+// }
 
 export default Create;
