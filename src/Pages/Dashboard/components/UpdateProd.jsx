@@ -110,7 +110,7 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
           throw new Error("Network response was not ok");
         }
 
-        const data = await response.json();
+        const { data } = await response.json();
         setProdData(data);
         setProd_name(data.prod_name);
         setPrice(data.price);

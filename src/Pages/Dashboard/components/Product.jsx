@@ -15,6 +15,8 @@ const Product = ({ trigger }) => {
   const [ID, setID] = useState(0);
   const [deleteID, setDeleteID] = useState(0);
 
+  const [prodStock, setProdStock] = useState();
+
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
   const [Back, setBack] = useState(true);
@@ -54,8 +56,25 @@ const Product = ({ trigger }) => {
 
   // const { data } = useFetch("http://cloudbox.test/api/product");
 
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/api/stock`)
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw Error("Data is not fetch");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(object);
+  //       // setProdStock(data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e.message);
+  //     });
+  // }, [addProduct]);
+
   useEffect(() => {
-    fetch(`${apiUrl}/api/product`)
+    fetch(`${apiUrl}/api/prod-stock`)
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");
@@ -65,6 +84,7 @@ const Product = ({ trigger }) => {
       .then((data) => {
         // console.log("Set Data for length", data.length);
         setProdLength(data.length);
+        console.log("ddata:: ", data);
 
         // Reverse the order of the data array before setting it in the state
         const reversedData = data.reverse();

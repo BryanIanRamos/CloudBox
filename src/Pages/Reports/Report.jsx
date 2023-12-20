@@ -7,88 +7,11 @@ import { userData } from "../../Components/Account-cards/extensionAuth/helper";
 
 const Report = () => {
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
-  const { data, loading, error } = useFetch("http://cloudbox.test/api/user");
+  const { data } = useFetch(`${apiUrl}/api/user`);
   console.log("Report Data:", data);
   const { jwt } = userData();
 
   const { data: activityLog } = useFetch(`${apiUrl}/api/activity-log`);
-
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 2,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 3,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 4,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 5,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 6,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 7,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-    {
-      id: 8,
-      name: "Aron Fernanzed",
-      prodID: 101,
-      prodName: "Milk",
-      date: "11/20/2023",
-      action: "Update",
-    },
-  ]);
-
-  console.log("Activities::++", activityLog);
-
-  // const [employees, setEmployees] = useState([
-  //   { id: 1, name: "Aron Fernandez", date: "June 6, 2023" },
-  //   { id: 2, name: "Aron Fernandez", date: "June 6, 2023" },
-  //   { id: 3, name: "Aron Fernandez", date: "June 6, 2023" },
-  //   { id: 4, name: "Aron Fernandez", date: "June 6, 2023" },
-  //   { id: 5, name: "Aron Fernandez", date: "June 6, 2023" },
-  // ]);
 
   const [sumData, setSumData] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
