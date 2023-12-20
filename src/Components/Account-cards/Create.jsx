@@ -56,40 +56,42 @@ function Create() {
       if (first_name && last_name && email && password) {
         // const resRegister = await fetch("http://cloudbox.test/api/user", {
         console.log("API:: ", apiUrl);
-        const resRegister = await fetch(`${apiUrl}/api/user`, {
+        let resRegister = await fetch(`${apiUrl}/api/user`, {
           method: "POST",
           body: formData,
         });
 
-        console.log("resRegister: ", resRegister);
-        console.log("ok?: ", resRegister.ok);
+
+
+        // const data = await resRegister.json();
+        // console.log("data Status: ", data);
 
         if (resRegister.ok) {
-          toast.success("Registered successfully!", {
-            hideProgressBar: true,
-          });
-          console.log("resRegister", resRegister);
+          // toast.success("Registered successfully!", {
+          //   hideProgressBar: true,
+          // });
+          // console.log("resRegister", resRegister);
 
-          toast.success(
-            "Account Registered",
-            {
-              hideProgressBar: true,
-            },
-            200
-          );
+          // toast.success(
+          //   "Account Registered",
+          //   {
+          //     hideProgressBar: true,
+          //   },
+          //   200
+          // );
 
-          setTimeout(() => {
-            navigate("/");
-          }, 3000);
+          // setTimeout(() => {
+          //   navigate("/");
+          // }, 3000);
         }
       } else {
-        toast.info(
-          "Invalid Credentials",
-          {
-            hideProgressBar: true,
-          },
-          200
-        );
+        // toast.info(
+        //   "Invalid Credentials",
+        //   {
+        //     hideProgressBar: true,
+        //   },
+        //   200
+        // );
       }
     } catch (error) {
       toast.error(error.message, {

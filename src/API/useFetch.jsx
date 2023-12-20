@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { userData } from "../Components/Account-cards/extensionAuth/helper";
 
 const useFetch = (api) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const { jwt } = userData();
+
   useEffect(() => {
-    fetch(api)
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+      },
+    };
+
+    fetch(api, requestOptions)
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");

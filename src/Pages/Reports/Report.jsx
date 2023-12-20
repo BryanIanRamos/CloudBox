@@ -3,11 +3,13 @@ import SideNavBar from "../../Components/SideNavBar";
 import ProfileHdr from "../../Components/ProfileHdr";
 import CircularProgressBar from "../../Components/CircularProgressBar";
 import useFetch from "../../API/useFetch";
+import { userData } from "../../Components/Account-cards/extensionAuth/helper";
 
 const Report = () => {
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
   const { data, loading, error } = useFetch("http://cloudbox.test/api/user");
   console.log("Report Data:", data);
+  const { jwt } = userData();
 
   const { data: activityLog } = useFetch(`${apiUrl}/api/activity-log`);
 
@@ -92,8 +94,16 @@ const Report = () => {
   const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+      },
+    };
+
     // Make an API request to fetch the data
-    fetch("http://cloudbox.test/api/stock")
+    fetch(`${apiUrl}/api/stock`, requestOptions)
       .then((response) => response.json())
       .then((sumData) => {
         setSumData(sumData); // Save the fetched data to the state
