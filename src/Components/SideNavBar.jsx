@@ -47,9 +47,10 @@ const SideNavBar = () => {
     // }
   };
   return (
-    <>
-      <div className="w-fit h-full bg-primaryColor max-lg:px-3 px-6 py-7 z-[3]">
-        <div>
+    <div className="h-screen  ">
+      <ToastContainer />
+      <div className="bg-primaryColor h-full px-6 py-7 max-lg:px-3">
+        <div className="w-fit pt-[30%]  ">
           <div className="flex items-center gap-1">
             <Icon
               icon="solar:box-bold-duotone"
@@ -60,34 +61,35 @@ const SideNavBar = () => {
             </h1>
           </div>
         </div>
-        <div className="w-full h-auto flex flex-col gap-7 px-4 py-6 mt-5">
-          <div>
-            <div className="flex gap-1 items-center text-white hover:text-blue-400">
-              <Icon
-                icon="material-symbols:dashboard"
-                className="h-[24px] w-[24px]"
-              />
-              <Link to="/dashboard">
-                <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
-                  Dashboard
-                </h1>
-              </Link>
+        <div className="z-20">
+          <div className="w-full h-auto flex flex-col gap-7 px-4 py-6 mt-5 ">
+            <div>
+              <div className="flex gap-1 items-center text-white hover:text-blue-400">
+                <Icon
+                  icon="material-symbols:dashboard"
+                  className="h-[24px] w-[24px]"
+                />
+                <Link to="/dashboard">
+                  <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
+                    Dashboard
+                  </h1>
+                </Link>
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="flex gap-1 items-center text-white hover:text-blue-400">
-              <Icon
-                icon="fluent:calendar-date-28-filled"
-                className="h-[24px] w-[24px]"
-              />
-              <Link to="/calendar">
-                <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
-                  Calendar
-                </h1>
-              </Link>
+            <div>
+              <div className="flex gap-1 items-center text-white hover:text-blue-400">
+                <Icon
+                  icon="fluent:calendar-date-28-filled"
+                  className="h-[24px] w-[24px]"
+                />
+                <Link to="/calendar">
+                  <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
+                    Calendar
+                  </h1>
+                </Link>
+              </div>
             </div>
-          </div>
-          {/* <div>
+            {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="tabler:mail-filled"
@@ -101,20 +103,20 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div> */}
-          <div>
-            <div className="flex gap-1 items-center text-white hover:text-blue-400 ">
-              <Icon
-                icon="mingcute:chat-4-fill"
-                className="h-[24px] w-[24px] "
-              />
-              <Link to="/report">
-                <h1 className="text-center  text-[15px] font-['Poppins'] max-lg:hidden">
-                  Reports
-                </h1>
-              </Link>
+            <div>
+              <div className="flex gap-1 items-center text-white hover:text-blue-400 ">
+                <Icon
+                  icon="mingcute:chat-4-fill"
+                  className="h-[24px] w-[24px] "
+                />
+                <Link to="/report">
+                  <h1 className="text-center  text-[15px] font-['Poppins'] max-lg:hidden">
+                    Reports
+                  </h1>
+                </Link>
+              </div>
             </div>
-          </div>
-          {/* <div>
+            {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="eos-icons:project"
@@ -128,7 +130,7 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div> */}
-          {/* <div>
+            {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="icon-park-solid:notes"
@@ -142,7 +144,7 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div> */}
-          {/* <div>
+            {/* <div>
             <div className="flex gap-1 items-center">
               <Icon
                 icon="eos-icons:admin"
@@ -156,31 +158,34 @@ const SideNavBar = () => {
               </Link>
             </div>
           </div> */}
-        </div>
-        <div className=" mt-20 flex flex-col gap-3">
-          <div>
-            <div className="flex gap-1 items-center  px-4 py-2 text-white hover:text-blue-400">
-              <Icon icon="solar:settings-bold" className="h-[24px] w-[24px]" />
-              <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
-                Settings
-              </h1>
-            </div>
           </div>
-          <div>
-            <div className="flex gap-1 items-center px-4 py-2 text-white hover:text-blue-400">
-              <Icon icon="ic:round-logout" className="h-[24px] w-[24px]" />
-              <button
-                onClick={handleLogout}
-                className="text-center text-[15px] font-['Poppins'] max-lg:hidden"
-              >
-                Log out
-              </button>
+          <div className=" mt-20 flex flex-col gap-3">
+            <div>
+              <div className="flex gap-1 items-center  px-4 py-2 text-white hover:text-blue-400">
+                <Icon
+                  icon="solar:settings-bold"
+                  className="h-[24px] w-[24px]"
+                />
+                <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
+                  Settings
+                </h1>
+              </div>
+            </div>
+            <div>
+              <div className="flex gap-1 items-center px-4 py-2 text-white hover:text-blue-400">
+                <Icon icon="ic:round-logout" className="h-[24px] w-[24px]" />
+                <button
+                  onClick={handleLogout}
+                  className="text-center text-[15px] font-['Poppins'] max-lg:hidden"
+                >
+                  Log out
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <ToastContainer />
-    </>
+    </div>
   );
 };
 
