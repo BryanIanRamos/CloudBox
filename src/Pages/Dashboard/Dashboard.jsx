@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [transaction, setTransaction] = useState(false);
   const [movement, setMovement] = useState(0);
   const [balance, setBalance] = useState(0);
+  const { jwt } = userData();
 
   const [wkSales, setWeeklySales] = useState(0);
 
@@ -44,19 +45,19 @@ const Dashboard = () => {
       weeklySales[0].total_quantity !== null &&
       weeklySales[0].total_quantity !== undefined
     ) {
-      console.log("weeklySales", weeklySales[0].total_quantity);
+      // console.log("weeklySales", weeklySales[0].total_quantity);
       const value = parseInt(weeklySales[0].total_quantity);
       setSalesVal(value);
       // console.log("value: ", value);
       const { percentage: circularSales } = StatCalculator(2500, value);
-      console.log("circularSales", circularSales);
+      // console.log("circularSales", circularSales);
       setWeeklySales(circularSales);
     }
 
     // Update other states or perform other necessary logic here
   }, [weeklySales]);
 
-  console.log("wkSales", wkSales);
+  // console.log("wkSales", wkSales);
   // console.log("userTransAPI", userTransAPI);
 
   // const { percentage: wkSales } = StatCalculator(
@@ -105,7 +106,7 @@ const Dashboard = () => {
         // Convert sum to an integer
         const totalQuantityInteger = parseInt(sum);
 
-        console.log("totalQuantityInteger", totalQuantityInteger);
+        // console.log("totalQuantityInteger", totalQuantityInteger);
         setTotalQuantitySales(totalQuantityInteger); // Save the total sum as an integer to the state
       })
       .catch((error) => {

@@ -8,19 +8,18 @@ const useFetch = (api) => {
 
   const { jwt } = userData();
 
-  useEffect(() => {
-    // const requestOptions = {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
-    //   },
-    // };
+  console.log("jwt", jwt);
 
-    fetch(
-      api
-      // , requestOptions
-    )
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+      },
+    };
+
+    fetch(api, requestOptions)
       .then((res) => {
         if (!res.ok) {
           throw Error("Data is not fetch");
@@ -37,7 +36,7 @@ const useFetch = (api) => {
         setLoading(false);
         setError(true);
       });
-  }, []);
+  }, [jwt]);
 
   return { data, loading, error };
 };

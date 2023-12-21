@@ -9,6 +9,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const { id } = userData();
   const [isShowed, setIsShowed] = useState(false);
   const [isOk, SetIsOk] = useState(false);
+  const { jwt } = userData();
 
   // let user_id = localStorage.getItem("account_id");
 
@@ -32,7 +33,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
   const [prod_id, setProduct] = useState(null);
   const [trans_id, setTrans_id] = useState(0);
 
-  console.log("temp_balance:::>", temp_balance);
+  // console.log("temp_balance:::>", temp_balance);
 
   //   Product
   const [selectedProd, setSelectedProd] = useState([]);
@@ -59,8 +60,6 @@ const AddTransaction = ({ trigger, UIclose }) => {
       if (transLength > 0) {
         setTrans_id(transDT[transLength - 1].trans_id);
         setUpdate_balance(transDT[transLength - 1].update_balance);
-        console.log("BALANCE", update_balance);
-        // console.log("setTrans_id: ", transDT[transLength - 1].trans_id);
       } else {
         // console.log("The transDT array is empty");
       }
@@ -76,17 +75,6 @@ const AddTransaction = ({ trigger, UIclose }) => {
   // Filter products based on the productIdToMatch
   //   useEffect(() => {
   const [amountsArray, setAmountsArray] = useState([]);
-
-  // useEffect(() => {
-  //   const qtyLength = qty.length;
-  //   // console.log("::", qty.length);
-  //   if (qtyLength === 0) {
-  //     // Set amount to a default value or handle the empty condition as needed
-  //     setAmount(0 * (filProd?.price || 0)); // Replace DEFAULT_VALUE with the value you want to set
-  //   } else {
-  //     setAmount(qty[qtyLength - 1] * (filProd?.price || 0));
-  //   }
-  // }, [selectedProd, qty]);
 
   useEffect(() => {
     const newTotalAmount = amountsArray.reduce((acc, curr) => acc + curr, 0);
@@ -134,14 +122,12 @@ const AddTransaction = ({ trigger, UIclose }) => {
 
     try {
       const response = await fetch(`${apiUrl}/api/product/${prod_id}`);
-      console.log("Triggered");
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
       const productData = await response.json();
-      console.log("POST OKAY");
       // console.log("Proceed", productData);
       setImage(productData.image_url);
 
@@ -197,6 +183,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
             headers: {
               "Content-Type": "application/json",
               // Accept: "application/json",
+              Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
             },
             body: JSON.stringify(
               // { quantity, total_amount, prod_id, trans_id }
@@ -295,6 +282,7 @@ const AddTransaction = ({ trigger, UIclose }) => {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
           },
           body: JSON.stringify(formTransData),
         });

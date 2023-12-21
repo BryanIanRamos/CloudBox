@@ -9,6 +9,7 @@ import { Toaster, toast } from "sonner";
 
 const AddProduct = ({ trigger, closeUI }) => {
   const [isShowed, setIsShowed] = useState(false);
+  const { jwt } = userData();
   const { id } = userData();
 
   // Attribute for Product
@@ -38,14 +39,14 @@ const AddProduct = ({ trigger, closeUI }) => {
     }
   };
 
-  // const formProdData = {
-  //   prod_name,
-  //   price,
-  //   description,
-  //   status,
-  //   category_id,
-  //   image,
-  // };
+  const formProdData = {
+    prod_name,
+    price,
+    description,
+    status,
+    category_id,
+    image,
+  };
 
   const formStockData = {
     quantity,
@@ -74,8 +75,8 @@ const AddProduct = ({ trigger, closeUI }) => {
           const resStock = await fetch(`${apiUrl}/api/stock`, {
             method: "POST",
             headers: {
-              "COntent-Type": "application/json",
-              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
             },
             body: JSON.stringify(formStockData),
           });
@@ -110,22 +111,32 @@ const AddProduct = ({ trigger, closeUI }) => {
     // console.log("data}} ", prodData);
     // display();
 
-    const formProdData = new FormData();
-    formProdData.append("prod_name", prod_name);
-    const priceValue = parseFloat(price);
-    formProdData.append("price", priceValue);
-    formProdData.append("description", description);
-    formProdData.append("status", status);
-    formProdData.append("category_id", category_id);
-    formProdData.append("image", image);
+    console.log("prod_name", prod_name);
+    console.log("price", price);
+    console.log("description", description);
+    console.log("status", status);
+    console.log("category_id", category_id);
+    console.log("image", image);
+
+    // const formProdData = new FormData();
+    // formProdData.append("prod_name", prod_name);
+    // const priceValue = parseFloat(price);
+    // formProdData.append("price", priceValue);
+    // formProdData.append("description", description);
+    // formProdData.append("status", status);
+    // formProdData.append("category_id", category_id);
+    // formProdData.append("image", image);
 
     if (prod_name && price && description && status && category_id) {
       try {
         const resProduct = await fetch(`${apiUrl}/api/product`, {
           method: "POST",
-
-          // body: JSON.stringify(formProdData),
-          body: formProdData,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+          },
+          body: JSON.stringify(formProdData),
+          // body: formProdData,
         });
 
         // console.log("resProduct", resProduct);
