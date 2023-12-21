@@ -47,7 +47,7 @@ const SideNavBar = () => {
     // }
   };
   return (
-    <div className="h-screen  ">
+    <div className="h-screen max-sm:hidden">
       <ToastContainer />
       <div className="bg-primaryColor h-full px-6 py-7 max-lg:px-3">
         <div className="w-fit pt-[30%]  ">

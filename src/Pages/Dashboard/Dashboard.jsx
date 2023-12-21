@@ -114,24 +114,24 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="flex w-screen h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100">
       <SideNavBar />
 
       <ProfileHdr />
 
-      <div className=" w-full ">
-        <div className="flex w-full h-full  mx-0">
+      <div className="w-full h-full">
+        <div className="flex mx-0 max-md:justify-center  max-md:items-center overflow-y-auto h-[100%] w-full">
           <div
             // bg-[#EBEEF5]
-            className="relative p-2 flex justify-center"
+            className=" flex w-full h-full"
           >
             {/* Popup Transaction here  */}
             <AddTransaction trigger={transaction} UIclose={UIclose} />
 
             {!nextPage ? (
-              <div className="flex flex-col  max-lg:px-[15px] px-[60px] gap-6 overflow-y-auto h-[100%] pt-[10%] border w-full">
-                <div className="flex h-10 items-center relative">
-                  <h1 className=" text-blue-950 text-[32px] font-bold font-['Poppins'] absolute">
+              <div className="flex flex-col max-md:px-[15px] px-[60px] md:gap-6 pt-[20%] md:pt-[7%]  w-full">
+                <div className="flex h-10 w-[100%] md:w-[60%] sm:gap-10 relative items-center">
+                  <h1 className=" text-blue-950 text-[32px] font-bold font-['Poppins'] ">
                     Dashboard
                   </h1>
                   <button
@@ -149,7 +149,7 @@ const Dashboard = () => {
 
                 <div>
                   <div
-                    className="flex gap-[5%] max-md:flex-col max-md:justify-center max-md:items-center max-md:mt-10
+                    className="flex md:gap-11 max-md:flex-col max-md:justify-center max-md:items-center max-md:mt-10
                                   "
                   >
                     <div
@@ -197,7 +197,7 @@ const Dashboard = () => {
                         </div> */}
                       </button>
                     </div>
-                    <div className="w-[327px] h-[232px] bg-gray-50 border border-zinc-500 border-opacity-50 p-5">
+                    <div className="w-[327px] h-[232px] bg-gray-50 border border-zinc-500 border-opacity-50 p-5 ">
                       <h1 className="text-center text-blue-950 text-base font-bold font-['Poppins']">
                         Breakdown
                       </h1>
@@ -255,8 +255,8 @@ const Dashboard = () => {
           </div>
 
           {/* TRANSACTION CONTENT HERE  */}
-          <div className=" bg-[#113F8D] w-[21%]  px-5 max-xl:hidden absolute right-0 h-full pt-[6%]">
-            <div className="h-full">
+          <div className=" bg-[#113F8D] w-[21%]  px-5 max-xl:hidden absolute right-0 h-screen py-[6%] ">
+            <div className="h-full overflow-hidden">
               <h1 className="text-center text-white text-[30px] font-bold font-['Poppins']">
                 Transactions
               </h1>
@@ -273,7 +273,7 @@ const Dashboard = () => {
 
               {/* TransData */}
 
-              <div className="flex flex-col gap-7 h-[70%] overflow-y-auto py-3 border">
+              <div className="flex flex-col gap-7 h-[70%] overflow-y-auto py-3">
                 {userTransAPI &&
                   userTransAPI.map((elem, index) => (
                     <div key={index}>

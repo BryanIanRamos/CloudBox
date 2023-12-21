@@ -342,11 +342,11 @@ const AddTransaction = ({ trigger, UIclose }) => {
       <Toaster richColors position="top-center" />
 
       <div
-        className="w-full h-full absolute flex flex-row
-                    justify-center items-center px-[130px] z-20 bg-gray-600"
+        className="w-[65%] h-[100%] absolute flex flex-col justify-center
+                     px-[130px] z-20 "
       >
-        <div className="w-full h-[465px] bg-[#072060] flex relative ">
-          <div className="bg-[#F2EFEF] h-full w-[217px]">
+        <div className="w-fit h-[465px] bg-[#072060] flex  ">
+          <div className="bg-[#F2EFEF] h-full w-[217px] ">
             <img
               className="w-full h-[136px]"
               src={image}
@@ -387,9 +387,9 @@ const AddTransaction = ({ trigger, UIclose }) => {
               <p>Total ${total_amount.toFixed(2)}</p>
             </div>
           </div>
-          <div className="absolute right-[50px] w-[400px] h-full flex ">
-            <div className=" w-full flex flex-col  items-center mt-5 relative">
-              <div className="absolute right-0 top-2" onClick={UIclose}>
+          <div className=" w-[400px] flex right-0 ">
+            <div className=" w-full flex flex-col  items-center mt-5 relative ">
+              <div className="absolute right-0 top-2 px-10" onClick={UIclose}>
                 <Icon
                   icon="tabler:circle-x-filled"
                   // style={{ color: "#FD6E67" }}

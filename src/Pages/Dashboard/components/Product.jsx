@@ -56,8 +56,6 @@ const Product = ({ trigger }) => {
 
   // const { data } = useFetch("http://cloudbox.test/api/product");
 
-  
-
   useEffect(() => {
     fetch(`${apiUrl}/api/prod-stock`)
       .then((res) => {
@@ -112,8 +110,8 @@ const Product = ({ trigger }) => {
     <div className="relative pt-[30px]">
       <AddProduct trigger={addProduct} closeUI={closeUI} />
       <UpdateProd setOpen={isShowed} triggerUI={triggerUI} id={ID} />
-      <div className="px-20">
-        <div className="flex relative items-center h-10 mb-5">
+      <div className="px-20 pt-10 ">
+        <div className="flex relative items-center h-10 mb-5 ">
           <div className="text-blue-950 text-[32px] font-bold font-['Poppins']">
             Products
           </div>
@@ -183,8 +181,8 @@ const Product = ({ trigger }) => {
                 <div className="flex relative items-center">
                   <div
                     className="w-[274px] h-8 bg-white rounded-[25.48px] border
-           border-zinc-500 border-opacity-50 px-3
-           flex gap-3 items-center"
+                          border-zinc-500 border-opacity-50 px-3
+                          flex gap-3 items-center"
                   >
                     <Icon
                       icon="ic:baseline-search"
@@ -205,7 +203,7 @@ const Product = ({ trigger }) => {
                 {/* Here */}
                 {product ? (
                   <div
-                    className="grid grid-cols-3 gap-2 px-[30px] overflow-auto"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 px-[30px] overflow-auto"
                     style={{ scrollBehavior: "smooth" }}
                   >
                     {product.map((elem, index) => (
