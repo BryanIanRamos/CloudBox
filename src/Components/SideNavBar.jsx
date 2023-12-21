@@ -65,27 +65,33 @@ const SideNavBar = () => {
           <div className="w-full h-auto flex flex-col gap-7 px-4 py-6 mt-5 ">
             <div>
               <div className="flex gap-1 items-center text-white hover:text-blue-400">
-                <Icon
-                  icon="material-symbols:dashboard"
-                  className="h-[24px] w-[24px]"
-                />
                 <Link to="/dashboard">
-                  <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
-                    Dashboard
-                  </h1>
+                  <div className="flex gap-1 justify-center items-center">
+                    <Icon
+                      icon="material-symbols:dashboard"
+                      className="h-[24px] w-[24px]"
+                    />
+                    <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
+                      Dashboard
+                    </h1>
+                  </div>
                 </Link>
               </div>
             </div>
             <div>
               <div className="flex gap-1 items-center text-white hover:text-blue-400">
-                <Icon
-                  icon="fluent:calendar-date-28-filled"
-                  className="h-[24px] w-[24px]"
-                />
                 <Link to="/calendar">
-                  <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
-                    Calendar
-                  </h1>
+                  <div className="flex gap-1 justify-center items-center">
+                    <Icon
+                      // icon="fluent:calendar-date-28-filled"
+                      icon="icon-park-solid:transaction"
+                      className="h-[24px] w-[24px]"
+                    />
+                    <h1 className="text-center text-[15px] font-['Poppins'] max-lg:hidden">
+                      {/* Calendar  */}
+                      Transaction
+                    </h1>
+                  </div>
                 </Link>
               </div>
             </div>
@@ -105,14 +111,16 @@ const SideNavBar = () => {
           </div> */}
             <div>
               <div className="flex gap-1 items-center text-white hover:text-blue-400 ">
-                <Icon
-                  icon="mingcute:chat-4-fill"
-                  className="h-[24px] w-[24px] "
-                />
                 <Link to="/report">
-                  <h1 className="text-center  text-[15px] font-['Poppins'] max-lg:hidden">
-                    Reports
-                  </h1>
+                  <div className="flex gap-1 justify-center items-center">
+                    <Icon
+                      icon="mingcute:chat-4-fill"
+                      className="h-[24px] w-[24px] "
+                    />
+                    <h1 className="text-center  text-[15px] font-['Poppins'] max-lg:hidden">
+                      Reports
+                    </h1>
+                  </div>
                 </Link>
               </div>
             </div>

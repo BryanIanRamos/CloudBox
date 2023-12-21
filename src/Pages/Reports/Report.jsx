@@ -71,8 +71,8 @@ const Report = () => {
         <ProfileHdr />
 
         <div className="w-full h-full">
-          <div className="flex border w-full h-full bg-[#EBEEF5] pt-10">
-            <div className=" mt-8 px-[60px] flex flex-col gap-8">
+          <div className="flex border w-full h-full bg-[#EBEEF5] pt-10 max-">
+            <div className=" mt-8 px-[43px] ms:px-[60px] flex flex-col gap-8  overflow-y-scroll">
               <h1 className="text-blue-950 text-3xl font-bold font-['Poppins']">
                 Reports
               </h1>
@@ -93,7 +93,7 @@ const Report = () => {
                         ID#
                       </p>
                     </div>
-                    <div className="w-[114.53px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
+                    <div className="w-[114.53px] h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center max-md:hidden">
                       <p className="text-white text-[11.79px] font-medium font-['Poppins']">
                         Name
                       </p>
@@ -103,7 +103,7 @@ const Report = () => {
                         Product ID
                       </p>
                     </div>
-                    <div className="px-2 h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center">
+                    <div className="px-2 h-[25.52px] bg-blue-950 border border-slate-100 flex items-center justify-center max-md:hidden">
                       <p className="text-white text-[8.79px] font-medium font-['Poppins']">
                         Product Name
                       </p>
@@ -119,18 +119,18 @@ const Report = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="h-[155px] overflow-y-auto  scroll-snap-type-y w-fit">
+                  <div className="h-[155px] overflow-y-auto  scroll-snap-type-y ">
                     {/* activityLog */}
                     {activityLog &&
                       activityLog.map((elem, index) => (
                         <div key={index} className="flex">
                           <div className="w-[70.30px] h-[25.52px] bg-[#DCE0E9]  border border-slate-100 flex items-center justify-center">
-                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins'] px-1">
                               {elem.account_id}
                             </p>
                           </div>
-                          <div className="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
-                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
+                          <div className="w-[114.53px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center overflow-hidden truncate max-md:hidden">
+                            <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins'] px-1">
                               {elem.user_name}
                             </p>
                           </div>
@@ -139,7 +139,7 @@ const Report = () => {
                               {elem.prod_id}
                             </p>
                           </div>
-                          <div className="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center">
+                          <div className="w-[81.27px] h-[25.52px] bg-[#DCE0E9] border border-slate-100 flex items-center justify-center max-md:hidden">
                             <p className="text-blue-950 text-[11.79px] font-medium font-['Poppins']">
                               {elem.prod_name}
                             </p>
@@ -161,7 +161,7 @@ const Report = () => {
                       ))}
                   </div>
                 </div>
-                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 hidden xl:block">
                   <div className="mb-2">
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Employees
@@ -220,7 +220,7 @@ const Report = () => {
               </div>
 
               <div className="flex gap-10">
-                <div className="w-[539px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div className="w-[539px] max-sm:w-[627px] h-fit md:h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
                   <div>
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Stock and Sales
@@ -228,7 +228,7 @@ const Report = () => {
                         2023
                       </span>
                     </h2>
-                    <div className="flex justify-center gap-[65px] h-auto">
+                    <div className="flex max-sm:flex-col justify-center gap-[65px] h-auto max-sm:items-center">
                       <div className="flex flex-col gap-3">
                         <CircularProgressBar
                           percentage={percentStock}
@@ -257,7 +257,7 @@ const Report = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5">
+                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 hidden xl:block">
                   <div>
                     <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
                       Annual Sales
@@ -265,6 +265,75 @@ const Report = () => {
                         2023
                       </span>
                     </h2>
+                  </div>
+                </div>
+              </div>
+              {/* Hidden Tables  */}
+              <div className="flex flex-col gap-8 justify-center items-center">
+                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 xl:hidden">
+                  <div>
+                    <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
+                      Annual Sales
+                      <span className="text-blue-950 text-xs font-normal font-['Poppins']">
+                        2023
+                      </span>
+                    </h2>
+                  </div>
+                </div>
+                <div className="w-[327px] h-[272px] bg-white rounded-lg border border-zinc-500 border-opacity-50 p-5 block xl:hidden">
+                  <div className="mb-2">
+                    <h2 className="text-blue-950 text-xl font-[900] font-['Poppins'] flex flex-col">
+                      Employees
+                      <span className="text-blue-950 text-xs font-normal font-['Poppins']">
+                        4 Activities
+                      </span>
+                    </h2>
+                  </div>
+                  <div>
+                    <div className="flex">
+                      <div className="w-[67.97px] h-[21.77px] bg-blue-950 rounded-tl-[3.19px] border border-slate-100 flex justify-center items-center">
+                        <p className="text-white text-[11.50px] font-medium font-['Poppins']">
+                          ID#
+                        </p>
+                      </div>
+                      <div className="w-[113.65px] h-[21.77px] bg-blue-950 border border-slate-100 flex justify-center items-center">
+                        <p className="text-white text-[11.50px] font-medium font-['Poppins']">
+                          Name
+                        </p>
+                      </div>
+                      <div className="w-[89.22px] h-[21.77px] bg-blue-950 rounded-tr-[3.19px] border border-slate-100 flex justify-center items-center">
+                        <p className="text-white text-[11.50px] font-medium font-['Poppins']">
+                          Date
+                        </p>
+                      </div>
+                    </div>
+                    {/* Table side  */}
+                    <div className="h-[155px] overflow-y-auto scroll-snap-type-y">
+                      {data &&
+                        data.map((elem, index) => (
+                          <div className="flex" key={index}>
+                            <div className="w-[67.97px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
+                                {elem.account_id}
+                              </p>
+                            </div>
+                            <div className="w-[113.65px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-left items-center pl-2">
+                              <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
+                                {elem.first_name} {elem.last_name}
+                              </p>
+                            </div>
+                            <div className="w-[89.22px] h-[21.77px] bg-blue-950 bg-opacity-20 border border-slate-100 flex justify-center items-center">
+                              <p className="text-blue-950 text-[10.50px] font-medium font-['Poppins']">
+                                {new Date(elem.created_at).toLocaleDateString()}
+                                {/* {new Date(elem.created_at).toLocaleString(
+                                  "default",
+                                  { month: "long", day: "numeric" }
+                                )} */}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
                   </div>
                 </div>
               </div>

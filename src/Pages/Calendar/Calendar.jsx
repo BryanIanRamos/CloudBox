@@ -104,13 +104,13 @@ const Calendar = () => {
         <SideNavBar />
         <ProfileHdr />
 
-        <div className="w-full h-full px-[40px] pt-[5%]">
+        <div className="w-full h-full px-[40px] pt-[6%]">
           <div className="p-5 bg-white rounded-md border border-zinc-500 border-opacity-50">
             <div className="text-blue-950 text-[18px] font-bold font-['Arial']">
               Transaction Log
             </div>
 
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[580px] mt-3">
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[430px] mt-3">
               <table className="w-full text-sm text-left rtl:text-right text-white">
                 <thead className="text-xs text-white uppercase bg-[#152D69]">
                   <tr>
