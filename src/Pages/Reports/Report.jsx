@@ -20,8 +20,10 @@ const Report = () => {
   const { data: stockSum } = useFetch(`${apiUrl}/api/sum-stock`);
 
   // console.log(object);
-  const { percentage: percentSales } = StatCalculator(15000, annualSales);
-  const { percentage: percentStock } = StatCalculator(3000, stockSum);
+  const { percentage: percentSales } = StatCalculator(25000, annualSales);
+  const { percentage: percentStock } = StatCalculator(15000, stockSum);
+
+  console.log("annualSales:: ", annualSales);
 
   console.log("annualSales: ", percentSales);
   console.log("stockSum: ", percentStock);
@@ -59,30 +61,6 @@ const Report = () => {
 
   const [sumDataSales, setSumDataSales] = useState([]);
   const [totalQuantitySales, setTotalQuantitySales] = useState(0);
-
-  useEffect(() => {
-    // Make an API request to fetch the data
-    fetch("http://cloudbox.test/api/sales")
-      .then((response) => response.json())
-      .then((sumDataSales) => {
-        setSumDataSales(sumDataSales); // Save the fetched data to the state
-
-        // Calculate the sum of 'quantity' values
-        const sum = sumDataSales.reduce((accumulator, currentValue) => {
-          return accumulator + currentValue.quantity;
-        }, 0);
-
-        // Convert sum to an integer
-        const totalQuantityInteger = parseInt(sum);
-
-        console.log("totalQuantityInteger", totalQuantityInteger);
-        setTotalQuantitySales(totalQuantityInteger);
-        setSales(totalQuantityInteger); // Save the total sum as an integer to the state
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   console.log("totalQuantitySales", totalQuantitySales);
 

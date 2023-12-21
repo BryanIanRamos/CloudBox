@@ -4,7 +4,8 @@ import { Icon } from "@iconify/react";
 import useFetch from "../API/useFetch";
 import axios from "axios";
 import { userData } from "./Account-cards/extensionAuth/helper";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
+import { Toaster, toast } from "sonner";
 
 const AddProduct = ({ trigger, closeUI }) => {
   const [isShowed, setIsShowed] = useState(false);
@@ -65,51 +66,8 @@ const AddProduct = ({ trigger, closeUI }) => {
   };
 
   const { data: categories } = useFetch(`${apiUrl}/api/category`);
-  // const [categories, setCategories] = useState();
-
-  // useEffect(() => {
-  //   const display = () => {
-  //     fetch("http://cloudbox.test/api/category")
-  //       .then((res) => {
-  //         if (!res.ok) {
-  //           throw Error("Data is not fetch");
-  //         }
-  //         return res.json();
-  //       })
-  //       .then((data) => {
-  //         // console.log("Data::", data);
-  //         setCategories(data);
-  //       })
-  //       .catch((e) => {
-  //         console.log(e.message);
-  //       });
-  //   };
-  //   display();
-  // }, [prod_id, account_id]);
-
-  // const display = () => {
-  //   // console.log("Product Name: ", prodData.prod_name);
-  //   // console.log("Price: ", prodData.price);
-  //   // console.log("description: ", prodData.description);
-  //   // // console.log("Quantity: ", prodData.status);
-  //   // console.log("Available: ", prodData.status);
-  //   // console.log("Category: ", prodData.category_name);
-  // console.log("IMage: ", image);
-  // };
-
-  // useEffect(() => {
-  //   setProd_name("");
-  //   setPrice(0);
-  //   setDescription("");
-  //   setStatus("Not Available");
-  //   setCategory_id(1);
-  //   setImage("Text");
-  // }, []);
 
   useEffect(() => {
-    // console.log("quantity : ", quantity);
-    // console.log("prod_id : ", prod_id);
-    // console.log("account_id :", account_id);
     const submitStock = async () => {
       if (quantity && prod_id && account_id) {
         try {
@@ -151,6 +109,7 @@ const AddProduct = ({ trigger, closeUI }) => {
   const handleSubmit = async () => {
     // console.log("data}} ", prodData);
     // display();
+
     const formProdData = new FormData();
     formProdData.append("prod_name", prod_name);
     const priceValue = parseFloat(price);
@@ -176,6 +135,7 @@ const AddProduct = ({ trigger, closeUI }) => {
           setProd_id(data.prod_id);
           setAccount_id(id);
           // console.log("Product POST successfully!");
+
           toast.success(
             "Product POST successfully!",
             {
@@ -183,9 +143,9 @@ const AddProduct = ({ trigger, closeUI }) => {
             },
             200
           );
-          // setTimeout(() => {
-          //   closeUI();
-          // }, 2000);
+          setTimeout(() => {
+            closeUI();
+          }, 2000);
         } else {
           toast.info(
             "POST Product Error!",
@@ -218,6 +178,7 @@ const AddProduct = ({ trigger, closeUI }) => {
       key={null}
     >
       <div className="h-full flex justify-center items-center">
+        <Toaster richColors position="top-center" />
         <div className="w-full h-full bg-white rounded-[18px] flex flex-col items-center p-7 border-2 shadow-md">
           {/* Header  */}
           <div className="h-20 w-full relative">

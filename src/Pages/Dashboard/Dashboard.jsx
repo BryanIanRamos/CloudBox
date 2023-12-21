@@ -11,18 +11,59 @@ import useFetch from "../../API/useFetch";
 import { userData } from "../../Components/Account-cards/extensionAuth/helper";
 import AddTransaction from "../../Components/AddTransaction";
 import useJoinTables from "../../API/useJoinTables";
+import StatCalculator from "../../middleware/StatCalculator";
 
 const Dashboard = () => {
   const [nextPage, setNextPage] = useState(false);
   const [transaction, setTransaction] = useState(false);
   const [movement, setMovement] = useState(0);
   const [balance, setBalance] = useState(0);
+
+  const [wkSales, setWeeklySales] = useState(0);
+
+  const [salesVal, setSalesVal] = useState(0);
+  // const [userTransAPI, setUserTransAPI] = useState("");
+
   const apiUrl = import.meta.env.VITE_MY_DOMAIN_API_;
 
   const { data: transactions } = useFetch(`${apiUrl}/api/transaction`);
   const { data: latestBalance } = useFetch(`${apiUrl}/api/BalanceTrans`);
   // const { data: userTransAPI } = useFetch(`${apiUrl}/api/BalanceTrans`);
   const { data: userTransAPI } = useFetch(`${apiUrl}/api/userTrans`);
+  const { data: weeklySales } = useFetch(`${apiUrl}/api/weekly-sales`);
+
+  // useEffect(() => {
+  //   setUserTransAPI(userTrans_API);
+  //   setWeeklySales(weekSales);
+  // }, [userTrans_API, weekSales]);
+
+  useEffect(() => {
+    if (
+      weeklySales &&
+      weeklySales.length > 0 &&
+      weeklySales[0].total_quantity !== null &&
+      weeklySales[0].total_quantity !== undefined
+    ) {
+      console.log("weeklySales", weeklySales[0].total_quantity);
+      const value = parseInt(weeklySales[0].total_quantity);
+      setSalesVal(value);
+      // console.log("value: ", value);
+      const { percentage: circularSales } = StatCalculator(2500, value);
+      console.log("circularSales", circularSales);
+      setWeeklySales(circularSales);
+    }
+
+    // Update other states or perform other necessary logic here
+  }, [weeklySales]);
+
+  console.log("wkSales", wkSales);
+  // console.log("userTransAPI", userTransAPI);
+
+  // const { percentage: wkSales } = StatCalculator(
+  //   10,
+  //   weeklySales.total_quantity
+  // );
+  // console.log("weeklySales :", wkSales);
 
   useEffect(() => {
     if (latestBalance && latestBalance[0]?.currentbalance > 0) {
@@ -196,7 +237,7 @@ const Dashboard = () => {
                   </div>
                 </div>
 
-                <ButtomSide totalQuantitySales={totalQuantitySales} />
+                <ButtomSide wkSales={wkSales} salesVal={salesVal} />
               </div>
             ) : (
               <Product
@@ -269,14 +310,14 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-function ButtomSide({ totalQuantitySales }) {
+function ButtomSide({ wkSales, salesVal }) {
   return (
     <>
       <div className="flex max-md:flex-col max-md:justify-center max-md:items-center">
         <div className="w-[326.85px] h-[247px] bg-gray-50 border border-zinc-500 border-opacity-50 p-4 overflow-hidden max-md:mb-10">
           <div>
             <h1 className=" text-blue-950 text-sm font-bold font-['Poppins'] mb-2">
-              Weekly Produce
+              Weekly Transaction
             </h1>
           </div>
           <div className="flex items-center h-fit gap-5">
@@ -284,7 +325,7 @@ function ButtomSide({ totalQuantitySales }) {
               <h2 className="text-black text-[35.04px] font-bold font-['Inria Sans']">
                 11,487
                 <span className="text-zinc-500 text-lg font-bold font-['Inria Sans']">
-                  Bottles
+                  Entries
                 </span>
               </h2>
             </div>
@@ -350,15 +391,14 @@ function ButtomSide({ totalQuantitySales }) {
             <div>
               <h2 className="text-black text-[35.04px] font-bold font-['Inria Sans']">
                 {/* 11,017 */}
-                {totalQuantitySales}{" "}
+                {salesVal} {/* {totalQuantitySales}{" "} */}
                 <span className="text-zinc-500 text-lg font-bold font-['Inria Sans']">
-                  {/* Bottles */}
-                  Products
+                  {/* Bottles */} Products
                 </span>
               </h2>
             </div>
             <CircularProgressBar
-              percentage={43}
+              percentage={wkSales}
               setRadius={45}
               stroke={11}
               secColor={true}

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { userData } from "./Account-cards/extensionAuth/helper";
 import useFetch from "../API/useFetch";
 import { Icon } from "@iconify/react";
-import { toast, useToast } from "react-toastify";
+// import { toast, useToast } from "react-toastify";
+import { Toaster, toast } from "sonner";
 
 const AddTransaction = ({ trigger, UIclose }) => {
   const { id } = userData();
@@ -207,12 +208,27 @@ const AddTransaction = ({ trigger, UIclose }) => {
             // If the response is okay (status 200-299), do something with the response data
             const salesData = await resSales.json();
             console.log("Response from Sales API:", salesData);
-            console.log("Post sales successful");
+            // console.log("Post sales successful");
             // Perform any action needed after a successful POST request
+
+            const promise = () =>
+              new Promise((resolve) => setTimeout(resolve, 2000));
+            // Handle successful response
+            console.log("Add product successfully:", salesData);
+
+            toast.promise(promise, {
+              loading: "Loading...",
+              success: () => {
+                return `Product Recorded`;
+              },
+              error: "Error",
+            });
           } else {
             // Handle error cases for the POST request
             throw new Error(
-              `Error: ${resSales.status} - ${resSales.statusText}`
+              toast.error(
+                "Adding product error. Please try again."
+              )`Error: ${resSales.status} - ${resSales.statusText}`
             );
           }
         } catch (error) {
@@ -286,14 +302,27 @@ const AddTransaction = ({ trigger, UIclose }) => {
         if (resTransaction.ok) {
           // If the response is okay (status 200-299), do something with the response data
           const transData = await resTransaction.json();
-          toast.success("Transaction Successful!", {
-            hideProgressBar: true,
-          });
-          console.log("Post Transaction successful");
-          console.log("Response from  Transaction API:", transData);
+          // toast.success("Transaction Successful!", {
+          //   hideProgressBar: true,
+          // });
+          // console.log("Post Transaction successful");
+          // console.log("Response from  Transaction API:", transData);
           setTrans_id(transData.trans_id);
-          console.log("Transaction ID ++: ", transData.trans_id);
+          // console.log("Transaction ID ++: ", transData.trans_id);
+          const promise = () =>
+            new Promise((resolve) => setTimeout(resolve, 2000));
+          // Handle successful response
+          console.log("Transaction is successful.", transData);
+
+          toast.promise(promise, {
+            loading: "Loading...",
+            success: () => {
+              return `Transaction is successful`;
+            },
+            error: "Error",
+          });
         } else {
+          console.error("Transaction error.");
           throw new Error(
             `Error: ${resTransaction.status} - ${resTransaction.statusText}`
           );
@@ -303,12 +332,15 @@ const AddTransaction = ({ trigger, UIclose }) => {
       }
     } else {
       console.log("INVALID TRANSACTION");
+      console.error("Transaction error.");
     }
   };
 
   return (
     <div className={isShowed ? " " : "hidden"}>
       {/* <button onClick={UIclose}>Back</button> */}
+      <Toaster richColors position="top-center" />
+
       <div
         className="w-full h-full absolute flex flex-row
                     justify-center items-center px-[130px] z-20 bg-gray-600"

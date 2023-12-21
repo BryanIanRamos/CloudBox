@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import useFetch from "../../../API/useFetch";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { Toaster, toast } from "sonner";
 
 const UpdateProd = ({ setOpen, id, triggerUI }) => {
   // const [isClose, setIsClose] = useState(false);
@@ -29,6 +30,7 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
     formProdData.append("description", description);
     formProdData.append("status", status);
     formProdData.append("category_id", category_id);
+
     // formProdData.append("image", image);
     // console.log("Image in FormData:", formProdData.get("image"));
 
@@ -74,8 +76,18 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
             return resProduct.json(); // Parse JSON response
           })
           .then((data) => {
+            const promise = () =>
+              new Promise((resolve) => setTimeout(resolve, 2000));
             // Handle successful response
             console.log("Data updated successfully:", data);
+
+            toast.promise(promise, {
+              loading: "Loading...",
+              success: () => {
+                return `Product has been updated`;
+              },
+              error: "Error",
+            });
           })
           .catch((error) => {
             console.error("There was a problem updating the data:", error);
@@ -134,6 +146,8 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
                       !setOpen && "hidden"
                     }`}
     >
+      <Toaster richColors position="top-center" />
+
       <div
         //   key={elem.prod_id}
         className="shadow-md"
