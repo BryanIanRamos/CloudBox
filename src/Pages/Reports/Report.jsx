@@ -68,10 +68,11 @@ const Report = () => {
     <>
       <div className="flex w-screen h-screen">
         <SideNavBar />
+        <ProfileHdr />
+
         <div className="w-full h-full">
-          <ProfileHdr />
-          <div className="flex border w-full h-[95%] bg-[#EBEEF5] ">
-            <div className="w-[100%] mt-8 px-[60px] flex flex-col gap-8">
+          <div className="flex border w-full h-full bg-[#EBEEF5] pt-10">
+            <div className=" mt-8 px-[60px] flex flex-col gap-8">
               <h1 className="text-blue-950 text-3xl font-bold font-['Poppins']">
                 Reports
               </h1>

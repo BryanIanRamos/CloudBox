@@ -99,127 +99,80 @@ const Calendar = () => {
   // ]);
 
   return (
-    <>
-      <div className="flex w-screen h-screen ">
+    <div className="w-screen h-[50%] ">
+      <div className="flex">
         <SideNavBar />
-        <div className="w-full h-full">
-          <ProfileHdr />
-          <div className="flex border w-full h-[95%] bg-[#EBEEF5] ">
-            <div
-              // bg-[#EBEEF5]
-              className="
-            w-[100%] mt-8"
-            >
-              <div className="flex flex-col  px-20 gap-6 border">
-                <h1 className="text-blue-950 text-[32px] font-bold font-['Poppins']">
-                  Calendar
-                </h1>
-                <div className="p-5 w-[895px] h-[213px] bg-white rounded-md border border-zinc-500 border-opacity-50">
-                  <div className="h-full flex flex-col gap-3">
-                    <div className="text-blue-950 text-base font-bold font-['Poppins']">
-                      September 2023
-                    </div>
-                    <div className="h-full flex overflow-x-auto ">
-                      <div className="flex gap-5 max-h-full py-1 ">
-                        {tempDate.map((elem, index) => (
-                          <div
-                            key={index}
-                            className="w-[95px] h-full bg-slate-100 rounded-md flex justify-center items-center"
-                          >
-                            <span className=" text-center text-blue-950 text-[55px] font-bold font-['Poppins']">
-                              {elem.date}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-[895px] h-[389px] bg-white rounded-md border border-zinc-500 border-opacity-50 p-5 flex flex-col gap-4">
-                  <h2 className="text-blue-950 text-[14px] font-bold font-['Arial']">
-                    Sort by: Name
-                  </h2>
-                  <div>
-                    <div className="flex">
-                      <div className="w-[119.98px] h-[38.43px] bg-blue-950 rounded-tl-md border border-slate-100 flex justify-center items-center">
-                        <p className="text-white text-[11.79px] font-medium font-['Poppins']">
-                          ID#
-                        </p>
-                      </div>
-                      <div className="w-[200.60px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
-                        <p className="text-white text-[11.79px] font-medium font-['Poppins']">
-                          Name
-                        </p>
-                      </div>
-                      <div className="w-[100.30px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
-                        <p className="text-white text-[15px] font-medium font-['Poppins']">
-                          Type
-                        </p>
-                      </div>
-                      <div className="w-[119.04px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
-                        <p className="text-white text-[15px] font-medium font-['Poppins']">
-                          Income
-                        </p>
-                      </div>
-                      <div className="w-[157.48px] h-[38.43px] bg-blue-950 border border-slate-100 flex justify-center items-center">
-                        <p className="text-white text-[11.79px] font-medium font-['Poppins']">
-                          Date
-                        </p>
-                      </div>
-                      <div className="w-[140.60px] h-[38.43px] bg-blue-950 rounded-tr-lg border border-slate-100 flex justify-center items-center">
-                        <p className="text-white text-[11.79px] font-medium font-['Poppins']">
-                          Total
-                        </p>
-                      </div>
-                    </div>
-                    <div className="h-[273px] overflow-y-auto">
-                      {mergedData &&
-                        mergedData.map((elem, index) => (
-                          <div className="flex" key={index}>
-                            <div className="w-[119.98px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                                {elem.account_id}
-                              </p>
-                            </div>
-                            <div className="w-[200.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                                {/* {elem.name} */}
-                                {elem.first_name} {elem.last_name}
-                              </p>
-                            </div>
-                            <div className="w-[100.30px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                                {/* {elem.quantity} */}
-                                {elem.trans_type}
-                              </p>
-                            </div>
-                            <div className="w-[119.04px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                                {/* {elem.type} */}
-                                {elem.income}
-                              </p>
-                            </div>
-                            <div className="w-[157.48px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                                {new Date(elem.created_at).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <div className="w-[140.60px] h-[38.43px] bg-[#EBEEF5] border border-slate-100 flex justify-center items-center">
-                              <p className="text-blue-950 text-[15px] font-medium font-['Poppins']">
-                                {elem.update_balance}php
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <ProfileHdr />
+
+        <div className="w-full h-full px-[40px] pt-[5%]">
+          <div className="p-5 bg-white rounded-md border border-zinc-500 border-opacity-50">
+            <div className="text-blue-950 text-[18px] font-bold font-['Arial']">
+              Transaction Log
+            </div>
+
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full h-[580px] mt-3">
+              <table className="w-full text-sm text-left rtl:text-right text-white">
+                <thead className="text-xs text-white uppercase bg-[#152D69]">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      ID#
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Type
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Income
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Date
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Total
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {mergedData &&
+                    mergedData.map((elem) => (
+                      <tr
+                        className="odd:bg-white odd:dark:bg-[#DCE0E9] even:bg-gray-50 even:dark:bg-[#F5F8FF] border-b dark:border-gray-700"
+                        key={elem.account_id}
+                      >
+                        <th
+                          scope="row"
+                          className="px-6 py-4 text-blue-950 text-[15px] font-medium font-['Poppins']"
+                        >
+                          {elem.account_id}
+                        </th>
+                        <td className="px-6 py-4 text-blue-950 text-[15px] font-medium font-['Poppins']">
+                          {" "}
+                          {elem.first_name} {elem.last_name}
+                        </td>
+                        <td className="px-6 py-4 text-blue-950 text-[15px] font-medium font-['Poppins']">
+                          {" "}
+                          {elem.trans_type}
+                        </td>
+                        <td className="px-6 py-4 text-blue-950 text-[15px] font-medium font-['Poppins']">
+                          $ {elem.income}
+                        </td>
+                        <td className="px-6 py-4 text-blue-950 text-[15px] font-medium font-['Poppins']">
+                          {new Date(elem.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 text-blue-950 text-[15px] font-medium font-['Poppins']">
+                          {elem.update_balance}php
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
