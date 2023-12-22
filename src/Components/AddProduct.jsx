@@ -194,7 +194,7 @@ const AddProduct = ({ trigger, closeUI }) => {
   return [
     isShowed,
     <div
-      className={`absolute py-[120px] border w-[70%] z-50 ${
+      className={`absolute py-[140px]  w-[60%] z-50 pl-[12%] h-fits ${
         isShowed ? "block" : "hidden"
       }`}
       key={null}
