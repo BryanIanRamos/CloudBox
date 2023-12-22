@@ -3,10 +3,12 @@ import { Icon } from "@iconify/react";
 import useFetch from "../../../API/useFetch";
 // import { toast } from "react-toastify";
 import { Toaster, toast } from "sonner";
+import { userData } from "../../../Components/Account-cards/extensionAuth/helper";
 
 const UpdateProd = ({ setOpen, id, triggerUI }) => {
   // const [isClose, setIsClose] = useState(false);
   // setIsClose(isOpen);
+  const { id: userID } = userData();
   console.log("ID:::", id);
 
   const [prod_name, setProd_name] = useState("");
@@ -14,6 +16,7 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
   const [description, setDescription] = useState("Unknown");
   const [status, setStatus] = useState("Not Available");
   const [category_id, setCategory_id] = useState(1);
+  const { jwt } = userData();
   const [image, setImage] = useState(null);
 
   const [prodData, setProdData] = useState([]);
@@ -62,9 +65,10 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
           `${apiUrl}/api/product/${parsedID}`,
           {
             method: "POST", // or 'PATCH' depending on your API
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
+            headers: {
+              // "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+            },
             // body: JSON.stringify(formProdData),
             body: formProdData,
           }
@@ -141,12 +145,40 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
     handleUpdate();
   }, [id]);
 
+  // useEffect(() => {
+  //   const formDataActivity = {
+  //     prod_id: id,
+  //     account_id: userID,
+  //     type: "Add",
+  //   };
+
+  //   // Register Activity
+  //   const submitActivity = async () => {
+  //     try {
+  //       let resProduct = await fetch(`${apiUrl}/api/activity`, {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+  //         },
+  //         body: JSON.stringify(formDataActivity),
+  //         // body: formProdData,
+  //       });
+
+  //       if (resProduct.ok) {
+  //         console.log("resProduct Activity", resProduct);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error while fetching data activity:", error);
+  //     }
+  //   };
+  //   submitActivity();
+  // }, []);
+
   return (
     <div
       className={`absolute w-full h-full  z-50
-                    flex justify-center items-center p-10 ${
-                      !setOpen && "hidden"
-                    }`}
+                    flex pl-[15%] items-center p-10 ${!setOpen && "hidden"}`}
     >
       <Toaster richColors position="top-center" />
 

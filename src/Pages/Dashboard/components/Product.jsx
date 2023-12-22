@@ -47,10 +47,6 @@ const Product = ({ trigger }) => {
   // };
   // setAddProduct(isShowed);
 
-  useEffect(()=>{
-
-  }, [])
-
   useEffect(() => {
     setBack();
   }, []);
