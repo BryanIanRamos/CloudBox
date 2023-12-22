@@ -42,6 +42,9 @@ const Product = ({ trigger }) => {
     setBack(false);
     trigger(Back);
   };
+  // const handleClick = () => {
+  //   trigger(true); // Signal the parent component to go back
+  // };
   // setAddProduct(isShowed);
 
   useEffect(() => {
@@ -98,6 +101,10 @@ const Product = ({ trigger }) => {
         const resourceIdToDelete = parseInt(deleteID, 10); // Example: ID of the resource you want to delete
         fetch(`${apiUrl}/api/product/${resourceIdToDelete}`, {
           method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+          },
         })
           .then((response) => {
             if (!response.ok) {
@@ -119,12 +126,12 @@ const Product = ({ trigger }) => {
 
   return (
     <>
-      <div className="relative pt-[30px] flex ">
+      <div className="relative pt-[30px] flex w-full border">
         <AddProduct trigger={addProduct} closeUI={closeUI} />
         <UpdateProd setOpen={isShowed} triggerUI={triggerUI} id={ID} />
-        <div className="w-full h-full flex justify-center items-center">
-          <div className="sm:px-20 pt-10 ">
-            <div className="flex relative items-center justify-center h-10 mb-5 border">
+        <div className="w-full h-full flex items-center ">
+          <div className="sm:px-20 pt-10 w-full xl:w-[75%]">
+            <div className="flex relative items-center justify-center h-10 mb-5">
               <div className="text-blue-950 text-[32px] font-bold font-['Poppins']">
                 Products
               </div>

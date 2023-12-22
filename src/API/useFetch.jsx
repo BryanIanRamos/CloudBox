@@ -8,7 +8,7 @@ const useFetch = (api) => {
 
   const { jwt } = userData();
 
-  console.log("jwt", jwt);
+  // console.log("jwt", jwt);
 
   useEffect(() => {
     const requestOptions = {

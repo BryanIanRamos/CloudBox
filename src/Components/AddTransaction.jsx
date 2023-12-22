@@ -232,7 +232,6 @@ const AddTransaction = ({ trigger, UIclose }) => {
   }, [selectedSales]);
 
   // console.log("AMOUNT:", parIncome);
-
   const handleTransaction = async (e) => {
     e.preventDefault();
 

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Icon } from "@iconify/react";
+import { userData } from "./extensionAuth/helper";
 
 const initialUser = { email: "", password: "", username: "" };
 
@@ -16,6 +17,7 @@ function Create() {
   // const [name, setName] = useState("");
   const [first_name, setFirst_name] = useState("");
   const [last_name, setLast_name] = useState("");
+  const { jwt } = userData();
 
   // const [userFocus, setUserFocus] = useState(false);
 
@@ -56,42 +58,42 @@ function Create() {
       if (first_name && last_name && email && password) {
         // const resRegister = await fetch("http://cloudbox.test/api/user", {
         console.log("API:: ", apiUrl);
-        let resRegister = await fetch(`${apiUrl}/api/user`, {
+        let resRegister = await fetch(`${apiUrl}/api/signup`, {
           method: "POST",
+          headers: {
+            // "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
+          },
           body: formData,
         });
 
-
-
         // const data = await resRegister.json();
-        // console.log("data Status: ", data);
+        console.log("data Status: ", resRegister);
 
         if (resRegister.ok) {
-          // toast.success("Registered successfully!", {
-          //   hideProgressBar: true,
-          // });
-          // console.log("resRegister", resRegister);
-
-          // toast.success(
-          //   "Account Registered",
-          //   {
-          //     hideProgressBar: true,
-          //   },
-          //   200
-          // );
-
-          // setTimeout(() => {
-          //   navigate("/");
-          // }, 3000);
+          toast.success("Registered successfully!", {
+            hideProgressBar: true,
+          });
+          console.log("resRegister", resRegister);
+          toast.success(
+            "Account Registered",
+            {
+              hideProgressBar: true,
+            },
+            200
+          );
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         }
       } else {
-        // toast.info(
-        //   "Invalid Credentials",
-        //   {
-        //     hideProgressBar: true,
-        //   },
-        //   200
-        // );
+        toast.info(
+          "Invalid Credentials",
+          {
+            hideProgressBar: true,
+          },
+          200
+        );
       }
     } catch (error) {
       toast.error(error.message, {

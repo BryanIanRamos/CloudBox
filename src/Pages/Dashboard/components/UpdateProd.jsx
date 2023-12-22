@@ -11,7 +11,7 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
 
   const [prod_name, setProd_name] = useState("");
   const [price, setPrice] = useState(0);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("Unknown");
   const [status, setStatus] = useState("Not Available");
   const [category_id, setCategory_id] = useState(1);
   const [image, setImage] = useState(null);
@@ -54,7 +54,7 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
 
     if (prod_name && price && description && status && category_id) {
       const parsedID = parseInt(id, 10);
-
+      console.log("parsedID", parsedID);
       try {
         let resProduct = await fetch(
           //     // `http://cloudbox.test/api/product/${parsedID}`,
@@ -118,6 +118,8 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
         const parsedID = parseInt(id, 10); // Second argument specifies the radix/base (e.g., base 10)
         const response = await fetch(`${apiUrl}/api/product/${parsedID}`);
 
+        console.log("response_product", response);
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -130,7 +132,7 @@ const UpdateProd = ({ setOpen, id, triggerUI }) => {
         setStatus(data.status);
         setCategory_id(data.category_id);
         setImage(data.image_url);
-        // console.log("Update successful", data);
+        console.log("Update successful", data);
         // Perform additional actions after successful update if needed
       } catch (error) {
         console.error("There was an error updating the data:", error);

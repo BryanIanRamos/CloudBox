@@ -39,14 +39,14 @@ const AddProduct = ({ trigger, closeUI }) => {
     }
   };
 
-  const formProdData = {
-    prod_name,
-    price,
-    description,
-    status,
-    category_id,
-    image,
-  };
+  // const formProdData = {
+  //   prod_name,
+  //   price,
+  //   description,
+  //   status,
+  //   category_id,
+  //   image,
+  // };
 
   const formStockData = {
     quantity,
@@ -81,8 +81,10 @@ const AddProduct = ({ trigger, closeUI }) => {
             body: JSON.stringify(formStockData),
           });
 
+          console.log("Triggered Here!");
+
           if (resStock) {
-            // console.log("Stock POST successfully!");
+            console.log("Stock POST successfully!");
             toast.success(
               "Stock POST successfully!",
               {
@@ -111,37 +113,42 @@ const AddProduct = ({ trigger, closeUI }) => {
     // console.log("data}} ", prodData);
     // display();
 
-    console.log("prod_name", prod_name);
-    console.log("price", price);
-    console.log("description", description);
-    console.log("status", status);
-    console.log("category_id", category_id);
-    console.log("image", image);
+    // console.log("prod_name", prod_name);
+    // console.log("price", price);
+    // console.log("description", description);
+    // console.log("status", status);
+    // console.log("category_id", category_id);
+    // console.log("image", image);
 
-    // const formProdData = new FormData();
-    // formProdData.append("prod_name", prod_name);
-    // const priceValue = parseFloat(price);
-    // formProdData.append("price", priceValue);
-    // formProdData.append("description", description);
-    // formProdData.append("status", status);
-    // formProdData.append("category_id", category_id);
-    // formProdData.append("image", image);
+    const formProdData = new FormData();
+    formProdData.append("prod_name", prod_name);
+    const priceValue = parseFloat(price);
+    formProdData.append("price", priceValue);
+    formProdData.append("description", description);
+    formProdData.append("status", status);
+    formProdData.append("category_id", category_id);
+    formProdData.append("image", image);
 
     if (prod_name && price && description && status && category_id) {
       try {
-        const resProduct = await fetch(`${apiUrl}/api/product`, {
+        let resProduct = await fetch(`${apiUrl}/api/product`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            // "Content-Type": "application/json",
             Authorization: `Bearer ${jwt}`, // Include the bearer token in the Authorization header
           },
-          body: JSON.stringify(formProdData),
-          // body: formProdData,
+          // body: JSON.stringify(formProdData),
+          body: formProdData,
         });
 
-        // console.log("resProduct", resProduct);
+        console.log("resProduct", resProduct);
 
         if (resProduct.ok) {
+          // const contentType = resProduct.headers.get("content-type");
+
+          // console.log(object);
+
+          // if (contentType && contentType.includes("application/json")) {
           const data = await resProduct.json();
           setProd_id(data.prod_id);
           setAccount_id(id);
@@ -157,6 +164,10 @@ const AddProduct = ({ trigger, closeUI }) => {
           setTimeout(() => {
             closeUI();
           }, 2000);
+          // } else {
+          //   // Handle HTTP error
+          //   console.error("HTTP error:", resProduct.status);
+          // }
         } else {
           toast.info(
             "POST Product Error!",
@@ -183,14 +194,14 @@ const AddProduct = ({ trigger, closeUI }) => {
   return [
     isShowed,
     <div
-      className={`absolute z-20 w-full h-full py-[120px] px-[18%] ${
+      className={`absolute py-[120px] border w-[70%] z-50 ${
         isShowed ? "block" : "hidden"
       }`}
       key={null}
     >
-      <div className="h-full flex justify-center items-center">
+      <div className="h-full flex justify-center items-center ">
         <Toaster richColors position="top-center" />
-        <div className="w-full h-full bg-white rounded-[18px] flex flex-col items-center p-7 border-2 shadow-md">
+        <div className="w-[800px] h-full bg-white rounded-[18px] flex flex-col items-center p-7 border-2 shadow-md bg-red-400">
           {/* Header  */}
           <div className="h-20 w-full relative">
             <div className="flex items-center absolute left-0">
